@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Petstore from 'lorikeet';
-import { APIUserAbortError } from 'lorikeet';
-import { Headers } from 'lorikeet/core';
+import Petstore from '@lorikeet/sdk';
+import { APIUserAbortError } from '@lorikeet/sdk';
+import { Headers } from '@lorikeet/sdk/core';
 import defaultFetch, { Response, type RequestInit, type RequestInfo } from 'node-fetch';
 
 describe('instantiate client', () => {

@@ -4,8 +4,8 @@
 /**
  * Types will get added to this namespace when you import one of the following:
  *
- *   import 'lorikeet/shims/node'
- *   import 'lorikeet/shims/web'
+ *   import '@lorikeet/sdk/shims/node'
+ *   import '@lorikeet/sdk/shims/web'
  *
  * Importing more than one will cause type and runtime errors.
  */

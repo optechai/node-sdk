@@ -1,5 +1,5 @@
 {
-  "name": "lorikeet",
+  "name": "@lorikeet/sdk",
   "version": "0.0.1-alpha.0",
   "description": "The official TypeScript library for the Petstore API",
   "author": "Petstore <example@example.com>",
@@ -60,8 +60,8 @@
     "./shims/web.mjs"
   ],
   "imports": {
-    "lorikeet": ".",
-    "lorikeet/*": "./src/*"
+    "@lorikeet/sdk": ".",
+    "@lorikeet/sdk/*": "./src/*"
   },
   "exports": {
     "./_shims/auto/*": {
