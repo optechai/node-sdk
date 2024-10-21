@@ -55,12 +55,12 @@ $ cd lorikeet-node
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link lorikeet
+$ yarn link @lorikeet/sdk
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global lorikeet
+$ pnpm link -—global @lorikeet/sdk
 ```
 
 ## Running tests
