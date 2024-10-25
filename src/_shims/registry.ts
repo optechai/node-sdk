@@ -42,12 +42,12 @@ export let isFsReadStream: Shims['isFsReadStream'] | undefined = undefined;
 export function setShims(shims: Shims, options: { auto: boolean } = { auto: false }) {
   if (auto) {
     throw new Error(
-      `you must \`import 'lorikeet/shims/${shims.kind}'\` before importing anything else from lorikeet`,
+      `you must \`import '@lorikeetai/node-sdk/shims/${shims.kind}'\` before importing anything else from @lorikeetai/node-sdk`,
     );
   }
   if (kind) {
     throw new Error(
-      `can't \`import 'lorikeet/shims/${shims.kind}'\` after \`import 'lorikeet/shims/${kind}'\``,
+      `can't \`import '@lorikeetai/node-sdk/shims/${shims.kind}'\` after \`import '@lorikeetai/node-sdk/shims/${kind}'\``,
     );
   }
   auto = options.auto;

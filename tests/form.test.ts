@@ -1,6 +1,6 @@
-import { multipartFormRequestOptions, createForm } from 'lorikeet/core';
-import { Blob } from 'lorikeet/_shims/index';
-import { toFile } from 'lorikeet';
+import { multipartFormRequestOptions, createForm } from '@lorikeetai/node-sdk/core';
+import { Blob } from '@lorikeetai/node-sdk/_shims/index';
+import { toFile } from '@lorikeetai/node-sdk';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

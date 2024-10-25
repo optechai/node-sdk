@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Lorikeet } from 'lorikeet';
+import { Lorikeet } from '@lorikeetai/node-sdk';
 
 const { stringifyQuery } = Lorikeet.prototype as any;
 

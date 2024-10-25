@@ -9,9 +9,9 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "lorikeet/_shims/auto/*": ["src/_shims/auto/*-node"],
-      "lorikeet/*": ["src/*"],
-      "lorikeet": ["src/index.ts"],
+      "@lorikeetai/node-sdk/_shims/auto/*": ["src/_shims/auto/*-node"],
+      "@lorikeetai/node-sdk/*": ["src/*"],
+      "@lorikeetai/node-sdk": ["src/index.ts"],
     },
     "noEmit": true,
 

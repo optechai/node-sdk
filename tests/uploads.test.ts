@@ -1,6 +1,6 @@
 import fs from 'fs';
-import { toFile, type ResponseLike } from 'lorikeet/uploads';
-import { File } from 'lorikeet/_shims/index';
+import { toFile, type ResponseLike } from '@lorikeetai/node-sdk/uploads';
+import { File } from '@lorikeetai/node-sdk/_shims/index';
 
 class MyClass {
   name: string = 'foo';
