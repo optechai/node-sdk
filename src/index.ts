@@ -3,20 +3,24 @@
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import { type Agent } from './_shims/index';
-import * as qs from './internal/qs';
 import * as Core from './core';
 import * as API from './resources/index';
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['PETSTORE_API_KEY'].
+   * The client ID associated with your account.
    */
-  apiKey?: string | undefined;
+  bearerToken?: string | null | undefined;
+
+  /**
+   * The signature of the webhook - should be generated as a SHA256 hash of the payload and the secret key.
+   */
+  apiKey?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['PETSTORE_BASE_URL'].
+   * Defaults to process.env['LORIKEET_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -71,18 +75,20 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Petstore API.
+ * API Client for interfacing with the Lorikeet API.
  */
-export class Petstore extends Core.APIClient {
-  apiKey: string;
+export class Lorikeet extends Core.APIClient {
+  bearerToken: string | null;
+  apiKey: string | null;
 
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Petstore API.
+   * API Client for interfacing with the Lorikeet API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['PETSTORE_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['PETSTORE_BASE_URL'] ?? https://petstore3.swagger.io/api/v3] - Override the default base URL for the API.
+   * @param {string | null | undefined} [opts.bearerToken=process.env['LORIKEET_CLIENT_ID'] ?? null]
+   * @param {string | null | undefined} [opts.apiKey]
+   * @param {string} [opts.baseURL=process.env['LORIKEET_BASE_URL'] ?? http://api.lorikeetcx.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
    * @param {Core.Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -91,20 +97,16 @@ export class Petstore extends Core.APIClient {
    * @param {Core.DefaultQuery} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = Core.readEnv('PETSTORE_BASE_URL'),
-    apiKey = Core.readEnv('PETSTORE_API_KEY'),
+    baseURL = Core.readEnv('LORIKEET_BASE_URL'),
+    bearerToken = Core.readEnv('LORIKEET_CLIENT_ID') ?? null,
+    apiKey = null,
     ...opts
   }: ClientOptions = {}) {
-    if (apiKey === undefined) {
-      throw new Errors.PetstoreError(
-        "The PETSTORE_API_KEY environment variable is missing or empty; either provide it, or instantiate the Petstore client with an apiKey option, like new Petstore({ apiKey: 'My API Key' }).",
-      );
-    }
-
     const options: ClientOptions = {
+      bearerToken,
       apiKey,
       ...opts,
-      baseURL: baseURL || `https://petstore3.swagger.io/api/v3`,
+      baseURL: baseURL || `http://api.lorikeetcx.ai`,
     };
 
     super({
@@ -117,12 +119,12 @@ export class Petstore extends Core.APIClient {
 
     this._options = options;
 
+    this.bearerToken = bearerToken;
     this.apiKey = apiKey;
   }
 
-  pets: API.Pets = new API.Pets(this);
-  store: API.Store = new API.Store(this);
-  user: API.UserResource = new API.UserResource(this);
+  conversation: API.Conversation = new API.Conversation(this);
+  ingest: API.Ingest = new API.Ingest(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -135,18 +137,58 @@ export class Petstore extends Core.APIClient {
     };
   }
 
+  protected override validateHeaders(headers: Core.Headers, customHeaders: Core.Headers) {
+    if (this.bearerToken && headers['authorization']) {
+      return;
+    }
+    if (customHeaders['authorization'] === null) {
+      return;
+    }
+
+    if (this.apiKey && headers['x-optech-webhook-signature']) {
+      return;
+    }
+    if (customHeaders['x-optech-webhook-signature'] === null) {
+      return;
+    }
+
+    throw new Error(
+      'Could not resolve authentication method. Expected either bearerToken or apiKey to be set. Or for one of the "Authorization" or "x-optech-webhook-signature" headers to be explicitly omitted',
+    );
+  }
+
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
-    return { api_key: this.apiKey };
+    const bearerAuth = this.bearerAuth(opts);
+    const apiKeyAuth = this.apiKeyAuth(opts);
+
+    if (bearerAuth != null && !Core.isEmptyObj(bearerAuth)) {
+      return bearerAuth;
+    }
+
+    if (apiKeyAuth != null && !Core.isEmptyObj(apiKeyAuth)) {
+      return apiKeyAuth;
+    }
+    return {};
   }
 
-  protected override stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
+  protected bearerAuth(opts: Core.FinalRequestOptions): Core.Headers {
+    if (this.bearerToken == null) {
+      return {};
+    }
+    return { Authorization: `Bearer ${this.bearerToken}` };
   }
 
-  static Petstore = this;
+  protected apiKeyAuth(opts: Core.FinalRequestOptions): Core.Headers {
+    if (this.apiKey == null) {
+      return {};
+    }
+    return { 'x-optech-webhook-signature': this.apiKey };
+  }
+
+  static Lorikeet = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static PetstoreError = Errors.PetstoreError;
+  static LorikeetError = Errors.LorikeetError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -165,7 +207,7 @@ export class Petstore extends Core.APIClient {
 }
 
 export const {
-  PetstoreError,
+  LorikeetError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,
@@ -183,34 +225,19 @@ export const {
 export import toFile = Uploads.toFile;
 export import fileFromPath = Uploads.fileFromPath;
 
-export namespace Petstore {
+export namespace Lorikeet {
   export import RequestOptions = Core.RequestOptions;
 
-  export import Pets = API.Pets;
-  export import APIResponse = API.APIResponse;
-  export import Pet = API.Pet;
-  export import PetFindByStatusResponse = API.PetFindByStatusResponse;
-  export import PetFindByTagsResponse = API.PetFindByTagsResponse;
-  export import PetCreateParams = API.PetCreateParams;
-  export import PetUpdateParams = API.PetUpdateParams;
-  export import PetFindByStatusParams = API.PetFindByStatusParams;
-  export import PetFindByTagsParams = API.PetFindByTagsParams;
-  export import PetUpdateByIDParams = API.PetUpdateByIDParams;
-  export import PetUploadImageParams = API.PetUploadImageParams;
+  export import Conversation = API.Conversation;
+  export import ConversationMessageResponse = API.ConversationMessageResponse;
+  export import ConversationStartResponse = API.ConversationStartResponse;
+  export import ConversationMessageParams = API.ConversationMessageParams;
 
-  export import Store = API.Store;
-  export import StoreInventoryResponse = API.StoreInventoryResponse;
-  export import StoreCreateOrderParams = API.StoreCreateOrderParams;
-
-  export import UserResource = API.UserResource;
-  export import User = API.User;
-  export import UserLoginResponse = API.UserLoginResponse;
-  export import UserCreateParams = API.UserCreateParams;
-  export import UserUpdateParams = API.UserUpdateParams;
-  export import UserCreateWithListParams = API.UserCreateWithListParams;
-  export import UserLoginParams = API.UserLoginParams;
-
-  export import Order = API.Order;
+  export import Ingest = API.Ingest;
+  export import IngestValidateResponse = API.IngestValidateResponse;
+  export import IngestReturnWebhookParams = API.IngestReturnWebhookParams;
+  export import IngestTokenParams = API.IngestTokenParams;
+  export import IngestValidateParams = API.IngestValidateParams;
 }
 
-export default Petstore;
+export default Lorikeet;
