@@ -7,9 +7,9 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^lorikeet$': '<rootDir>/src/index.ts',
-    '^lorikeet/_shims/auto/(.*)$': '<rootDir>/src/_shims/auto/$1-node',
-    '^lorikeet/(.*)$': '<rootDir>/src/$1',
+    '^@lorikeetai/node-sdk$': '<rootDir>/src/index.ts',
+    '^@lorikeetai/node-sdk/_shims/auto/(.*)$': '<rootDir>/src/_shims/auto/$1-node',
+    '^@lorikeetai/node-sdk/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',

@@ -1,5 +1,5 @@
-import { createResponseHeaders } from 'lorikeet/core';
-import { Headers } from 'lorikeet/_shims/index';
+import { createResponseHeaders } from '@lorikeetai/node-sdk/core';
+import { Headers } from '@lorikeetai/node-sdk/_shims/index';
 
 describe('response parsing', () => {
   // TODO: test unicode characters

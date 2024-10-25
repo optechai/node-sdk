@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "lorikeet/*": ["dist/src/*"],
-      "lorikeet": ["dist/src/index.ts"],
+      "@lorikeetai/node-sdk/*": ["dist/src/*"],
+      "@lorikeetai/node-sdk": ["dist/src/index.ts"],
     },
     "noEmit": false,
     "declaration": true,

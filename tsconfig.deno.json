@@ -6,9 +6,9 @@
     "rootDir": "./deno",
     "lib": ["es2020", "DOM"],
     "paths": {
-      "lorikeet/_shims/auto/*": ["deno/_shims/auto/*-deno"],
-      "lorikeet/*": ["deno/*"],
-      "lorikeet": ["deno/index.ts"],
+      "@lorikeetai/node-sdk/_shims/auto/*": ["deno/_shims/auto/*-deno"],
+      "@lorikeetai/node-sdk/*": ["deno/*"],
+      "@lorikeetai/node-sdk": ["deno/index.ts"],
     },
     "noEmit": true,
     "declaration": true,

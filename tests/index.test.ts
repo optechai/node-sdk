@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Lorikeet from 'lorikeet';
-import { APIUserAbortError } from 'lorikeet';
-import { Headers } from 'lorikeet/core';
+import Lorikeet from '@lorikeetai/node-sdk';
+import { APIUserAbortError } from '@lorikeetai/node-sdk';
+import { Headers } from '@lorikeetai/node-sdk/core';
 import defaultFetch, { Response, type RequestInit, type RequestInfo } from 'node-fetch';
 
 describe('instantiate client', () => {
