@@ -24,7 +24,6 @@ import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
   clientId: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
-  clientSecret: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
 });
 
 async function main() {
@@ -46,7 +45,6 @@ import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
   clientId: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
-  clientSecret: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
 });
 
 async function main() {
