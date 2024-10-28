@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-alpha.2 (2024-10-28)
+
+Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
+
+### Features
+
+* **api:** update via SDK Studio ([#6](https://github.com/optechai/node-sdk/issues/6)) ([3078f36](https://github.com/optechai/node-sdk/commit/3078f360f3957f91352415fa834418c5f8b05b71))
+* **api:** update via SDK Studio ([#8](https://github.com/optechai/node-sdk/issues/8)) ([deaf9d5](https://github.com/optechai/node-sdk/commit/deaf9d58eb28691faae681527ec062e29eaa5b9e))
+
 ## 0.1.0-alpha.1 (2024-10-25)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/optechai/node-sdk/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)
