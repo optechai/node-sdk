@@ -1,15 +1,5 @@
 # Conversation
 
-Types:
-
-- <code><a href="./src/resources/conversation.ts">ConversationMessageResponse</a></code>
-- <code><a href="./src/resources/conversation.ts">ConversationStartResponse</a></code>
-
-Methods:
-
-- <code title="post /conversation/{conversationId}/message">client.conversation.<a href="./src/resources/conversation.ts">message</a>(conversationId, { ...params }) -> ConversationMessageResponse</code>
-- <code title="post /conversation/start">client.conversation.<a href="./src/resources/conversation.ts">start</a>() -> ConversationStartResponse</code>
-
 # Ingest
 
 Types:

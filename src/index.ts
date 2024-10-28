@@ -137,54 +137,6 @@ export class Lorikeet extends Core.APIClient {
     };
   }
 
-  protected override validateHeaders(headers: Core.Headers, customHeaders: Core.Headers) {
-    if (this.bearerToken && headers['authorization']) {
-      return;
-    }
-    if (customHeaders['authorization'] === null) {
-      return;
-    }
-
-    if (this.apiKey && headers['x-optech-webhook-signature']) {
-      return;
-    }
-    if (customHeaders['x-optech-webhook-signature'] === null) {
-      return;
-    }
-
-    throw new Error(
-      'Could not resolve authentication method. Expected either bearerToken or apiKey to be set. Or for one of the "Authorization" or "x-optech-webhook-signature" headers to be explicitly omitted',
-    );
-  }
-
-  protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
-    const bearerAuth = this.bearerAuth(opts);
-    const apiKeyAuth = this.apiKeyAuth(opts);
-
-    if (bearerAuth != null && !Core.isEmptyObj(bearerAuth)) {
-      return bearerAuth;
-    }
-
-    if (apiKeyAuth != null && !Core.isEmptyObj(apiKeyAuth)) {
-      return apiKeyAuth;
-    }
-    return {};
-  }
-
-  protected bearerAuth(opts: Core.FinalRequestOptions): Core.Headers {
-    if (this.bearerToken == null) {
-      return {};
-    }
-    return { Authorization: `Bearer ${this.bearerToken}` };
-  }
-
-  protected apiKeyAuth(opts: Core.FinalRequestOptions): Core.Headers {
-    if (this.apiKey == null) {
-      return {};
-    }
-    return { 'x-optech-webhook-signature': this.apiKey };
-  }
-
   static Lorikeet = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
@@ -229,9 +181,6 @@ export namespace Lorikeet {
   export import RequestOptions = Core.RequestOptions;
 
   export import Conversation = API.Conversation;
-  export import ConversationMessageResponse = API.ConversationMessageResponse;
-  export import ConversationStartResponse = API.ConversationStartResponse;
-  export import ConversationMessageParams = API.ConversationMessageParams;
 
   export import Ingest = API.Ingest;
   export import IngestValidateResponse = API.IngestValidateResponse;
