@@ -22,14 +22,15 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import Lorikeet from '@lorikeetai/node-sdk';
 
-const client = new Lorikeet();
+const client = new Lorikeet({
+  clientId: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
+  clientSecret: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
+});
 
 async function main() {
-  await client.ingest.returnWebhook(
-    '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    { data: {} },
-  );
+  const response = await client.conversation.chat.start({});
+
+  console.log(response.conversationId);
 }
 
 main();
@@ -43,15 +44,14 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import Lorikeet from '@lorikeetai/node-sdk';
 
-const client = new Lorikeet();
+const client = new Lorikeet({
+  clientId: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
+  clientSecret: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
+});
 
 async function main() {
-  const params: Lorikeet.IngestReturnWebhookParams = { data: {} };
-  await client.ingest.returnWebhook(
-    '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    params,
-  );
+  const params: Lorikeet.Conversation.ChatStartParams = {};
+  const response: Lorikeet.Conversation.ChatStartResponse = await client.conversation.chat.start(params);
 }
 
 main();
@@ -68,19 +68,15 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const response = await client.ingest
-    .returnWebhook('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      data: {},
-    })
-    .catch(async (err) => {
-      if (err instanceof Lorikeet.APIError) {
-        console.log(err.status); // 400
-        console.log(err.name); // BadRequestError
-        console.log(err.headers); // {server: 'nginx', ...}
-      } else {
-        throw err;
-      }
-    });
+  const response = await client.conversation.chat.start({}).catch(async (err) => {
+    if (err instanceof Lorikeet.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 }
 
 main();
@@ -115,7 +111,7 @@ const client = new Lorikeet({
 });
 
 // Or, configure per-request:
-await client.ingest.returnWebhook('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { data: {} }, {
+await client.conversation.chat.start({}, {
   maxRetries: 5,
 });
 ```
@@ -132,7 +128,7 @@ const client = new Lorikeet({
 });
 
 // Override per-request:
-await client.ingest.returnWebhook('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { data: {} }, {
+await client.conversation.chat.start({}, {
   timeout: 5 * 1000,
 });
 ```
@@ -153,17 +149,13 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new Lorikeet();
 
-const response = await client.ingest
-  .returnWebhook('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { data: {} })
-  .asResponse();
+const response = await client.conversation.chat.start({}).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: result, response: raw } = await client.ingest
-  .returnWebhook('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { data: {} })
-  .withResponse();
+const { data: response, response: raw } = await client.conversation.chat.start({}).withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(result);
+console.log(response.conversationId);
 ```
 
 ### Making custom/undocumented requests
@@ -267,10 +259,8 @@ const client = new Lorikeet({
 });
 
 // Override per-request:
-await client.ingest.returnWebhook(
-  '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-  '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-  { data: {} },
+await client.conversation.chat.start(
+  {},
   {
     httpAgent: new http.Agent({ keepAlive: false }),
   },
