@@ -8,14 +8,14 @@ import * as API from './resources/index';
 
 export interface ClientOptions {
   /**
-   * The client ID associated with your account.
+   * client identifier authentication associated with the account.
    */
-  bearerToken?: string | null | undefined;
+  clientId?: string | undefined;
 
   /**
-   * The signature of the webhook - should be generated as a SHA256 hash of the payload and the secret key.
+   * Secret key pulled from the Lorikeet App
    */
-  apiKey?: string | null | undefined;
+  clientSecret?: string | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -78,16 +78,16 @@ export interface ClientOptions {
  * API Client for interfacing with the Lorikeet API.
  */
 export class Lorikeet extends Core.APIClient {
-  bearerToken: string | null;
-  apiKey: string | null;
+  clientId: string;
+  clientSecret: string;
 
   private _options: ClientOptions;
 
   /**
    * API Client for interfacing with the Lorikeet API.
    *
-   * @param {string | null | undefined} [opts.bearerToken=process.env['LORIKEET_CLIENT_ID'] ?? null]
-   * @param {string | null | undefined} [opts.apiKey]
+   * @param {string | undefined} [opts.clientId=process.env['LORIKEET_CLIENT_ID'] ?? undefined]
+   * @param {string | undefined} [opts.clientSecret=process.env['LORIKEET_CLIENT_SECRET'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['LORIKEET_BASE_URL'] ?? http://api.lorikeetcx.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -98,13 +98,24 @@ export class Lorikeet extends Core.APIClient {
    */
   constructor({
     baseURL = Core.readEnv('LORIKEET_BASE_URL'),
-    bearerToken = Core.readEnv('LORIKEET_CLIENT_ID') ?? null,
-    apiKey = null,
+    clientId = Core.readEnv('LORIKEET_CLIENT_ID'),
+    clientSecret = Core.readEnv('LORIKEET_CLIENT_SECRET'),
     ...opts
   }: ClientOptions = {}) {
+    if (clientId === undefined) {
+      throw new Errors.LorikeetError(
+        "The LORIKEET_CLIENT_ID environment variable is missing or empty; either provide it, or instantiate the Lorikeet client with an clientId option, like new Lorikeet({ clientId: 'My Client ID' }).",
+      );
+    }
+    if (clientSecret === undefined) {
+      throw new Errors.LorikeetError(
+        "The LORIKEET_CLIENT_SECRET environment variable is missing or empty; either provide it, or instantiate the Lorikeet client with an clientSecret option, like new Lorikeet({ clientSecret: 'My Client Secret' }).",
+      );
+    }
+
     const options: ClientOptions = {
-      bearerToken,
-      apiKey,
+      clientId,
+      clientSecret,
       ...opts,
       baseURL: baseURL || `http://api.lorikeetcx.ai`,
     };
@@ -119,11 +130,12 @@ export class Lorikeet extends Core.APIClient {
 
     this._options = options;
 
-    this.bearerToken = bearerToken;
-    this.apiKey = apiKey;
+    this.clientId = clientId;
+    this.clientSecret = clientSecret;
   }
 
   conversation: API.Conversation = new API.Conversation(this);
+  token: API.Token = new API.Token(this);
   ingest: API.Ingest = new API.Ingest(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
@@ -135,6 +147,29 @@ export class Lorikeet extends Core.APIClient {
       ...super.defaultHeaders(opts),
       ...this._options.defaultHeaders,
     };
+  }
+
+  protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
+    const lorikeetClientIdAuth = this.lorikeetClientIdAuth(opts);
+    const lorikeetSignatureAuthV1Auth = this.lorikeetSignatureAuthV1Auth(opts);
+
+    if (
+      lorikeetClientIdAuth != null &&
+      !Core.isEmptyObj(lorikeetClientIdAuth) &&
+      lorikeetSignatureAuthV1Auth != null &&
+      !Core.isEmptyObj(lorikeetSignatureAuthV1Auth)
+    ) {
+      return { ...lorikeetClientIdAuth, ...lorikeetSignatureAuthV1Auth };
+    }
+    return {};
+  }
+
+  protected lorikeetClientIdAuth(opts: Core.FinalRequestOptions): Core.Headers {
+    return { Authorization: `Bearer ${this.clientId}` };
+  }
+
+  protected lorikeetSignatureAuthV1Auth(opts: Core.FinalRequestOptions): Core.Headers {
+    return { 'x-optech-webhook-signature': this.clientSecret };
   }
 
   static Lorikeet = this;
@@ -182,11 +217,13 @@ export namespace Lorikeet {
 
   export import Conversation = API.Conversation;
 
+  export import Token = API.Token;
+  export import TokenCreateParams = API.TokenCreateParams;
+
   export import Ingest = API.Ingest;
   export import IngestValidateResponse = API.IngestValidateResponse;
-  export import IngestReturnWebhookParams = API.IngestReturnWebhookParams;
-  export import IngestTokenParams = API.IngestTokenParams;
   export import IngestValidateParams = API.IngestValidateParams;
+  export import IngestWebhooksParams = API.IngestWebhooksParams;
 }
 
 export default Lorikeet;
