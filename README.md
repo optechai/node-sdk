@@ -24,6 +24,7 @@ import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
   clientId: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
+  clientSecret: 'My Client Secret',
 });
 
 async function main() {
@@ -45,6 +46,7 @@ import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
   clientId: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
+  clientSecret: 'My Client Secret',
 });
 
 async function main() {
@@ -106,6 +108,7 @@ You can use the `maxRetries` option to configure or disable this:
 // Configure the default for all requests:
 const client = new Lorikeet({
   maxRetries: 0, // default is 2
+  clientSecret: 'My Client Secret',
 });
 
 // Or, configure per-request:
@@ -123,6 +126,7 @@ Requests time out after 1 minute by default. You can configure this with a `time
 // Configure the default for all requests:
 const client = new Lorikeet({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
+  clientSecret: 'My Client Secret',
 });
 
 // Override per-request:
@@ -254,6 +258,7 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 // Configure the default for all requests:
 const client = new Lorikeet({
   httpAgent: new HttpsProxyAgent(process.env.PROXY_URL),
+  clientSecret: 'My Client Secret',
 });
 
 // Override per-request:
