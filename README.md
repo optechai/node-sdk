@@ -22,14 +22,14 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import Lorikeet from '@lorikeetai/node-sdk';
 
-const client = new Lorikeet({
-  bearerToken: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
-});
+const client = new Lorikeet();
 
 async function main() {
-  const response = await client.conversation.start();
-
-  console.log(response.conversationId);
+  await client.ingest.returnWebhook(
+    '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    { data: {} },
+  );
 }
 
 main();
@@ -43,12 +43,15 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import Lorikeet from '@lorikeetai/node-sdk';
 
-const client = new Lorikeet({
-  bearerToken: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
-});
+const client = new Lorikeet();
 
 async function main() {
-  const response: Lorikeet.ConversationStartResponse = await client.conversation.start();
+  const params: Lorikeet.IngestReturnWebhookParams = { data: {} };
+  await client.ingest.returnWebhook(
+    '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    params,
+  );
 }
 
 main();
@@ -65,15 +68,19 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const response = await client.conversation.start().catch(async (err) => {
-    if (err instanceof Lorikeet.APIError) {
-      console.log(err.status); // 400
-      console.log(err.name); // BadRequestError
-      console.log(err.headers); // {server: 'nginx', ...}
-    } else {
-      throw err;
-    }
-  });
+  const response = await client.ingest
+    .returnWebhook('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      data: {},
+    })
+    .catch(async (err) => {
+      if (err instanceof Lorikeet.APIError) {
+        console.log(err.status); // 400
+        console.log(err.name); // BadRequestError
+        console.log(err.headers); // {server: 'nginx', ...}
+      } else {
+        throw err;
+      }
+    });
 }
 
 main();
@@ -108,7 +115,7 @@ const client = new Lorikeet({
 });
 
 // Or, configure per-request:
-await client.conversation.start({
+await client.ingest.returnWebhook('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { data: {} }, {
   maxRetries: 5,
 });
 ```
@@ -125,7 +132,7 @@ const client = new Lorikeet({
 });
 
 // Override per-request:
-await client.conversation.start({
+await client.ingest.returnWebhook('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { data: {} }, {
   timeout: 5 * 1000,
 });
 ```
@@ -146,13 +153,17 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new Lorikeet();
 
-const response = await client.conversation.start().asResponse();
+const response = await client.ingest
+  .returnWebhook('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { data: {} })
+  .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.conversation.start().withResponse();
+const { data: result, response: raw } = await client.ingest
+  .returnWebhook('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { data: {} })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(response.conversationId);
+console.log(result);
 ```
 
 ### Making custom/undocumented requests
@@ -256,9 +267,14 @@ const client = new Lorikeet({
 });
 
 // Override per-request:
-await client.conversation.start({
-  httpAgent: new http.Agent({ keepAlive: false }),
-});
+await client.ingest.returnWebhook(
+  '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+  '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+  { data: {} },
+  {
+    httpAgent: new http.Agent({ keepAlive: false }),
+  },
+);
 ```
 
 ## Semantic versioning

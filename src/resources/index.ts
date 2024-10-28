@@ -1,11 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export {
-  ConversationMessageResponse,
-  ConversationStartResponse,
-  ConversationMessageParams,
-  Conversation,
-} from './conversation';
+export { Conversation } from './conversation';
 export {
   IngestValidateResponse,
   IngestReturnWebhookParams,

@@ -3,10 +3,7 @@
 import Lorikeet from '@lorikeetai/node-sdk';
 import { Response } from 'node-fetch';
 
-const client = new Lorikeet({
-  bearerToken: 'My Bearer Token',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new Lorikeet({ baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010' });
 
 describe('resource ingest', () => {
   test('returnWebhook: only required params', async () => {
@@ -37,6 +34,7 @@ describe('resource ingest', () => {
       email: 'dev@stainlessapi.com',
       firstName: 'firstName',
       lastName: 'lastName',
+      remoteId: 'remoteId',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -52,6 +50,7 @@ describe('resource ingest', () => {
       email: 'dev@stainlessapi.com',
       firstName: 'firstName',
       lastName: 'lastName',
+      remoteId: 'remoteId',
     });
   });
 
