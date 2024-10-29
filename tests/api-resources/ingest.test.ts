@@ -10,12 +10,8 @@ const client = new Lorikeet({
 });
 
 describe('resource ingest', () => {
-  test('webhooks: only required params', async () => {
-    const responsePromise = client.ingest.webhooks(
-      '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      { data: {} },
-    );
+  test('validate', async () => {
+    const responsePromise = client.ingest.validate();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -25,11 +21,10 @@ describe('resource ingest', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('webhooks: required and optional params', async () => {
-    const response = await client.ingest.webhooks(
-      '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      { data: {} },
+  test('validate: request options instead of params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(client.ingest.validate({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      Lorikeet.NotFoundError,
     );
   });
 });
