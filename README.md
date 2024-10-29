@@ -28,9 +28,7 @@ const client = new Lorikeet({
 });
 
 async function main() {
-  const response = await client.conversation.chat.start({});
-
-  console.log(response.conversationId);
+  await client.token.create();
 }
 
 main();
@@ -50,8 +48,7 @@ const client = new Lorikeet({
 });
 
 async function main() {
-  const params: Lorikeet.Conversation.ChatStartParams = {};
-  const response: Lorikeet.Conversation.ChatStartResponse = await client.conversation.chat.start(params);
+  await client.token.create();
 }
 
 main();
@@ -68,7 +65,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const response = await client.conversation.chat.start({}).catch(async (err) => {
+  const response = await client.token.create().catch(async (err) => {
     if (err instanceof Lorikeet.APIError) {
       console.log(err.status); // 400
       console.log(err.name); // BadRequestError
@@ -112,7 +109,7 @@ const client = new Lorikeet({
 });
 
 // Or, configure per-request:
-await client.conversation.chat.start({}, {
+await client.token.create({
   maxRetries: 5,
 });
 ```
@@ -130,7 +127,7 @@ const client = new Lorikeet({
 });
 
 // Override per-request:
-await client.conversation.chat.start({}, {
+await client.token.create({
   timeout: 5 * 1000,
 });
 ```
@@ -151,13 +148,13 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new Lorikeet();
 
-const response = await client.conversation.chat.start({}).asResponse();
+const response = await client.token.create().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.conversation.chat.start({}).withResponse();
+const { data: result, response: raw } = await client.token.create().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(response.conversationId);
+console.log(result);
 ```
 
 ### Making custom/undocumented requests
@@ -262,12 +259,9 @@ const client = new Lorikeet({
 });
 
 // Override per-request:
-await client.conversation.chat.start(
-  {},
-  {
-    httpAgent: new http.Agent({ keepAlive: false }),
-  },
-);
+await client.token.create({
+  httpAgent: new http.Agent({ keepAlive: false }),
+});
 ```
 
 ## Semantic versioning
