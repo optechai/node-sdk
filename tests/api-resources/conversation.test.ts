@@ -4,7 +4,10 @@ import Lorikeet from '@lorikeetai/node-sdk'
 
 const client = new Lorikeet({
   clientId: 'My Bearer Token',
+  clientSecret: 'My Client Secret',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  // @ts-ignore
+  fetch: globalThis.fetch,
 })
 
 describe('resource conversation', () => {
