@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.6 (2024-10-30)
+
+Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
+
+### Features
+
+* chore: fix no git checks ([b937333](https://github.com/optechai/node-sdk/commit/b937333af237ad5b8e9cca9af68ce5087983d1cd))
+
 ## 0.1.0-alpha.5 (2024-10-30)
 
 Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)
