@@ -3,7 +3,6 @@
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import { type Agent } from './_shims/index';
-import * as qs from './internal/qs';
 import * as Core from './core';
 import * as API from './resources/index';
 
@@ -154,10 +153,6 @@ export class Lorikeet extends Core.APIClient {
     return { Authorization: `Bearer ${this.clientId}` };
   }
 
-  protected override stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
-  }
-
   static Lorikeet = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
@@ -204,6 +199,7 @@ export namespace Lorikeet {
   export import Conversation = API.Conversation;
 
   export import Token = API.Token;
+  export import TokenCreateParams = API.TokenCreateParams;
 
   export import Ingest = API.Ingest;
 }
