@@ -1,5 +1,5 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
+import { Response } from 'node-fetch'
 import Lorikeet from '@lorikeetai/node-sdk'
 
 const client = new Lorikeet({
@@ -11,6 +11,7 @@ const client = new Lorikeet({
 describe('resource token', () => {
   test('create: only required params', async () => {
     const responsePromise = client.token.create({
+      // @ts-expect-error
       email: 'dev@stainlessapi.com',
       firstName: 'firstName',
       lastName: 'lastName',
@@ -27,6 +28,7 @@ describe('resource token', () => {
 
   test('create: required and optional params', async () => {
     const response = await client.token.create({
+      // @ts-expect-error
       email: 'dev@stainlessapi.com',
       firstName: 'firstName',
       lastName: 'lastName',
