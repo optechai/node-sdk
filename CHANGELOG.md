@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2024-10-30)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
+
+### Features
+
+* chore: add base url ([a4f19e1](https://github.com/optechai/node-sdk/commit/a4f19e18cf9298444a21f375d3d6b35582822692))
+* chore: format ([12eae60](https://github.com/optechai/node-sdk/commit/12eae60eb0ad49c944bfac52054d940e32ebf8aa))
+* chore: further tweak of test ([13c1043](https://github.com/optechai/node-sdk/commit/13c1043da4be0e4817910a12f5f02900aa83f8ee))
+* chore: reinstance node-fetch ([c13b575](https://github.com/optechai/node-sdk/commit/c13b5751d2dad94fc2d372fa2bc69264243134e0))
+* fix: more type fixes ([5aa5680](https://github.com/optechai/node-sdk/commit/5aa5680fe99cc432e64f419c9ad2f3a975640cb7))
+* fix: resolve type errors ([d1c689f](https://github.com/optechai/node-sdk/commit/d1c689f57bdfa8e650cae7e8ce988aa5db05b9c5))
+* various codegen changes ([ed11dc6](https://github.com/optechai/node-sdk/commit/ed11dc6b5666384ccd3b7cb9db2d184a8fc4cea4))
+
+
+### Bug Fixes
+
+* main branch ([933bfe9](https://github.com/optechai/node-sdk/commit/933bfe984e459281c1e9602695ec898fc9cdab5e))
+
+
+### Chores
+
+* update ci/actions ([645e253](https://github.com/optechai/node-sdk/commit/645e253adc9448e5ec9a7f7084d59025886fcb61))
+
 ## 0.1.0-alpha.2 (2024-10-28)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
