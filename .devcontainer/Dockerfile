@@ -3,21 +3,18 @@ FROM debian:bookworm-slim AS stainless
 
 RUN apt-get update && apt-get install -y \
   nodejs \
-  npm \
-  yarnpkg \
   && apt-get clean autoclean
+
+RUN corepack install pnpm
 
 # Ensure UTF-8 encoding
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
-# Yarn
-RUN ln -sf /usr/bin/yarnpkg /usr/bin/yarn
-
 WORKDIR /workspace
 
-COPY package.json yarn.lock /workspace/
+COPY package.json pnpm-lock.yaml /workspace/
 
-RUN yarn install
+RUN pnpm install
 
 COPY . /workspace

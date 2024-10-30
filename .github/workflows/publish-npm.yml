@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          yarn install
+          pnpm install
 
       - name: Publish to NPM
         run: |
