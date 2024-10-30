@@ -25,12 +25,13 @@ export interface ChatGenerateResponse {
   conversationId: string;
 
   /**
-   * The timestamp of the message
+   * The timestamp of when the message was created in our system.
    */
   createdAt: string;
 
   /**
-   * The message to be sent
+   * The message to be sent back to the user. If empty, the message is still being
+   * processed.
    */
   message: string;
 }
@@ -42,12 +43,13 @@ export interface ChatGetResponse {
   conversationId: string;
 
   /**
-   * The timestamp of the message
+   * The timestamp of when the message was created in our system.
    */
   createdAt: string;
 
   /**
-   * The message to be sent
+   * The message to be sent back to the user. If empty, the message is still being
+   * processed.
    */
   message: string;
 }
@@ -59,7 +61,7 @@ export interface ChatStartResponse {
   conversationId: string;
 
   /**
-   * The timestamp of the conversation creation
+   * The timestamp of the when the conversation was created in our system.
    */
   createdAt: string;
 }
@@ -71,35 +73,21 @@ export interface ChatGenerateParams {
   conversationId: string;
 
   /**
-   * The message to be sent
+   * The message to be sent to the user. This endpoint supports markdown.
    */
   message: string;
 }
 
 export interface ChatGetParams {
+  /**
+   * The ID of the conversation you need to poll.
+   */
   conversationId: string;
-
-  /**
-   * The ID of the conversation
-   */
-  conversationPollParam: ChatGetParams.ConversationPollParam;
-}
-
-export namespace ChatGetParams {
-  /**
-   * The ID of the conversation
-   */
-  export interface ConversationPollParam {
-    /**
-     * The ID of the conversation
-     */
-    conversationId: string;
-  }
 }
 
 export interface ChatStartParams {
   /**
-   * The ID of the customer
+   * The ID of the customer. If omitted, a new customer will be created.
    */
   customerId: string;
 }
