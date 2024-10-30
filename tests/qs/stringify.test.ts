@@ -1589,7 +1589,6 @@ describe('stringify()', function () {
       stringify({}, { encoder: 'string' })
     }).toThrow(TypeError)
   })
-
   ;(typeof Buffer === 'undefined' ? test.skip : test)(
     'can use custom encoder for a buffer object',
     function () {
