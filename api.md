@@ -11,7 +11,7 @@ Types:
 Methods:
 
 - <code title="post /conversation/chat/message">client.conversation.chat.<a href="./src/resources/conversation/chat.ts">generate</a>({ ...params }) -> ChatGenerateResponse</code>
-- <code title="get /conversation/chat/message">client.conversation.chat.<a href="./src/resources/conversation/chat.ts">get</a>() -> ChatGetResponse</code>
+- <code title="get /conversation/chat/message">client.conversation.chat.<a href="./src/resources/conversation/chat.ts">get</a>({ ...params }) -> ChatGetResponse</code>
 - <code title="post /conversation/chat/create">client.conversation.chat.<a href="./src/resources/conversation/chat.ts">start</a>({ ...params }) -> ChatStartResponse</code>
 
 # Token
