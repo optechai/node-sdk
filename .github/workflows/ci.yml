@@ -11,7 +11,7 @@ on:
 jobs:
   lint:
     name: lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-m
 
     steps:
       - uses: actions/checkout@v4
@@ -29,7 +29,7 @@ jobs:
 
   build:
     name: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-m
 
     steps:
       - uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
         run: ./scripts/build
   test:
     name: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-m
 
     steps:
       - uses: actions/checkout@v4
