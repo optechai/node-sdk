@@ -2,4 +2,4 @@
 
 export { Conversation } from './conversation/conversation'
 export { Ingest } from './ingest'
-export { Token } from './token'
+export { TokenCreateParams, Token } from './token'

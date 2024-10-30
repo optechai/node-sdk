@@ -204,6 +204,7 @@ export namespace Lorikeet {
   export import Conversation = API.Conversation
 
   export import Token = API.Token
+  export import TokenCreateParams = API.TokenCreateParams
 
   export import Ingest = API.Ingest
 }

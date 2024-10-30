@@ -11,10 +11,9 @@ const client = new Lorikeet({
 describe('resource token', () => {
   test('create: only required params', async () => {
     const responsePromise = client.token.create({
-      // @ts-expect-error
-      email: 'dev@stainlessapi.com',
-      firstName: 'firstName',
-      lastName: 'lastName',
+      email: 'lori@lorikeetcx.ai',
+      firstName: 'Lori',
+      lastName: 'Keet',
       remoteId: 'remoteId',
     })
     const rawResponse = await responsePromise.asResponse()
@@ -28,10 +27,9 @@ describe('resource token', () => {
 
   test('create: required and optional params', async () => {
     const response = await client.token.create({
-      // @ts-expect-error
-      email: 'dev@stainlessapi.com',
-      firstName: 'firstName',
-      lastName: 'lastName',
+      email: 'lori@lorikeetcx.ai',
+      firstName: 'Lori',
+      lastName: 'Keet',
       remoteId: 'remoteId',
     })
   })
