@@ -1,7 +1,7 @@
 import iconv from 'iconv-lite'
-import { stringify } from '@lorikeet/sdk/internal/qs'
-import { encode } from '@lorikeet/sdk/internal/qs/utils'
-import { StringifyOptions } from '@lorikeet/sdk/internal/qs/types'
+import { stringify } from '@lorikeetai/node-sdk/internal/qs/stringify'
+import { encode } from '@lorikeetai/node-sdk/internal/qs/utils'
+import { StringifyOptions } from '@lorikeetai/node-sdk/internal/qs/types'
 import { empty_test_cases } from './empty-keys-cases'
 import assert from 'assert'
 
