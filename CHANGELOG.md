@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.4 (2024-10-30)
+
+Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
+
+### Features
+
+* chore: try this for publish ([53747b7](https://github.com/optechai/node-sdk/commit/53747b7cb8462a2bee382a5cd582e2dff0dbcdb8))
+
 ## 0.1.0-alpha.3 (2024-10-30)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
