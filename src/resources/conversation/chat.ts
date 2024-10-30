@@ -10,7 +10,7 @@ export class Chat extends APIResource {
   }
 
   get(query: ChatGetParams, options?: Core.RequestOptions): Core.APIPromise<ChatGetResponse> {
-    return this._client.get('/conversation/chat/message', options)
+    return this._client.get('/conversation/chat/message', { query, ...options })
   }
 
   start(body: ChatStartParams, options?: Core.RequestOptions): Core.APIPromise<ChatStartResponse> {
@@ -54,14 +54,14 @@ export interface ChatGetResponse {
 
 export interface ChatStartResponse {
   /**
-   * The ID of the created conversation
+   * The ID of the conversation
    */
-  conversationId?: string
+  conversationId: string
 
   /**
    * The timestamp of the conversation creation
    */
-  createdAt?: string
+  createdAt: string
 }
 
 export interface ChatGenerateParams {
@@ -76,7 +76,26 @@ export interface ChatGenerateParams {
   message: string
 }
 
-export interface ChatGetParams {}
+export interface ChatGetParams {
+  conversationId: string
+
+  /**
+   * The ID of the conversation
+   */
+  conversationPollParam: ChatGetParams.ConversationPollParam
+}
+
+export namespace ChatGetParams {
+  /**
+   * The ID of the conversation
+   */
+  export interface ConversationPollParam {
+    /**
+     * The ID of the conversation
+     */
+    conversationId: string
+  }
+}
 
 export interface ChatStartParams {
   /**

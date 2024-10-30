@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.0-alpha.5 (2024-10-30)
+
+Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)
+
+### Features
+
+* **api:** api update ([#20](https://github.com/optechai/node-sdk/issues/20)) ([171a387](https://github.com/optechai/node-sdk/commit/171a387c16ad5b2b54c199c5426382d02b5ae4b5))
+* chore: add ubuntu-latest-m ([b46e897](https://github.com/optechai/node-sdk/commit/b46e897b8c1d186f3c4ca85c6aa679955e7578e2))
+* chore: try this ([679bb85](https://github.com/optechai/node-sdk/commit/679bb85b050cc5980ad3a67170a538900b40032f))
+
 ## 0.1.0-alpha.4 (2024-10-30)
 
 Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)

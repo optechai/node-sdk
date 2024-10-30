@@ -1,5 +1,5 @@
 import iconv from 'iconv-lite'
-import { stringify } from '@lorikeetai/node-sdk/internal/qs/stringify'
+import { stringify } from '@lorikeetai/node-sdk/internal/qs'
 import { encode } from '@lorikeetai/node-sdk/internal/qs/utils'
 import { StringifyOptions } from '@lorikeetai/node-sdk/internal/qs/types'
 import { empty_test_cases } from './empty-keys-cases'
