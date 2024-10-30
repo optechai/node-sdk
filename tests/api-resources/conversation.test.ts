@@ -3,13 +3,13 @@
 import Lorikeet from '@lorikeetai/node-sdk'
 
 const client = new Lorikeet({
-  bearerToken: 'My Bearer Token',
+  clientId: 'My Bearer Token',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 })
 
 describe('resource conversation', () => {
   test('message', async () => {
-    const responsePromise = client.conversation.message('conversationId', {})
+    const responsePromise = client.conversation.chat.generate({ conversationId: 'blah', message: 'blah' }, {})
     const rawResponse = await responsePromise.asResponse()
     expect(rawResponse).toBeInstanceOf(Response)
     const response = await responsePromise
@@ -20,7 +20,7 @@ describe('resource conversation', () => {
   })
 
   test('start', async () => {
-    const responsePromise = client.conversation.start()
+    const responsePromise = client.conversation.chat.start({ customerId: 'blah' }, {})
     const rawResponse = await responsePromise.asResponse()
     expect(rawResponse).toBeInstanceOf(Response)
     const response = await responsePromise
@@ -32,8 +32,8 @@ describe('resource conversation', () => {
 
   test('start: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.conversation.start({ path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Lorikeet.NotFoundError,
-    )
+    await expect(
+      client.conversation.chat.start({ customerId: 'blah' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Lorikeet.NotFoundError)
   })
 })
