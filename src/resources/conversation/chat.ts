@@ -5,79 +5,91 @@ import * as Core from '../../core'
 import * as ChatAPI from './chat'
 
 export class Chat extends APIResource {
-  /**
-   * Retrieves the latest conversation message for a given conversation ID.
-   */
-  generate(
-    conversationId: string,
-    body: ChatGenerateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationMessage> {
-    return this._client.post(`/conversation/chat/${conversationId}/generate`, { body, ...options })
+  generate(body: ChatGenerateParams, options?: Core.RequestOptions): Core.APIPromise<ChatGenerateResponse> {
+    return this._client.post('/conversation/chat/message', { body, ...options })
   }
 
-  /**
-   * Retrieves the latest conversation message for a given conversation ID.
-   */
-  get(conversationId: string, options?: Core.RequestOptions): Core.APIPromise<ConversationMessage> {
-    return this._client.get(`/conversation/chat/${conversationId}`, options)
+  get(query: ChatGetParams, options?: Core.RequestOptions): Core.APIPromise<ChatGetResponse> {
+    return this._client.get('/conversation/chat/message', options)
   }
 
-  /**
-   * Generates a new conversation ID.
-   */
   start(body: ChatStartParams, options?: Core.RequestOptions): Core.APIPromise<ChatStartResponse> {
-    return this._client.post('/conversation/chat/start', { body, ...options })
+    return this._client.post('/conversation/chat/create', { body, ...options })
   }
 }
 
-export interface ConversationMessage {
-  actions?: Array<ConversationMessage.Action>
+export interface ChatGenerateResponse {
+  /**
+   * The ID of the conversation
+   */
+  conversationId: string
 
   /**
-   * The message content.
+   * The timestamp of the message
    */
-  message?: string
+  createdAt: string
 
   /**
-   * The timestamp of the message.
+   * The message to be sent
    */
-  timestamp?: string
+  message: string
 }
 
-export namespace ConversationMessage {
-  export interface Action {
-    /**
-     * The label of the action.
-     */
-    label?: string
+export interface ChatGetResponse {
+  /**
+   * The ID of the conversation
+   */
+  conversationId: string
 
-    /**
-     * The type of action.
-     */
-    type?: string
+  /**
+   * The timestamp of the message
+   */
+  createdAt: string
 
-    /**
-     * The value of the action.
-     */
-    value?: string
-  }
+  /**
+   * The message to be sent
+   */
+  message: string
 }
 
 export interface ChatStartResponse {
   /**
-   * The unique identifier of the created conversation.
+   * The ID of the created conversation
    */
   conversationId?: string
+
+  /**
+   * The timestamp of the conversation creation
+   */
+  createdAt?: string
 }
 
-export type ChatGenerateParams = unknown
+export interface ChatGenerateParams {
+  /**
+   * The ID of the conversation
+   */
+  conversationId: string
 
-export type ChatStartParams = unknown
+  /**
+   * The message to be sent
+   */
+  message: string
+}
+
+export interface ChatGetParams {}
+
+export interface ChatStartParams {
+  /**
+   * The ID of the customer
+   */
+  customerId: string
+}
 
 export namespace Chat {
-  export import ConversationMessage = ChatAPI.ConversationMessage
+  export import ChatGenerateResponse = ChatAPI.ChatGenerateResponse
+  export import ChatGetResponse = ChatAPI.ChatGetResponse
   export import ChatStartResponse = ChatAPI.ChatStartResponse
   export import ChatGenerateParams = ChatAPI.ChatGenerateParams
+  export import ChatGetParams = ChatAPI.ChatGetParams
   export import ChatStartParams = ChatAPI.ChatStartParams
 }

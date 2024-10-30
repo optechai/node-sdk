@@ -11,7 +11,10 @@ const client = new Lorikeet({
 
 describe('resource chat', () => {
   test('generate: only required params', async () => {
-    const responsePromise = client.conversation.chat.generate('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {})
+    const responsePromise = client.conversation.chat.generate({
+      conversationId: 'conversationId',
+      message: 'message',
+    })
     const rawResponse = await responsePromise.asResponse()
     expect(rawResponse).toBeInstanceOf(Response)
     const response = await responsePromise
@@ -22,11 +25,14 @@ describe('resource chat', () => {
   })
 
   test('generate: required and optional params', async () => {
-    const response = await client.conversation.chat.generate('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {})
+    const response = await client.conversation.chat.generate({
+      conversationId: 'conversationId',
+      message: 'message',
+    })
   })
 
   test('get', async () => {
-    const responsePromise = client.conversation.chat.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e')
+    const responsePromise = client.conversation.chat.get({})
     const rawResponse = await responsePromise.asResponse()
     expect(rawResponse).toBeInstanceOf(Response)
     const response = await responsePromise
@@ -36,17 +42,8 @@ describe('resource chat', () => {
     expect(dataAndResponse.response).toBe(rawResponse)
   })
 
-  test('get: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.conversation.chat.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-        path: '/_stainless_unknown_path',
-      }),
-    ).rejects.toThrow(Lorikeet.NotFoundError)
-  })
-
   test('start: only required params', async () => {
-    const responsePromise = client.conversation.chat.start({})
+    const responsePromise = client.conversation.chat.start({ customerId: 'customerId' })
     const rawResponse = await responsePromise.asResponse()
     expect(rawResponse).toBeInstanceOf(Response)
     const response = await responsePromise
@@ -57,6 +54,6 @@ describe('resource chat', () => {
   })
 
   test('start: required and optional params', async () => {
-    const response = await client.conversation.chat.start({})
+    const response = await client.conversation.chat.start({ customerId: 'customerId' })
   })
 })
