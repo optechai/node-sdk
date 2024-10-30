@@ -9,8 +9,10 @@ export class Conversation extends APIResource {
 
 export namespace Conversation {
   export import Chat = ChatAPI.Chat
-  export import ConversationMessage = ChatAPI.ConversationMessage
+  export import ChatGenerateResponse = ChatAPI.ChatGenerateResponse
+  export import ChatGetResponse = ChatAPI.ChatGetResponse
   export import ChatStartResponse = ChatAPI.ChatStartResponse
   export import ChatGenerateParams = ChatAPI.ChatGenerateParams
+  export import ChatGetParams = ChatAPI.ChatGetParams
   export import ChatStartParams = ChatAPI.ChatStartParams
 }

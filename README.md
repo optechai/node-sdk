@@ -24,11 +24,11 @@ import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
   clientId: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
-  clientSecret: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
+  clientSecret: 'My Client Secret',
 });
 
 async function main() {
-  const response = await client.conversation.chat.start({});
+  const response = await client.conversation.chat.start({ customerId: 'blah' });
 
   console.log(response.conversationId);
 }
@@ -46,11 +46,11 @@ import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
   clientId: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
-  clientSecret: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
+  clientSecret: 'My Client Secret',
 });
 
 async function main() {
-  const params: Lorikeet.Conversation.ChatStartParams = {};
+  const params: Lorikeet.Conversation.ChatStartParams = { customerId: 'blah' };
   const response: Lorikeet.Conversation.ChatStartResponse = await client.conversation.chat.start(params);
 }
 
@@ -68,7 +68,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const response = await client.conversation.chat.start({}).catch(async (err) => {
+  const response = await client.conversation.chat.start({ customerId: 'blah' }).catch(async (err) => {
     if (err instanceof Lorikeet.APIError) {
       console.log(err.status); // 400
       console.log(err.name); // BadRequestError
@@ -108,10 +108,11 @@ You can use the `maxRetries` option to configure or disable this:
 // Configure the default for all requests:
 const client = new Lorikeet({
   maxRetries: 0, // default is 2
+  clientSecret: 'My Client Secret',
 });
 
 // Or, configure per-request:
-await client.conversation.chat.start({}, {
+await client.conversation.chat.start({ customerId: 'blah' }, {
   maxRetries: 5,
 });
 ```
@@ -125,10 +126,11 @@ Requests time out after 1 minute by default. You can configure this with a `time
 // Configure the default for all requests:
 const client = new Lorikeet({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
+  clientSecret: 'My Client Secret',
 });
 
 // Override per-request:
-await client.conversation.chat.start({}, {
+await client.conversation.chat.start({ customerId: 'blah' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -149,11 +151,13 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new Lorikeet();
 
-const response = await client.conversation.chat.start({}).asResponse();
+const response = await client.conversation.chat.start({ customerId: 'blah' }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.conversation.chat.start({}).withResponse();
+const { data: response, response: raw } = await client.conversation.chat
+  .start({ customerId: 'blah' })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.conversationId);
 ```
@@ -256,11 +260,12 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 // Configure the default for all requests:
 const client = new Lorikeet({
   httpAgent: new HttpsProxyAgent(process.env.PROXY_URL),
+  clientSecret: 'My Client Secret',
 });
 
 // Override per-request:
 await client.conversation.chat.start(
-  {},
+  { customerId: 'blah' },
   {
     httpAgent: new http.Agent({ keepAlive: false }),
   },

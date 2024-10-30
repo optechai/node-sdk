@@ -150,26 +150,7 @@ export class Lorikeet extends Core.APIClient {
   }
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
-    const lorikeetClientIdAuth = this.lorikeetClientIdAuth(opts)
-    const lorikeetSignatureAuthV1Auth = this.lorikeetSignatureAuthV1Auth(opts)
-
-    if (
-      lorikeetClientIdAuth != null &&
-      !Core.isEmptyObj(lorikeetClientIdAuth) &&
-      lorikeetSignatureAuthV1Auth != null &&
-      !Core.isEmptyObj(lorikeetSignatureAuthV1Auth)
-    ) {
-      return { ...lorikeetClientIdAuth, ...lorikeetSignatureAuthV1Auth }
-    }
-    return {}
-  }
-
-  protected lorikeetClientIdAuth(opts: Core.FinalRequestOptions): Core.Headers {
     return { Authorization: `Bearer ${this.clientId}` }
-  }
-
-  protected lorikeetSignatureAuthV1Auth(opts: Core.FinalRequestOptions): Core.Headers {
-    return { 'x-optech-webhook-signature': this.clientSecret }
   }
 
   static Lorikeet = this
@@ -218,12 +199,8 @@ export namespace Lorikeet {
   export import Conversation = API.Conversation
 
   export import Token = API.Token
-  export import TokenCreateParams = API.TokenCreateParams
 
   export import Ingest = API.Ingest
-  export import IngestValidateResponse = API.IngestValidateResponse
-  export import IngestValidateParams = API.IngestValidateParams
-  export import IngestWebhooksParams = API.IngestWebhooksParams
 }
 
 export default Lorikeet
