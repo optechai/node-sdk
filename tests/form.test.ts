@@ -1,6 +1,6 @@
-import { multipartFormRequestOptions, createForm } from '@lorikeetai/node-sdk/core';
-import { Blob } from '@lorikeetai/node-sdk/_shims/index';
-import { toFile } from '@lorikeetai/node-sdk';
+import { multipartFormRequestOptions, createForm } from '@lorikeetai/node-sdk/core'
+import { Blob } from '@lorikeetai/node-sdk/_shims/index'
+import { toFile } from '@lorikeetai/node-sdk'
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {
@@ -12,8 +12,8 @@ describe('form data validation', () => {
         file: await toFile(Buffer.from('some-content')),
         blob: new Blob(['Some content'], { type: 'text/plain' }),
       },
-    });
-  });
+    })
+  })
 
   test('null', async () => {
     await expect(() =>
@@ -22,44 +22,44 @@ describe('form data validation', () => {
           null: null,
         },
       }),
-    ).rejects.toThrow(TypeError);
-  });
+    ).rejects.toThrow(TypeError)
+  })
 
   test('undefined is stripped', async () => {
     const form = await createForm({
       foo: undefined,
       bar: 'baz',
-    });
-    expect(form.has('foo')).toBe(false);
-    expect(form.get('bar')).toBe('baz');
-  });
+    })
+    expect(form.has('foo')).toBe(false)
+    expect(form.get('bar')).toBe('baz')
+  })
 
   test('nested undefined property is stripped', async () => {
     const form = await createForm({
       bar: {
         baz: undefined,
       },
-    });
-    expect(Array.from(form.entries())).toEqual([]);
+    })
+    expect(Array.from(form.entries())).toEqual([])
 
     const form2 = await createForm({
       bar: {
         foo: 'string',
         baz: undefined,
       },
-    });
-    expect(Array.from(form2.entries())).toEqual([['bar[foo]', 'string']]);
-  });
+    })
+    expect(Array.from(form2.entries())).toEqual([['bar[foo]', 'string']])
+  })
 
   test('nested undefined array item is stripped', async () => {
     const form = await createForm({
       bar: [undefined, undefined],
-    });
-    expect(Array.from(form.entries())).toEqual([]);
+    })
+    expect(Array.from(form.entries())).toEqual([])
 
     const form2 = await createForm({
       bar: [undefined, 'foo'],
-    });
-    expect(Array.from(form2.entries())).toEqual([['bar[]', 'foo']]);
-  });
-});
+    })
+    expect(Array.from(form2.entries())).toEqual([['bar[]', 'foo']])
+  })
+})

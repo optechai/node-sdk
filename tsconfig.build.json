@@ -6,7 +6,7 @@
     "rootDir": "./dist/src",
     "paths": {
       "@lorikeetai/node-sdk/*": ["dist/src/*"],
-      "@lorikeetai/node-sdk": ["dist/src/index.ts"],
+      "@lorikeetai/node-sdk": ["dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

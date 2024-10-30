@@ -3,5 +3,6 @@
   "experimentalTernaries": true,
   "printWidth": 110,
   "singleQuote": true,
+  "semi": false,
   "trailingComma": "all"
 }

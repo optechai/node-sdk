@@ -260,12 +260,12 @@ export const empty_test_cases = [
     no_empty_keys: { 0: 'a', 1: 'b' },
   },
 ] satisfies {
-  input: string;
-  with_empty_keys: Record<string, unknown>;
+  input: string
+  with_empty_keys: Record<string, unknown>
   stringify_output: {
-    brackets: string;
-    indices: string;
-    repeat: string;
-  };
-  no_empty_keys: Record<string, unknown>;
-}[];
+    brackets: string
+    indices: string
+    repeat: string
+  }
+  no_empty_keys: Record<string, unknown>
+}[]

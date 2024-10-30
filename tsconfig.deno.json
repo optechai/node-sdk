@@ -8,7 +8,7 @@
     "paths": {
       "@lorikeetai/node-sdk/_shims/auto/*": ["deno/_shims/auto/*-deno"],
       "@lorikeetai/node-sdk/*": ["deno/*"],
-      "@lorikeetai/node-sdk": ["deno/index.ts"],
+      "@lorikeetai/node-sdk": ["deno/index.ts"]
     },
     "noEmit": true,
     "declaration": true,

@@ -1,29 +1,29 @@
-import { encode, is_buffer, maybe_map } from './utils';
-import { default_format, formatters } from './formats';
-import type { NonNullableProperties, StringifyOptions } from './types';
+import { encode, is_buffer, maybe_map } from './utils'
+import { default_format, formatters } from './formats'
+import type { NonNullableProperties, StringifyOptions } from './types'
 
-const has = Object.prototype.hasOwnProperty;
+const has = Object.prototype.hasOwnProperty
 
 const array_prefix_generators = {
   brackets(prefix: PropertyKey) {
-    return String(prefix) + '[]';
+    return String(prefix) + '[]'
   },
   comma: 'comma',
   indices(prefix: PropertyKey, key: string) {
-    return String(prefix) + '[' + key + ']';
+    return String(prefix) + '[' + key + ']'
   },
   repeat(prefix: PropertyKey) {
-    return String(prefix);
+    return String(prefix)
   },
-};
+}
 
-const is_array = Array.isArray;
-const push = Array.prototype.push;
+const is_array = Array.isArray
+const push = Array.prototype.push
 const push_to_array = function (arr: any[], value_or_array: any) {
-  push.apply(arr, is_array(value_or_array) ? value_or_array : [value_or_array]);
-};
+  push.apply(arr, is_array(value_or_array) ? value_or_array : [value_or_array])
+}
 
-const to_ISO = Date.prototype.toISOString;
+const to_ISO = Date.prototype.toISOString
 
 const defaults = {
   addQueryPrefix: false,
@@ -42,11 +42,11 @@ const defaults = {
   /** @deprecated */
   indices: false,
   serializeDate(date) {
-    return to_ISO.call(date);
+    return to_ISO.call(date)
   },
   skipNulls: false,
   strictNullHandling: false,
-} as NonNullableProperties<StringifyOptions & { formatter: (typeof formatters)['RFC1738'] }>;
+} as NonNullableProperties<StringifyOptions & { formatter: (typeof formatters)['RFC1738'] }>
 
 function is_non_nullish_primitive(v: unknown): v is string | number | boolean | symbol | bigint {
   return (
@@ -55,10 +55,10 @@ function is_non_nullish_primitive(v: unknown): v is string | number | boolean | 
     typeof v === 'boolean' ||
     typeof v === 'symbol' ||
     typeof v === 'bigint'
-  );
+  )
 }
 
-const sentinel = {};
+const sentinel = {}
 
 function inner_stringify(
   object: any,
@@ -80,38 +80,38 @@ function inner_stringify(
   charset: StringifyOptions['charset'],
   sideChannel: WeakMap<any, any>,
 ) {
-  let obj = object;
+  let obj = object
 
-  let tmp_sc = sideChannel;
-  let step = 0;
-  let find_flag = false;
+  let tmp_sc = sideChannel
+  let step = 0
+  let find_flag = false
   while ((tmp_sc = tmp_sc.get(sentinel)) !== void undefined && !find_flag) {
     // Where object last appeared in the ref tree
-    const pos = tmp_sc.get(object);
-    step += 1;
+    const pos = tmp_sc.get(object)
+    step += 1
     if (typeof pos !== 'undefined') {
       if (pos === step) {
-        throw new RangeError('Cyclic object value');
+        throw new RangeError('Cyclic object value')
       } else {
-        find_flag = true; // Break while
+        find_flag = true // Break while
       }
     }
     if (typeof tmp_sc.get(sentinel) === 'undefined') {
-      step = 0;
+      step = 0
     }
   }
 
   if (typeof filter === 'function') {
-    obj = filter(prefix, obj);
+    obj = filter(prefix, obj)
   } else if (obj instanceof Date) {
-    obj = serializeDate?.(obj);
+    obj = serializeDate?.(obj)
   } else if (generateArrayPrefix === 'comma' && is_array(obj)) {
     obj = maybe_map(obj, function (value) {
       if (value instanceof Date) {
-        return serializeDate?.(value);
+        return serializeDate?.(value)
       }
-      return value;
-    });
+      return value
+    })
   }
 
   if (obj === null) {
@@ -119,10 +119,10 @@ function inner_stringify(
       return encoder && !encodeValuesOnly ?
           // @ts-expect-error
           encoder(prefix, defaults.encoder, charset, 'key', format)
-        : prefix;
+        : prefix
     }
 
-    obj = '';
+    obj = ''
   }
 
   if (is_non_nullish_primitive(obj) || is_buffer(obj)) {
@@ -130,69 +130,69 @@ function inner_stringify(
       const key_value =
         encodeValuesOnly ? prefix
           // @ts-expect-error
-        : encoder(prefix, defaults.encoder, charset, 'key', format);
+        : encoder(prefix, defaults.encoder, charset, 'key', format)
       return [
         formatter?.(key_value) +
           '=' +
           // @ts-expect-error
           formatter?.(encoder(obj, defaults.encoder, charset, 'value', format)),
-      ];
+      ]
     }
-    return [formatter?.(prefix) + '=' + formatter?.(String(obj))];
+    return [formatter?.(prefix) + '=' + formatter?.(String(obj))]
   }
 
-  const values: string[] = [];
+  const values: string[] = []
 
   if (typeof obj === 'undefined') {
-    return values;
+    return values
   }
 
-  let obj_keys;
+  let obj_keys
   if (generateArrayPrefix === 'comma' && is_array(obj)) {
     // we need to join elements in
     if (encodeValuesOnly && encoder) {
       // @ts-expect-error values only
-      obj = maybe_map(obj, encoder);
+      obj = maybe_map(obj, encoder)
     }
-    obj_keys = [{ value: obj.length > 0 ? obj.join(',') || null : void undefined }];
+    obj_keys = [{ value: obj.length > 0 ? obj.join(',') || null : void undefined }]
   } else if (is_array(filter)) {
-    obj_keys = filter;
+    obj_keys = filter
   } else {
-    const keys = Object.keys(obj);
-    obj_keys = sort ? keys.sort(sort) : keys;
+    const keys = Object.keys(obj)
+    obj_keys = sort ? keys.sort(sort) : keys
   }
 
-  const encoded_prefix = encodeDotInKeys ? String(prefix).replace(/\./g, '%2E') : String(prefix);
+  const encoded_prefix = encodeDotInKeys ? String(prefix).replace(/\./g, '%2E') : String(prefix)
 
   const adjusted_prefix =
-    commaRoundTrip && is_array(obj) && obj.length === 1 ? encoded_prefix + '[]' : encoded_prefix;
+    commaRoundTrip && is_array(obj) && obj.length === 1 ? encoded_prefix + '[]' : encoded_prefix
 
   if (allowEmptyArrays && is_array(obj) && obj.length === 0) {
-    return adjusted_prefix + '[]';
+    return adjusted_prefix + '[]'
   }
 
   for (let j = 0; j < obj_keys.length; ++j) {
-    const key = obj_keys[j];
+    const key = obj_keys[j]
     const value =
       // @ts-ignore
-      typeof key === 'object' && typeof key.value !== 'undefined' ? key.value : obj[key as any];
+      typeof key === 'object' && typeof key.value !== 'undefined' ? key.value : obj[key as any]
 
     if (skipNulls && value === null) {
-      continue;
+      continue
     }
 
     // @ts-ignore
-    const encoded_key = allowDots && encodeDotInKeys ? (key as any).replace(/\./g, '%2E') : key;
+    const encoded_key = allowDots && encodeDotInKeys ? (key as any).replace(/\./g, '%2E') : key
     const key_prefix =
       is_array(obj) ?
         typeof generateArrayPrefix === 'function' ?
           generateArrayPrefix(adjusted_prefix, encoded_key)
         : adjusted_prefix
-      : adjusted_prefix + (allowDots ? '.' + encoded_key : '[' + encoded_key + ']');
+      : adjusted_prefix + (allowDots ? '.' + encoded_key : '[' + encoded_key + ']')
 
-    sideChannel.set(object, step);
-    const valueSideChannel = new WeakMap();
-    valueSideChannel.set(sentinel, sideChannel);
+    sideChannel.set(object, step)
+    const valueSideChannel = new WeakMap()
+    valueSideChannel.set(sentinel, sideChannel)
     push_to_array(
       values,
       inner_stringify(
@@ -216,57 +216,57 @@ function inner_stringify(
         charset,
         valueSideChannel,
       ),
-    );
+    )
   }
 
-  return values;
+  return values
 }
 
 function normalize_stringify_options(
   opts: StringifyOptions = defaults,
 ): NonNullableProperties<Omit<StringifyOptions, 'indices'>> & { indices?: boolean } {
   if (typeof opts.allowEmptyArrays !== 'undefined' && typeof opts.allowEmptyArrays !== 'boolean') {
-    throw new TypeError('`allowEmptyArrays` option can only be `true` or `false`, when provided');
+    throw new TypeError('`allowEmptyArrays` option can only be `true` or `false`, when provided')
   }
 
   if (typeof opts.encodeDotInKeys !== 'undefined' && typeof opts.encodeDotInKeys !== 'boolean') {
-    throw new TypeError('`encodeDotInKeys` option can only be `true` or `false`, when provided');
+    throw new TypeError('`encodeDotInKeys` option can only be `true` or `false`, when provided')
   }
 
   if (opts.encoder !== null && typeof opts.encoder !== 'undefined' && typeof opts.encoder !== 'function') {
-    throw new TypeError('Encoder has to be a function.');
+    throw new TypeError('Encoder has to be a function.')
   }
 
-  const charset = opts.charset || defaults.charset;
+  const charset = opts.charset || defaults.charset
   if (typeof opts.charset !== 'undefined' && opts.charset !== 'utf-8' && opts.charset !== 'iso-8859-1') {
-    throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined');
+    throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined')
   }
 
-  let format = default_format;
+  let format = default_format
   if (typeof opts.format !== 'undefined') {
     if (!has.call(formatters, opts.format)) {
-      throw new TypeError('Unknown format option provided.');
+      throw new TypeError('Unknown format option provided.')
     }
-    format = opts.format;
+    format = opts.format
   }
-  const formatter = formatters[format];
+  const formatter = formatters[format]
 
-  let filter = defaults.filter;
+  let filter = defaults.filter
   if (typeof opts.filter === 'function' || is_array(opts.filter)) {
-    filter = opts.filter;
+    filter = opts.filter
   }
 
-  let arrayFormat: StringifyOptions['arrayFormat'];
+  let arrayFormat: StringifyOptions['arrayFormat']
   if (opts.arrayFormat && opts.arrayFormat in array_prefix_generators) {
-    arrayFormat = opts.arrayFormat;
+    arrayFormat = opts.arrayFormat
   } else if ('indices' in opts) {
-    arrayFormat = opts.indices ? 'indices' : 'repeat';
+    arrayFormat = opts.indices ? 'indices' : 'repeat'
   } else {
-    arrayFormat = defaults.arrayFormat;
+    arrayFormat = defaults.arrayFormat
   }
 
   if ('commaRoundTrip' in opts && typeof opts.commaRoundTrip !== 'boolean') {
-    throw new TypeError('`commaRoundTrip` must be a boolean, or absent');
+    throw new TypeError('`commaRoundTrip` must be a boolean, or absent')
   }
 
   const allowDots =
@@ -274,7 +274,7 @@ function normalize_stringify_options(
       !!opts.encodeDotInKeys === true ?
         true
       : defaults.allowDots
-    : !!opts.allowDots;
+    : !!opts.allowDots
 
   return {
     addQueryPrefix: typeof opts.addQueryPrefix === 'boolean' ? opts.addQueryPrefix : defaults.addQueryPrefix,
@@ -303,47 +303,47 @@ function normalize_stringify_options(
     sort: typeof opts.sort === 'function' ? opts.sort : null,
     strictNullHandling:
       typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults.strictNullHandling,
-  };
+  }
 }
 
 export function stringify(object: any, opts: StringifyOptions = {}) {
-  let obj = object;
-  const options = normalize_stringify_options(opts);
+  let obj = object
+  const options = normalize_stringify_options(opts)
 
-  let obj_keys: PropertyKey[] | undefined;
-  let filter;
+  let obj_keys: PropertyKey[] | undefined
+  let filter
 
   if (typeof options.filter === 'function') {
-    filter = options.filter;
-    obj = filter('', obj);
+    filter = options.filter
+    obj = filter('', obj)
   } else if (is_array(options.filter)) {
-    filter = options.filter;
-    obj_keys = filter;
+    filter = options.filter
+    obj_keys = filter
   }
 
-  const keys: string[] = [];
+  const keys: string[] = []
 
   if (typeof obj !== 'object' || obj === null) {
-    return '';
+    return ''
   }
 
-  const generateArrayPrefix = array_prefix_generators[options.arrayFormat];
-  const commaRoundTrip = generateArrayPrefix === 'comma' && options.commaRoundTrip;
+  const generateArrayPrefix = array_prefix_generators[options.arrayFormat]
+  const commaRoundTrip = generateArrayPrefix === 'comma' && options.commaRoundTrip
 
   if (!obj_keys) {
-    obj_keys = Object.keys(obj);
+    obj_keys = Object.keys(obj)
   }
 
   if (options.sort) {
-    obj_keys.sort(options.sort);
+    obj_keys.sort(options.sort)
   }
 
-  const sideChannel = new WeakMap();
+  const sideChannel = new WeakMap()
   for (let i = 0; i < obj_keys.length; ++i) {
-    const key = obj_keys[i]!;
+    const key = obj_keys[i]!
 
     if (options.skipNulls && obj[key] === null) {
-      continue;
+      continue
     }
     push_to_array(
       keys,
@@ -368,21 +368,21 @@ export function stringify(object: any, opts: StringifyOptions = {}) {
         options.charset,
         sideChannel,
       ),
-    );
+    )
   }
 
-  const joined = keys.join(options.delimiter);
-  let prefix = options.addQueryPrefix === true ? '?' : '';
+  const joined = keys.join(options.delimiter)
+  let prefix = options.addQueryPrefix === true ? '?' : ''
 
   if (options.charsetSentinel) {
     if (options.charset === 'iso-8859-1') {
       // encodeURIComponent('&#10003;'), the "numeric entity" representation of a checkmark
-      prefix += 'utf8=%26%2310003%3B&';
+      prefix += 'utf8=%26%2310003%3B&'
     } else {
       // encodeURIComponent('✓')
-      prefix += 'utf8=%E2%9C%93&';
+      prefix += 'utf8=%E2%9C%93&'
     }
   }
 
-  return joined.length > 0 ? prefix + joined : '';
+  return joined.length > 0 ? prefix + joined : ''
 }

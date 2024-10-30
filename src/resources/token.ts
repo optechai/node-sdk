@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import * as Core from '../core';
-import * as TokenAPI from './token';
+import { APIResource } from '../resource'
+import * as Core from '../core'
+import * as TokenAPI from './token'
 
 export class Token extends APIResource {
   /**
@@ -14,7 +14,7 @@ export class Token extends APIResource {
       body,
       ...options,
       headers: { Accept: '*/*', ...options?.headers },
-    });
+    })
   }
 }
 
@@ -22,24 +22,24 @@ export interface TokenCreateParams {
   /**
    * The email of the user.
    */
-  email: string;
+  email: string
 
   /**
    * The first name of the user.
    */
-  firstName: string;
+  firstName: string
 
   /**
    * The last name of the user.
    */
-  lastName: string;
+  lastName: string
 
   /**
    * The unique identifier of the user in your system.
    */
-  remoteId: string;
+  remoteId: string
 }
 
 export namespace Token {
-  export import TokenCreateParams = TokenAPI.TokenCreateParams;
+  export import TokenCreateParams = TokenAPI.TokenCreateParams
 }

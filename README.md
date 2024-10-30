@@ -172,7 +172,7 @@ Options on the client, such as retries, will be respected when making these requ
 await client.post('/some/path', {
   body: { some_prop: 'foo' },
   query: { some_query_arg: 'bar' },
-});
+})
 ```
 
 #### Undocumented request params
@@ -187,7 +187,7 @@ client.foo.create({
   bar: 12,
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
-});
+})
 ```
 
 For requests with the `GET` verb, any extra params will be in the query, all other requests will send the
@@ -213,8 +213,8 @@ add the following import before your first import `from "Lorikeet"`:
 ```ts
 // Tell TypeScript and the package to use the global web fetch instead of node-fetch.
 // Note, despite the name, this does not add any polyfills, but expects them to be provided if needed.
-import '@lorikeetai/node-sdk/shims/web';
-import Lorikeet from '@lorikeetai/node-sdk';
+import '@lorikeetai/node-sdk/shims/web'
+import Lorikeet from '@lorikeetai/node-sdk'
 ```
 
 To do the inverse, add `import "@lorikeetai/node-sdk/shims/node"` (which does import polyfills).
@@ -226,17 +226,17 @@ You may also provide a custom `fetch` function when instantiating the client,
 which can be used to inspect or alter the `Request` or `Response` before/after each request:
 
 ```ts
-import { fetch } from 'undici'; // as one example
-import Lorikeet from '@lorikeetai/node-sdk';
+import { fetch } from 'undici' // as one example
+import Lorikeet from '@lorikeetai/node-sdk'
 
 const client = new Lorikeet({
   fetch: async (url: RequestInfo, init?: RequestInit): Promise<Response> => {
-    console.log('About to make a request', url, init);
-    const response = await fetch(url, init);
-    console.log('Got response', response);
-    return response;
+    console.log('About to make a request', url, init)
+    const response = await fetch(url, init)
+    console.log('Got response', response)
+    return response
   },
-});
+})
 ```
 
 Note that if given a `DEBUG=true` environment variable, this library will log all requests and responses automatically.

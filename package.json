@@ -8,7 +8,6 @@
   "type": "commonjs",
   "repository": "github:optechai/node-sdk",
   "license": "Apache-2.0",
-  "packageManager": "yarn@1.22.22",
   "files": [
     "*"
   ],
@@ -23,9 +22,13 @@
     "lint": "./scripts/lint",
     "fix": "./scripts/format"
   },
+  "engines": {
+    "node": ">=20.9.0 <21.0.0",
+    "pnpm": ">=9.4.0"
+  },
+  "packageManager": "pnpm@9.4.0",
   "dependencies": {
-    "@types/node": "^18.11.18",
-    "@types/node-fetch": "^2.6.4",
+    "@types/node": "^20.12.7",
     "abort-controller": "^3.0.0",
     "agentkeepalive": "^4.2.1",
     "form-data-encoder": "1.7.2",

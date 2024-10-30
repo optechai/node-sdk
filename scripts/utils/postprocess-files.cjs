@@ -1,28 +1,28 @@
-const fs = require('fs');
-const path = require('path');
-const { parse } = require('@typescript-eslint/parser');
+const fs = require('fs')
+const path = require('path')
+const { parse } = require('@typescript-eslint/parser')
 
-const pkgImportPath = process.env['PKG_IMPORT_PATH'] ?? '@lorikeetai/node-sdk/';
+const pkgImportPath = process.env['PKG_IMPORT_PATH'] ?? '@lorikeetai/node-sdk/'
 
 const distDir =
   process.env['DIST_PATH'] ?
     path.resolve(process.env['DIST_PATH'])
-  : path.resolve(__dirname, '..', '..', 'dist');
-const distSrcDir = path.join(distDir, 'src');
+  : path.resolve(__dirname, '..', '..', 'dist')
+const distSrcDir = path.join(distDir, 'src')
 
 /**
  * Quick and dirty AST traversal
  */
 function traverse(node, visitor) {
-  if (!node || typeof node.type !== 'string') return;
-  visitor.node?.(node);
-  visitor[node.type]?.(node);
+  if (!node || typeof node.type !== 'string') return
+  visitor.node?.(node)
+  visitor[node.type]?.(node)
   for (const key in node) {
-    const value = node[key];
+    const value = node[key]
     if (Array.isArray(value)) {
-      for (const elem of value) traverse(elem, visitor);
+      for (const elem of value) traverse(elem, visitor)
     } else if (value instanceof Object) {
-      traverse(value, visitor);
+      traverse(value, visitor)
     }
   }
 }
@@ -37,34 +37,34 @@ function traverse(node, visitor) {
  * The replaced ranges must not be overlapping.
  */
 function replaceRanges(code, replacer) {
-  const replacements = [];
-  replacer({ replace: (range, replacement) => replacements.push({ range, replacement }) });
+  const replacements = []
+  replacer({ replace: (range, replacement) => replacements.push({ range, replacement }) })
 
-  if (!replacements.length) return code;
-  replacements.sort((a, b) => a.range[0] - b.range[0]);
+  if (!replacements.length) return code
+  replacements.sort((a, b) => a.range[0] - b.range[0])
   const overlapIndex = replacements.findIndex(
     (r, index) => index > 0 && replacements[index - 1].range[1] > r.range[0],
-  );
+  )
   if (overlapIndex >= 0) {
     throw new Error(
       `replacements overlap: ${JSON.stringify(replacements[overlapIndex - 1])} and ${JSON.stringify(
         replacements[overlapIndex],
       )}`,
-    );
+    )
   }
 
-  const parts = [];
-  let end = 0;
+  const parts = []
+  let end = 0
   for (const {
     range: [from, to],
     replacement,
   } of replacements) {
-    if (from > end) parts.push(code.substring(end, from));
-    parts.push(replacement);
-    end = to;
+    if (from > end) parts.push(code.substring(end, from))
+    parts.push(replacement)
+    end = to
   }
-  if (end < code.length) parts.push(code.substring(end));
-  return parts.join('');
+  if (end < code.length) parts.push(code.substring(end))
+  return parts.join('')
 }
 
 /**
@@ -72,7 +72,7 @@ function replaceRanges(code, replacer) {
  * @returns the transformed code
  */
 function mapModulePaths(code, iteratee) {
-  const ast = parse(code, { range: true });
+  const ast = parse(code, { range: true })
   return replaceRanges(code, ({ replace }) =>
     traverse(ast, {
       node(node) {
@@ -82,31 +82,31 @@ function mapModulePaths(code, iteratee) {
           case 'ExportAllDeclaration':
           case 'ImportExpression':
             if (node.source) {
-              const { range, value } = node.source;
-              const transformed = iteratee(value);
+              const { range, value } = node.source
+              const transformed = iteratee(value)
               if (transformed !== value) {
-                replace(range, JSON.stringify(transformed));
+                replace(range, JSON.stringify(transformed))
               }
             }
         }
       },
     }),
-  );
+  )
 }
 
 async function* walk(dir) {
   for await (const d of await fs.promises.opendir(dir)) {
-    const entry = path.join(dir, d.name);
-    if (d.isDirectory()) yield* walk(entry);
-    else if (d.isFile()) yield entry;
+    const entry = path.join(dir, d.name)
+    if (d.isDirectory()) yield* walk(entry)
+    else if (d.isFile()) yield entry
   }
 }
 
 async function postprocess() {
   for await (const file of walk(path.resolve(__dirname, '..', '..', 'dist'))) {
-    if (!/\.([cm]?js|(\.d)?[cm]?ts)$/.test(file)) continue;
+    if (!/\.([cm]?js|(\.d)?[cm]?ts)$/.test(file)) continue
 
-    const code = await fs.promises.readFile(file, 'utf8');
+    const code = await fs.promises.readFile(file, 'utf8')
 
     let transformed = mapModulePaths(code, (importPath) => {
       if (file.startsWith(distSrcDir)) {
@@ -115,20 +115,20 @@ async function postprocess() {
           let relativePath = path.relative(
             path.dirname(file),
             path.join(distSrcDir, importPath.substring(pkgImportPath.length)),
-          );
-          if (!relativePath.startsWith('.')) relativePath = `./${relativePath}`;
-          return relativePath;
+          )
+          if (!relativePath.startsWith('.')) relativePath = `./${relativePath}`
+          return relativePath
         }
-        return importPath;
+        return importPath
       }
       if (importPath.startsWith('.')) {
         // add explicit file extensions to relative imports
-        const { dir, name } = path.parse(importPath);
-        const ext = /\.mjs$/.test(file) ? '.mjs' : '.js';
-        return `${dir}/${name}${ext}`;
+        const { dir, name } = path.parse(importPath)
+        const ext = /\.mjs$/.test(file) ? '.mjs' : '.js'
+        return `${dir}/${name}${ext}`
       }
-      return importPath;
-    });
+      return importPath
+    })
 
     if (file.startsWith(distSrcDir) && !file.endsWith('_shims/index.d.ts')) {
       // strip out `unknown extends Foo ? never :` shim guards in dist/src
@@ -137,7 +137,7 @@ async function postprocess() {
         new RegExp('unknown extends (typeof )?\\S+ \\? \\S+ :\\s*'.replace(/\s+/, '\\s+'), 'gm'),
         // replace with same number of characters to avoid breaking source maps
         (match) => ' '.repeat(match.length),
-      );
+      )
     }
 
     if (file.endsWith('.d.ts')) {
@@ -145,7 +145,7 @@ async function postprocess() {
       // if we have `import { type Readable } from '@lorikeetai/node-sdk/_shims/index'`,
       // tsc sometimes replaces `Readable` with `import("stream").Readable` inline
       // in the output .d.ts
-      transformed = transformed.replace(/import\("stream"\).Readable/g, 'Readable');
+      transformed = transformed.replace(/import\("stream"\).Readable/g, 'Readable')
     }
 
     // strip out lib="dom" and types="node" references; these are needed at build time,
@@ -154,12 +154,12 @@ async function postprocess() {
       /^ *\/\/\/ *<reference +(lib="dom"|types="node").*?\n/gm,
       // replace with same number of characters to avoid breaking source maps
       (match) => ' '.repeat(match.length - 1) + '\n',
-    );
+    )
 
     if (transformed !== code) {
-      await fs.promises.writeFile(file, transformed, 'utf8');
-      console.error(`wrote ${path.relative(process.cwd(), file)}`);
+      await fs.promises.writeFile(file, transformed, 'utf8')
+      console.error(`wrote ${path.relative(process.cwd(), file)}`)
     }
   }
 }
-postprocess();
+postprocess()

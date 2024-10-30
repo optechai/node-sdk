@@ -1,11 +1,11 @@
-import { VERSION } from './version';
+import { VERSION } from './version'
 import {
   LorikeetError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,
   APIUserAbortError,
-} from './error';
+} from './error'
 import {
   kind as shimsKind,
   type Readable,
@@ -16,53 +16,53 @@ import {
   type RequestInit,
   type Response,
   type HeadersInit,
-} from './_shims/index';
-export { type Response };
-import { BlobLike, isBlobLike, isMultipartBody } from './uploads';
+} from './_shims/index'
+export { type Response }
+import { BlobLike, isBlobLike, isMultipartBody } from './uploads'
 export {
   maybeMultipartFormRequestOptions,
   multipartFormRequestOptions,
   createForm,
   type Uploadable,
-} from './uploads';
+} from './uploads'
 
-export type Fetch = (url: RequestInfo, init?: RequestInit) => Promise<Response>;
+export type Fetch = (url: RequestInfo, init?: RequestInit) => Promise<Response>
 
-type PromiseOrValue<T> = T | Promise<T>;
+type PromiseOrValue<T> = T | Promise<T>
 
 type APIResponseProps = {
-  response: Response;
-  options: FinalRequestOptions;
-  controller: AbortController;
-};
+  response: Response
+  options: FinalRequestOptions
+  controller: AbortController
+}
 
 async function defaultParseResponse<T>(props: APIResponseProps): Promise<T> {
-  const { response } = props;
+  const { response } = props
   // fetch refuses to read the body when the status code is 204.
   if (response.status === 204) {
-    return null as T;
+    return null as T
   }
 
   if (props.options.__binaryResponse) {
-    return response as unknown as T;
+    return response as unknown as T
   }
 
-  const contentType = response.headers.get('content-type');
+  const contentType = response.headers.get('content-type')
   const isJSON =
-    contentType?.includes('application/json') || contentType?.includes('application/vnd.api+json');
+    contentType?.includes('application/json') || contentType?.includes('application/vnd.api+json')
   if (isJSON) {
-    const json = await response.json();
+    const json = await response.json()
 
-    debug('response', response.status, response.url, response.headers, json);
+    debug('response', response.status, response.url, response.headers, json)
 
-    return json as T;
+    return json as T
   }
 
-  const text = await response.text();
-  debug('response', response.status, response.url, response.headers, text);
+  const text = await response.text()
+  debug('response', response.status, response.url, response.headers, text)
 
   // TODO handle blob, arraybuffer, other content types, etc.
-  return text as unknown as T;
+  return text as unknown as T
 }
 
 /**
@@ -70,7 +70,7 @@ async function defaultParseResponse<T>(props: APIResponseProps): Promise<T> {
  * for interacting with the SDK.
  */
 export class APIPromise<T> extends Promise<T> {
-  private parsedPromise: Promise<T> | undefined;
+  private parsedPromise: Promise<T> | undefined
 
   constructor(
     private responsePromise: Promise<APIResponseProps>,
@@ -80,14 +80,14 @@ export class APIPromise<T> extends Promise<T> {
       // this is maybe a bit weird but this has to be a no-op to not implicitly
       // parse the response body; instead .then, .catch, .finally are overridden
       // to parse the response
-      resolve(null as any);
-    });
+      resolve(null as any)
+    })
   }
 
   _thenUnwrap<U>(transform: (data: T, props: APIResponseProps) => U): APIPromise<U> {
     return new APIPromise(this.responsePromise, async (props) =>
       transform(await this.parseResponse(props), props),
-    );
+    )
   }
 
   /**
@@ -104,7 +104,7 @@ export class APIPromise<T> extends Promise<T> {
    * - `import '@lorikeetai/node-sdk/shims/web'` (otherwise)
    */
   asResponse(): Promise<Response> {
-    return this.responsePromise.then((p) => p.response);
+    return this.responsePromise.then((p) => p.response)
   }
   /**
    * Gets the parsed response data and the raw `Response` instance.
@@ -120,43 +120,43 @@ export class APIPromise<T> extends Promise<T> {
    * - `import '@lorikeetai/node-sdk/shims/web'` (otherwise)
    */
   async withResponse(): Promise<{ data: T; response: Response }> {
-    const [data, response] = await Promise.all([this.parse(), this.asResponse()]);
-    return { data, response };
+    const [data, response] = await Promise.all([this.parse(), this.asResponse()])
+    return { data, response }
   }
 
   private parse(): Promise<T> {
     if (!this.parsedPromise) {
-      this.parsedPromise = this.responsePromise.then(this.parseResponse);
+      this.parsedPromise = this.responsePromise.then(this.parseResponse)
     }
-    return this.parsedPromise;
+    return this.parsedPromise
   }
 
   override then<TResult1 = T, TResult2 = never>(
     onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
     onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
   ): Promise<TResult1 | TResult2> {
-    return this.parse().then(onfulfilled, onrejected);
+    return this.parse().then(onfulfilled, onrejected)
   }
 
   override catch<TResult = never>(
     onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null,
   ): Promise<T | TResult> {
-    return this.parse().catch(onrejected);
+    return this.parse().catch(onrejected)
   }
 
   override finally(onfinally?: (() => void) | undefined | null): Promise<T> {
-    return this.parse().finally(onfinally);
+    return this.parse().finally(onfinally)
   }
 }
 
 export abstract class APIClient {
-  baseURL: string;
-  maxRetries: number;
-  timeout: number;
-  httpAgent: Agent | undefined;
+  baseURL: string
+  maxRetries: number
+  timeout: number
+  httpAgent: Agent | undefined
 
-  private fetch: Fetch;
-  protected idempotencyHeader?: string;
+  private fetch: Fetch
+  protected idempotencyHeader?: string
 
   constructor({
     baseURL,
@@ -165,22 +165,22 @@ export abstract class APIClient {
     httpAgent,
     fetch: overridenFetch,
   }: {
-    baseURL: string;
-    maxRetries?: number | undefined;
-    timeout: number | undefined;
-    httpAgent: Agent | undefined;
-    fetch: Fetch | undefined;
+    baseURL: string
+    maxRetries?: number | undefined
+    timeout: number | undefined
+    httpAgent: Agent | undefined
+    fetch: Fetch | undefined
   }) {
-    this.baseURL = baseURL;
-    this.maxRetries = validatePositiveInteger('maxRetries', maxRetries);
-    this.timeout = validatePositiveInteger('timeout', timeout);
-    this.httpAgent = httpAgent;
+    this.baseURL = baseURL
+    this.maxRetries = validatePositiveInteger('maxRetries', maxRetries)
+    this.timeout = validatePositiveInteger('timeout', timeout)
+    this.httpAgent = httpAgent
 
-    this.fetch = overridenFetch ?? fetch;
+    this.fetch = overridenFetch ?? fetch
   }
 
   protected authHeaders(opts: FinalRequestOptions): Headers {
-    return {};
+    return {}
   }
 
   /**
@@ -198,10 +198,10 @@ export abstract class APIClient {
       'User-Agent': this.getUserAgent(),
       ...getPlatformHeaders(),
       ...this.authHeaders(opts),
-    };
+    }
   }
 
-  protected abstract defaultQuery(): DefaultQuery | undefined;
+  protected abstract defaultQuery(): DefaultQuery | undefined
 
   /**
    * Override this to add your own headers validation:
@@ -209,27 +209,27 @@ export abstract class APIClient {
   protected validateHeaders(headers: Headers, customHeaders: Headers) {}
 
   protected defaultIdempotencyKey(): string {
-    return `stainless-node-retry-${uuid4()}`;
+    return `stainless-node-retry-${uuid4()}`
   }
 
   get<Req, Rsp>(path: string, opts?: PromiseOrValue<RequestOptions<Req>>): APIPromise<Rsp> {
-    return this.methodRequest('get', path, opts);
+    return this.methodRequest('get', path, opts)
   }
 
   post<Req, Rsp>(path: string, opts?: PromiseOrValue<RequestOptions<Req>>): APIPromise<Rsp> {
-    return this.methodRequest('post', path, opts);
+    return this.methodRequest('post', path, opts)
   }
 
   patch<Req, Rsp>(path: string, opts?: PromiseOrValue<RequestOptions<Req>>): APIPromise<Rsp> {
-    return this.methodRequest('patch', path, opts);
+    return this.methodRequest('patch', path, opts)
   }
 
   put<Req, Rsp>(path: string, opts?: PromiseOrValue<RequestOptions<Req>>): APIPromise<Rsp> {
-    return this.methodRequest('put', path, opts);
+    return this.methodRequest('put', path, opts)
   }
 
   delete<Req, Rsp>(path: string, opts?: PromiseOrValue<RequestOptions<Req>>): APIPromise<Rsp> {
-    return this.methodRequest('delete', path, opts);
+    return this.methodRequest('delete', path, opts)
   }
 
   private methodRequest<Req, Rsp>(
@@ -244,10 +244,10 @@ export abstract class APIClient {
           : opts?.body instanceof DataView ? opts.body
           : opts?.body instanceof ArrayBuffer ? new DataView(opts.body)
           : opts && ArrayBuffer.isView(opts?.body) ? new DataView(opts.body.buffer)
-          : opts?.body;
-        return { method, path, ...opts, body };
+          : opts?.body
+        return { method, path, ...opts, body }
       }),
-    );
+    )
   }
 
   getAPIList<Item, PageClass extends AbstractPage<Item> = AbstractPage<Item>>(
@@ -255,46 +255,46 @@ export abstract class APIClient {
     Page: new (...args: any[]) => PageClass,
     opts?: RequestOptions<any>,
   ): PagePromise<PageClass, Item> {
-    return this.requestAPIList(Page, { method: 'get', path, ...opts });
+    return this.requestAPIList(Page, { method: 'get', path, ...opts })
   }
 
   private calculateContentLength(body: unknown): string | null {
     if (typeof body === 'string') {
       if (typeof Buffer !== 'undefined') {
-        return Buffer.byteLength(body, 'utf8').toString();
+        return Buffer.byteLength(body, 'utf8').toString()
       }
 
       if (typeof TextEncoder !== 'undefined') {
-        const encoder = new TextEncoder();
-        const encoded = encoder.encode(body);
-        return encoded.length.toString();
+        const encoder = new TextEncoder()
+        const encoded = encoder.encode(body)
+        return encoded.length.toString()
       }
     } else if (ArrayBuffer.isView(body)) {
-      return body.byteLength.toString();
+      return body.byteLength.toString()
     }
 
-    return null;
+    return null
   }
 
   buildRequest<Req>(
     options: FinalRequestOptions<Req>,
     { retryCount = 0 }: { retryCount?: number } = {},
   ): { req: RequestInit; url: string; timeout: number } {
-    const { method, path, query, headers: headers = {} } = options;
+    const { method, path, query, headers: headers = {} } = options
 
     const body =
       ArrayBuffer.isView(options.body) || (options.__binaryRequest && typeof options.body === 'string') ?
         options.body
       : isMultipartBody(options.body) ? options.body.body
       : options.body ? JSON.stringify(options.body, null, 2)
-      : null;
-    const contentLength = this.calculateContentLength(body);
+      : null
+    const contentLength = this.calculateContentLength(body)
 
-    const url = this.buildURL(path!, query);
-    if ('timeout' in options) validatePositiveInteger('timeout', options.timeout);
-    const timeout = options.timeout ?? this.timeout;
-    const httpAgent = options.httpAgent ?? this.httpAgent ?? getDefaultAgent(url);
-    const minAgentTimeout = timeout + 1000;
+    const url = this.buildURL(path!, query)
+    if ('timeout' in options) validatePositiveInteger('timeout', options.timeout)
+    const timeout = options.timeout ?? this.timeout
+    const httpAgent = options.httpAgent ?? this.httpAgent ?? getDefaultAgent(url)
+    const minAgentTimeout = timeout + 1000
     if (
       typeof (httpAgent as any)?.options?.timeout === 'number' &&
       minAgentTimeout > ((httpAgent as any).options.timeout ?? 0)
@@ -303,15 +303,15 @@ export abstract class APIClient {
       // This may seem strange, but leaking active sockets should be rare and not particularly problematic,
       // and without mutating agent we would need to create more of them.
       // This tradeoff optimizes for performance.
-      (httpAgent as any).options.timeout = minAgentTimeout;
+      ;(httpAgent as any).options.timeout = minAgentTimeout
     }
 
     if (this.idempotencyHeader && method !== 'get') {
-      if (!options.idempotencyKey) options.idempotencyKey = this.defaultIdempotencyKey();
-      headers[this.idempotencyHeader] = options.idempotencyKey;
+      if (!options.idempotencyKey) options.idempotencyKey = this.defaultIdempotencyKey()
+      headers[this.idempotencyHeader] = options.idempotencyKey
     }
 
-    const reqHeaders = this.buildHeaders({ options, headers, contentLength, retryCount });
+    const reqHeaders = this.buildHeaders({ options, headers, contentLength, retryCount })
 
     const req: RequestInit = {
       method,
@@ -321,9 +321,9 @@ export abstract class APIClient {
       // @ts-ignore node-fetch uses a custom AbortSignal type that is
       // not compatible with standard web types
       signal: options.signal ?? null,
-    };
+    }
 
-    return { req, url, timeout };
+    return { req, url, timeout }
   }
 
   private buildHeaders({
@@ -332,23 +332,23 @@ export abstract class APIClient {
     contentLength,
     retryCount,
   }: {
-    options: FinalRequestOptions;
-    headers: Record<string, string | null | undefined>;
-    contentLength: string | null | undefined;
-    retryCount: number;
+    options: FinalRequestOptions
+    headers: Record<string, string | null | undefined>
+    contentLength: string | null | undefined
+    retryCount: number
   }): Record<string, string> {
-    const reqHeaders: Record<string, string> = {};
+    const reqHeaders: Record<string, string> = {}
     if (contentLength) {
-      reqHeaders['content-length'] = contentLength;
+      reqHeaders['content-length'] = contentLength
     }
 
-    const defaultHeaders = this.defaultHeaders(options);
-    applyHeadersMut(reqHeaders, defaultHeaders);
-    applyHeadersMut(reqHeaders, headers);
+    const defaultHeaders = this.defaultHeaders(options)
+    applyHeadersMut(reqHeaders, defaultHeaders)
+    applyHeadersMut(reqHeaders, headers)
 
     // let builtin fetch set the Content-Type for multipart bodies
     if (isMultipartBody(options.body) && shimsKind !== 'node') {
-      delete reqHeaders['content-type'];
+      delete reqHeaders['content-type']
     }
 
     // Don't set the retry count header if it was already set or removed through default headers or by the
@@ -358,12 +358,12 @@ export abstract class APIClient {
       getHeader(defaultHeaders, 'x-stainless-retry-count') === undefined &&
       getHeader(headers, 'x-stainless-retry-count') === undefined
     ) {
-      reqHeaders['x-stainless-retry-count'] = String(retryCount);
+      reqHeaders['x-stainless-retry-count'] = String(retryCount)
     }
 
-    this.validateHeaders(reqHeaders, headers);
+    this.validateHeaders(reqHeaders, headers)
 
-    return reqHeaders;
+    return reqHeaders
   }
 
   /**
@@ -388,7 +388,7 @@ export abstract class APIClient {
       : Symbol.iterator in headers ?
         Object.fromEntries(Array.from(headers as Iterable<string[]>).map((header) => [...header]))
       : { ...headers }
-    );
+    )
   }
 
   protected makeStatusError(
@@ -397,101 +397,101 @@ export abstract class APIClient {
     message: string | undefined,
     headers: Headers | undefined,
   ) {
-    return APIError.generate(status, error, message, headers);
+    return APIError.generate(status, error, message, headers)
   }
 
   request<Req, Rsp>(
     options: PromiseOrValue<FinalRequestOptions<Req>>,
     remainingRetries: number | null = null,
   ): APIPromise<Rsp> {
-    return new APIPromise(this.makeRequest(options, remainingRetries));
+    return new APIPromise(this.makeRequest(options, remainingRetries))
   }
 
   private async makeRequest<Req>(
     optionsInput: PromiseOrValue<FinalRequestOptions<Req>>,
     retriesRemaining: number | null,
   ): Promise<APIResponseProps> {
-    const options = await optionsInput;
-    const maxRetries = options.maxRetries ?? this.maxRetries;
+    const options = await optionsInput
+    const maxRetries = options.maxRetries ?? this.maxRetries
     if (retriesRemaining == null) {
-      retriesRemaining = maxRetries;
+      retriesRemaining = maxRetries
     }
 
-    await this.prepareOptions(options);
+    await this.prepareOptions(options)
 
-    const { req, url, timeout } = this.buildRequest(options, { retryCount: maxRetries - retriesRemaining });
+    const { req, url, timeout } = this.buildRequest(options, { retryCount: maxRetries - retriesRemaining })
 
-    await this.prepareRequest(req, { url, options });
+    await this.prepareRequest(req, { url, options })
 
-    debug('request', url, options, req.headers);
+    debug('request', url, options, req.headers)
 
     if (options.signal?.aborted) {
-      throw new APIUserAbortError();
+      throw new APIUserAbortError()
     }
 
-    const controller = new AbortController();
-    const response = await this.fetchWithTimeout(url, req, timeout, controller).catch(castToError);
+    const controller = new AbortController()
+    const response = await this.fetchWithTimeout(url, req, timeout, controller).catch(castToError)
 
     if (response instanceof Error) {
       if (options.signal?.aborted) {
-        throw new APIUserAbortError();
+        throw new APIUserAbortError()
       }
       if (retriesRemaining) {
-        return this.retryRequest(options, retriesRemaining);
+        return this.retryRequest(options, retriesRemaining)
       }
       if (response.name === 'AbortError') {
-        throw new APIConnectionTimeoutError();
+        throw new APIConnectionTimeoutError()
       }
-      throw new APIConnectionError({ cause: response });
+      throw new APIConnectionError({ cause: response })
     }
 
-    const responseHeaders = createResponseHeaders(response.headers);
+    const responseHeaders = createResponseHeaders(response.headers)
 
     if (!response.ok) {
       if (retriesRemaining && this.shouldRetry(response)) {
-        const retryMessage = `retrying, ${retriesRemaining} attempts remaining`;
-        debug(`response (error; ${retryMessage})`, response.status, url, responseHeaders);
-        return this.retryRequest(options, retriesRemaining, responseHeaders);
+        const retryMessage = `retrying, ${retriesRemaining} attempts remaining`
+        debug(`response (error; ${retryMessage})`, response.status, url, responseHeaders)
+        return this.retryRequest(options, retriesRemaining, responseHeaders)
       }
 
-      const errText = await response.text().catch((e) => castToError(e).message);
-      const errJSON = safeJSON(errText);
-      const errMessage = errJSON ? undefined : errText;
-      const retryMessage = retriesRemaining ? `(error; no more retries left)` : `(error; not retryable)`;
+      const errText = await response.text().catch((e: any) => castToError(e).message)
+      const errJSON = safeJSON(errText)
+      const errMessage = errJSON ? undefined : errText
+      const retryMessage = retriesRemaining ? `(error; no more retries left)` : `(error; not retryable)`
 
-      debug(`response (error; ${retryMessage})`, response.status, url, responseHeaders, errMessage);
+      debug(`response (error; ${retryMessage})`, response.status, url, responseHeaders, errMessage)
 
-      const err = this.makeStatusError(response.status, errJSON, errMessage, responseHeaders);
-      throw err;
+      const err = this.makeStatusError(response.status, errJSON, errMessage, responseHeaders)
+      throw err
     }
 
-    return { response, options, controller };
+    return { response, options, controller }
   }
 
   requestAPIList<Item = unknown, PageClass extends AbstractPage<Item> = AbstractPage<Item>>(
     Page: new (...args: ConstructorParameters<typeof AbstractPage>) => PageClass,
     options: FinalRequestOptions,
   ): PagePromise<PageClass, Item> {
-    const request = this.makeRequest(options, null);
-    return new PagePromise<PageClass, Item>(this, request, Page);
+    const request = this.makeRequest(options, null)
+    return new PagePromise<PageClass, Item>(this, request, Page)
   }
 
   buildURL<Req>(path: string, query: Req | null | undefined): string {
     const url =
       isAbsoluteURL(path) ?
         new URL(path)
-      : new URL(this.baseURL + (this.baseURL.endsWith('/') && path.startsWith('/') ? path.slice(1) : path));
+      : new URL(this.baseURL + (this.baseURL.endsWith('/') && path.startsWith('/') ? path.slice(1) : path))
 
-    const defaultQuery = this.defaultQuery();
+    const defaultQuery = this.defaultQuery()
     if (!isEmptyObj(defaultQuery)) {
-      query = { ...defaultQuery, ...query } as Req;
+      query = { ...defaultQuery, ...query } as Req
     }
 
     if (typeof query === 'object' && query && !Array.isArray(query)) {
-      url.search = this.stringifyQuery(query as Record<string, unknown>);
+      url.search = this.stringifyQuery(query as Record<string, unknown>)
     }
 
-    return url.toString();
+    return url.toString()
   }
 
   protected stringifyQuery(query: Record<string, unknown>): string {
@@ -499,16 +499,16 @@ export abstract class APIClient {
       .filter(([_, value]) => typeof value !== 'undefined')
       .map(([key, value]) => {
         if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
         }
         if (value === null) {
-          return `${encodeURIComponent(key)}=`;
+          return `${encodeURIComponent(key)}=`
         }
         throw new LorikeetError(
           `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
-        );
+        )
       })
-      .join('&');
+      .join('&')
   }
 
   async fetchWithTimeout(
@@ -517,46 +517,46 @@ export abstract class APIClient {
     ms: number,
     controller: AbortController,
   ): Promise<Response> {
-    const { signal, ...options } = init || {};
-    if (signal) signal.addEventListener('abort', () => controller.abort());
+    const { signal, ...options } = init || {}
+    if (signal) signal.addEventListener('abort', () => controller.abort())
 
-    const timeout = setTimeout(() => controller.abort(), ms);
+    const timeout = setTimeout(() => controller.abort(), ms)
 
     return (
       this.getRequestClient()
         // use undefined this binding; fetch errors if bound to something else in browser/cloudflare
         .fetch.call(undefined, url, { signal: controller.signal as any, ...options })
         .finally(() => {
-          clearTimeout(timeout);
+          clearTimeout(timeout)
         })
-    );
+    )
   }
 
   protected getRequestClient(): RequestClient {
-    return { fetch: this.fetch };
+    return { fetch: this.fetch }
   }
 
   private shouldRetry(response: Response): boolean {
     // Note this is not a standard header.
-    const shouldRetryHeader = response.headers.get('x-should-retry');
+    const shouldRetryHeader = response.headers.get('x-should-retry')
 
     // If the server explicitly says whether or not to retry, obey.
-    if (shouldRetryHeader === 'true') return true;
-    if (shouldRetryHeader === 'false') return false;
+    if (shouldRetryHeader === 'true') return true
+    if (shouldRetryHeader === 'false') return false
 
     // Retry on request timeouts.
-    if (response.status === 408) return true;
+    if (response.status === 408) return true
 
     // Retry on lock timeouts.
-    if (response.status === 409) return true;
+    if (response.status === 409) return true
 
     // Retry on rate limits.
-    if (response.status === 429) return true;
+    if (response.status === 429) return true
 
     // Retry internal errors.
-    if (response.status >= 500) return true;
+    if (response.status >= 500) return true
 
-    return false;
+    return false
   }
 
   private async retryRequest(
@@ -564,124 +564,124 @@ export abstract class APIClient {
     retriesRemaining: number,
     responseHeaders?: Headers | undefined,
   ): Promise<APIResponseProps> {
-    let timeoutMillis: number | undefined;
+    let timeoutMillis: number | undefined
 
     // Note the `retry-after-ms` header may not be standard, but is a good idea and we'd like proactive support for it.
-    const retryAfterMillisHeader = responseHeaders?.['retry-after-ms'];
+    const retryAfterMillisHeader = responseHeaders?.['retry-after-ms']
     if (retryAfterMillisHeader) {
-      const timeoutMs = parseFloat(retryAfterMillisHeader);
+      const timeoutMs = parseFloat(retryAfterMillisHeader)
       if (!Number.isNaN(timeoutMs)) {
-        timeoutMillis = timeoutMs;
+        timeoutMillis = timeoutMs
       }
     }
 
     // About the Retry-After header: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Retry-After
-    const retryAfterHeader = responseHeaders?.['retry-after'];
+    const retryAfterHeader = responseHeaders?.['retry-after']
     if (retryAfterHeader && !timeoutMillis) {
-      const timeoutSeconds = parseFloat(retryAfterHeader);
+      const timeoutSeconds = parseFloat(retryAfterHeader)
       if (!Number.isNaN(timeoutSeconds)) {
-        timeoutMillis = timeoutSeconds * 1000;
+        timeoutMillis = timeoutSeconds * 1000
       } else {
-        timeoutMillis = Date.parse(retryAfterHeader) - Date.now();
+        timeoutMillis = Date.parse(retryAfterHeader) - Date.now()
       }
     }
 
     // If the API asks us to wait a certain amount of time (and it's a reasonable amount),
     // just do what it says, but otherwise calculate a default
     if (!(timeoutMillis && 0 <= timeoutMillis && timeoutMillis < 60 * 1000)) {
-      const maxRetries = options.maxRetries ?? this.maxRetries;
-      timeoutMillis = this.calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries);
+      const maxRetries = options.maxRetries ?? this.maxRetries
+      timeoutMillis = this.calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries)
     }
-    await sleep(timeoutMillis);
+    await sleep(timeoutMillis)
 
-    return this.makeRequest(options, retriesRemaining - 1);
+    return this.makeRequest(options, retriesRemaining - 1)
   }
 
   private calculateDefaultRetryTimeoutMillis(retriesRemaining: number, maxRetries: number): number {
-    const initialRetryDelay = 0.5;
-    const maxRetryDelay = 8.0;
+    const initialRetryDelay = 0.5
+    const maxRetryDelay = 8.0
 
-    const numRetries = maxRetries - retriesRemaining;
+    const numRetries = maxRetries - retriesRemaining
 
     // Apply exponential backoff, but not more than the max.
-    const sleepSeconds = Math.min(initialRetryDelay * Math.pow(2, numRetries), maxRetryDelay);
+    const sleepSeconds = Math.min(initialRetryDelay * Math.pow(2, numRetries), maxRetryDelay)
 
     // Apply some jitter, take up to at most 25 percent of the retry time.
-    const jitter = 1 - Math.random() * 0.25;
+    const jitter = 1 - Math.random() * 0.25
 
-    return sleepSeconds * jitter * 1000;
+    return sleepSeconds * jitter * 1000
   }
 
   private getUserAgent(): string {
-    return `${this.constructor.name}/JS ${VERSION}`;
+    return `${this.constructor.name}/JS ${VERSION}`
   }
 }
 
-export type PageInfo = { url: URL } | { params: Record<string, unknown> | null };
+export type PageInfo = { url: URL } | { params: Record<string, unknown> | null }
 
 export abstract class AbstractPage<Item> implements AsyncIterable<Item> {
-  #client: APIClient;
-  protected options: FinalRequestOptions;
+  #client: APIClient
+  protected options: FinalRequestOptions
 
-  protected response: Response;
-  protected body: unknown;
+  protected response: Response
+  protected body: unknown
 
   constructor(client: APIClient, response: Response, body: unknown, options: FinalRequestOptions) {
-    this.#client = client;
-    this.options = options;
-    this.response = response;
-    this.body = body;
+    this.#client = client
+    this.options = options
+    this.response = response
+    this.body = body
   }
 
   /**
    * @deprecated Use nextPageInfo instead
    */
-  abstract nextPageParams(): Partial<Record<string, unknown>> | null;
-  abstract nextPageInfo(): PageInfo | null;
+  abstract nextPageParams(): Partial<Record<string, unknown>> | null
+  abstract nextPageInfo(): PageInfo | null
 
-  abstract getPaginatedItems(): Item[];
+  abstract getPaginatedItems(): Item[]
 
   hasNextPage(): boolean {
-    const items = this.getPaginatedItems();
-    if (!items.length) return false;
-    return this.nextPageInfo() != null;
+    const items = this.getPaginatedItems()
+    if (!items.length) return false
+    return this.nextPageInfo() != null
   }
 
   async getNextPage(): Promise<this> {
-    const nextInfo = this.nextPageInfo();
+    const nextInfo = this.nextPageInfo()
     if (!nextInfo) {
       throw new LorikeetError(
         'No next page expected; please check `.hasNextPage()` before calling `.getNextPage()`.',
-      );
+      )
     }
-    const nextOptions = { ...this.options };
+    const nextOptions = { ...this.options }
     if ('params' in nextInfo && typeof nextOptions.query === 'object') {
-      nextOptions.query = { ...nextOptions.query, ...nextInfo.params };
+      nextOptions.query = { ...nextOptions.query, ...nextInfo.params }
     } else if ('url' in nextInfo) {
-      const params = [...Object.entries(nextOptions.query || {}), ...nextInfo.url.searchParams.entries()];
+      const params = [...Object.entries(nextOptions.query || {}), ...nextInfo.url.searchParams.entries()]
       for (const [key, value] of params) {
-        nextInfo.url.searchParams.set(key, value as any);
+        nextInfo.url.searchParams.set(key, value as any)
       }
-      nextOptions.query = undefined;
-      nextOptions.path = nextInfo.url.toString();
+      nextOptions.query = undefined
+      nextOptions.path = nextInfo.url.toString()
     }
-    return await this.#client.requestAPIList(this.constructor as any, nextOptions);
+    return await this.#client.requestAPIList(this.constructor as any, nextOptions)
   }
 
   async *iterPages() {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
-    let page: AbstractPage<Item> = this;
-    yield page;
+    let page: AbstractPage<Item> = this
+    yield page
     while (page.hasNextPage()) {
-      page = await page.getNextPage();
-      yield page;
+      page = await page.getNextPage()
+      yield page
     }
   }
 
   async *[Symbol.asyncIterator]() {
     for await (const page of this.iterPages()) {
       for (const item of page.getPaginatedItems()) {
-        yield item;
+        yield item
       }
     }
   }
@@ -711,7 +711,7 @@ export class PagePromise<
     super(
       request,
       async (props) => new Page(client, props.response, await defaultParseResponse(props), props.options),
-    );
+    )
   }
 
   /**
@@ -722,9 +722,9 @@ export class PagePromise<
    *    }
    */
   async *[Symbol.asyncIterator]() {
-    const page = await this;
+    const page = await this
     for await (const item of page) {
-      yield item;
+      yield item
     }
   }
 }
@@ -739,39 +739,39 @@ export const createResponseHeaders = (
     ),
     {
       get(target, name) {
-        const key = name.toString();
-        return target[key.toLowerCase()] || target[key];
+        const key = name.toString()
+        return target[key.toLowerCase()] || target[key]
       },
     },
-  );
-};
+  )
+}
 
-type HTTPMethod = 'get' | 'post' | 'put' | 'patch' | 'delete';
+type HTTPMethod = 'get' | 'post' | 'put' | 'patch' | 'delete'
 
-export type RequestClient = { fetch: Fetch };
-export type Headers = Record<string, string | null | undefined>;
-export type DefaultQuery = Record<string, string | undefined>;
-export type KeysEnum<T> = { [P in keyof Required<T>]: true };
+export type RequestClient = { fetch: Fetch }
+export type Headers = Record<string, string | null | undefined>
+export type DefaultQuery = Record<string, string | undefined>
+export type KeysEnum<T> = { [P in keyof Required<T>]: true }
 
 export type RequestOptions<
   Req = unknown | Record<string, unknown> | Readable | BlobLike | ArrayBufferView | ArrayBuffer,
 > = {
-  method?: HTTPMethod;
-  path?: string;
-  query?: Req | undefined;
-  body?: Req | null | undefined;
-  headers?: Headers | undefined;
+  method?: HTTPMethod
+  path?: string
+  query?: Req | undefined
+  body?: Req | null | undefined
+  headers?: Headers | undefined
 
-  maxRetries?: number;
-  stream?: boolean | undefined;
-  timeout?: number;
-  httpAgent?: Agent;
-  signal?: AbortSignal | undefined | null;
-  idempotencyKey?: string;
+  maxRetries?: number
+  stream?: boolean | undefined
+  timeout?: number
+  httpAgent?: Agent
+  signal?: AbortSignal | undefined | null
+  idempotencyKey?: string
 
-  __binaryRequest?: boolean | undefined;
-  __binaryResponse?: boolean | undefined;
-};
+  __binaryRequest?: boolean | undefined
+  __binaryResponse?: boolean | undefined
+}
 
 // This is required so that we can determine if a given object matches the RequestOptions
 // type at runtime. While this requires duplication, it is enforced by the TypeScript
@@ -792,7 +792,7 @@ const requestOptionsKeys: KeysEnum<RequestOptions> = {
 
   __binaryRequest: true,
   __binaryResponse: true,
-};
+}
 
 export const isRequestOptions = (obj: unknown): obj is RequestOptions => {
   return (
@@ -800,18 +800,18 @@ export const isRequestOptions = (obj: unknown): obj is RequestOptions => {
     obj !== null &&
     !isEmptyObj(obj) &&
     Object.keys(obj).every((k) => hasOwn(requestOptionsKeys, k))
-  );
-};
+  )
+}
 
 export type FinalRequestOptions<Req = unknown | Record<string, unknown> | Readable | DataView> =
   RequestOptions<Req> & {
-    method: HTTPMethod;
-    path: string;
-  };
+    method: HTTPMethod
+    path: string
+  }
 
-declare const Deno: any;
-declare const EdgeRuntime: any;
-type Arch = 'x32' | 'x64' | 'arm' | 'arm64' | `other:${string}` | 'unknown';
+declare const Deno: any
+declare const EdgeRuntime: any
+type Arch = 'x32' | 'x64' | 'arm' | 'arm64' | `other:${string}` | 'unknown'
 type PlatformName =
   | 'MacOS'
   | 'Linux'
@@ -821,16 +821,16 @@ type PlatformName =
   | 'iOS'
   | 'Android'
   | `Other:${string}`
-  | 'Unknown';
-type Browser = 'ie' | 'edge' | 'chrome' | 'firefox' | 'safari';
+  | 'Unknown'
+type Browser = 'ie' | 'edge' | 'chrome' | 'firefox' | 'safari'
 type PlatformProperties = {
-  'X-Stainless-Lang': 'js';
-  'X-Stainless-Package-Version': string;
-  'X-Stainless-OS': PlatformName;
-  'X-Stainless-Arch': Arch;
-  'X-Stainless-Runtime': 'node' | 'deno' | 'edge' | `browser:${Browser}` | 'unknown';
-  'X-Stainless-Runtime-Version': string;
-};
+  'X-Stainless-Lang': 'js'
+  'X-Stainless-Package-Version': string
+  'X-Stainless-OS': PlatformName
+  'X-Stainless-Arch': Arch
+  'X-Stainless-Runtime': 'node' | 'deno' | 'edge' | `browser:${Browser}` | 'unknown'
+  'X-Stainless-Runtime-Version': string
+}
 const getPlatformProperties = (): PlatformProperties => {
   if (typeof Deno !== 'undefined' && Deno.build != null) {
     return {
@@ -840,8 +840,8 @@ const getPlatformProperties = (): PlatformProperties => {
       'X-Stainless-Arch': normalizeArch(Deno.build.arch),
       'X-Stainless-Runtime': 'deno',
       'X-Stainless-Runtime-Version':
-        typeof Deno.version === 'string' ? Deno.version : Deno.version?.deno ?? 'unknown',
-    };
+        typeof Deno.version === 'string' ? Deno.version : (Deno.version?.deno ?? 'unknown'),
+    }
   }
   if (typeof EdgeRuntime !== 'undefined') {
     return {
@@ -851,7 +851,7 @@ const getPlatformProperties = (): PlatformProperties => {
       'X-Stainless-Arch': `other:${EdgeRuntime}`,
       'X-Stainless-Runtime': 'edge',
       'X-Stainless-Runtime-Version': process.version,
-    };
+    }
   }
   // Check if Node.js
   if (Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]') {
@@ -862,10 +862,10 @@ const getPlatformProperties = (): PlatformProperties => {
       'X-Stainless-Arch': normalizeArch(process.arch),
       'X-Stainless-Runtime': 'node',
       'X-Stainless-Runtime-Version': process.version,
-    };
+    }
   }
 
-  const browserInfo = getBrowserInfo();
+  const browserInfo = getBrowserInfo()
   if (browserInfo) {
     return {
       'X-Stainless-Lang': 'js',
@@ -874,7 +874,7 @@ const getPlatformProperties = (): PlatformProperties => {
       'X-Stainless-Arch': 'unknown',
       'X-Stainless-Runtime': `browser:${browserInfo.browser}`,
       'X-Stainless-Runtime-Version': browserInfo.version,
-    };
+    }
   }
 
   // TODO add support for Cloudflare workers, etc.
@@ -885,20 +885,20 @@ const getPlatformProperties = (): PlatformProperties => {
     'X-Stainless-Arch': 'unknown',
     'X-Stainless-Runtime': 'unknown',
     'X-Stainless-Runtime-Version': 'unknown',
-  };
-};
+  }
+}
 
 type BrowserInfo = {
-  browser: Browser;
-  version: string;
-};
+  browser: Browser
+  version: string
+}
 
-declare const navigator: { userAgent: string } | undefined;
+declare const navigator: { userAgent: string } | undefined
 
 // Note: modified from https://github.com/JS-DevTools/host-environment/blob/b1ab79ecde37db5d6e163c050e54fe7d287d7c92/src/isomorphic.browser.ts
 function getBrowserInfo(): BrowserInfo | null {
   if (typeof navigator === 'undefined' || !navigator) {
-    return null;
+    return null
   }
 
   // NOTE: The order matters here!
@@ -909,21 +909,21 @@ function getBrowserInfo(): BrowserInfo | null {
     { key: 'chrome' as const, pattern: /Chrome(?:\W+(\d+)\.(\d+)(?:\.(\d+))?)?/ },
     { key: 'firefox' as const, pattern: /Firefox(?:\W+(\d+)\.(\d+)(?:\.(\d+))?)?/ },
     { key: 'safari' as const, pattern: /(?:Version\W+(\d+)\.(\d+)(?:\.(\d+))?)?(?:\W+Mobile\S*)?\W+Safari/ },
-  ];
+  ]
 
   // Find the FIRST matching browser
   for (const { key, pattern } of browserPatterns) {
-    const match = pattern.exec(navigator.userAgent);
+    const match = pattern.exec(navigator.userAgent)
     if (match) {
-      const major = match[1] || 0;
-      const minor = match[2] || 0;
-      const patch = match[3] || 0;
+      const major = match[1] || 0
+      const minor = match[2] || 0
+      const patch = match[3] || 0
 
-      return { browser: key, version: `${major}.${minor}.${patch}` };
+      return { browser: key, version: `${major}.${minor}.${patch}` }
     }
   }
 
-  return null;
+  return null
 }
 
 const normalizeArch = (arch: string): Arch => {
@@ -931,13 +931,13 @@ const normalizeArch = (arch: string): Arch => {
   // - https://nodejs.org/api/process.html#processarch
   // Deno docs:
   // - https://doc.deno.land/deno/stable/~/Deno.build
-  if (arch === 'x32') return 'x32';
-  if (arch === 'x86_64' || arch === 'x64') return 'x64';
-  if (arch === 'arm') return 'arm';
-  if (arch === 'aarch64' || arch === 'arm64') return 'arm64';
-  if (arch) return `other:${arch}`;
-  return 'unknown';
-};
+  if (arch === 'x32') return 'x32'
+  if (arch === 'x86_64' || arch === 'x64') return 'x64'
+  if (arch === 'arm') return 'arm'
+  if (arch === 'aarch64' || arch === 'arm64') return 'arm64'
+  if (arch) return `other:${arch}`
+  return 'unknown'
+}
 
 const normalizePlatform = (platform: string): PlatformName => {
   // Node platforms:
@@ -946,68 +946,68 @@ const normalizePlatform = (platform: string): PlatformName => {
   // - https://doc.deno.land/deno/stable/~/Deno.build
   // - https://github.com/denoland/deno/issues/14799
 
-  platform = platform.toLowerCase();
+  platform = platform.toLowerCase()
 
   // NOTE: this iOS check is untested and may not work
   // Node does not work natively on IOS, there is a fork at
   // https://github.com/nodejs-mobile/nodejs-mobile
   // however it is unknown at the time of writing how to detect if it is running
-  if (platform.includes('ios')) return 'iOS';
-  if (platform === 'android') return 'Android';
-  if (platform === 'darwin') return 'MacOS';
-  if (platform === 'win32') return 'Windows';
-  if (platform === 'freebsd') return 'FreeBSD';
-  if (platform === 'openbsd') return 'OpenBSD';
-  if (platform === 'linux') return 'Linux';
-  if (platform) return `Other:${platform}`;
-  return 'Unknown';
-};
+  if (platform.includes('ios')) return 'iOS'
+  if (platform === 'android') return 'Android'
+  if (platform === 'darwin') return 'MacOS'
+  if (platform === 'win32') return 'Windows'
+  if (platform === 'freebsd') return 'FreeBSD'
+  if (platform === 'openbsd') return 'OpenBSD'
+  if (platform === 'linux') return 'Linux'
+  if (platform) return `Other:${platform}`
+  return 'Unknown'
+}
 
-let _platformHeaders: PlatformProperties;
+let _platformHeaders: PlatformProperties
 const getPlatformHeaders = () => {
-  return (_platformHeaders ??= getPlatformProperties());
-};
+  return (_platformHeaders ??= getPlatformProperties())
+}
 
 export const safeJSON = (text: string) => {
   try {
-    return JSON.parse(text);
+    return JSON.parse(text)
   } catch (err) {
-    return undefined;
+    return undefined
   }
-};
+}
 
 // https://stackoverflow.com/a/19709846
-const startsWithSchemeRegexp = new RegExp('^(?:[a-z]+:)?//', 'i');
+const startsWithSchemeRegexp = new RegExp('^(?:[a-z]+:)?//', 'i')
 const isAbsoluteURL = (url: string): boolean => {
-  return startsWithSchemeRegexp.test(url);
-};
+  return startsWithSchemeRegexp.test(url)
+}
 
-export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const validatePositiveInteger = (name: string, n: unknown): number => {
   if (typeof n !== 'number' || !Number.isInteger(n)) {
-    throw new LorikeetError(`${name} must be an integer`);
+    throw new LorikeetError(`${name} must be an integer`)
   }
   if (n < 0) {
-    throw new LorikeetError(`${name} must be a positive integer`);
+    throw new LorikeetError(`${name} must be a positive integer`)
   }
-  return n;
-};
+  return n
+}
 
 export const castToError = (err: any): Error => {
-  if (err instanceof Error) return err;
+  if (err instanceof Error) return err
   if (typeof err === 'object' && err !== null) {
     try {
-      return new Error(JSON.stringify(err));
+      return new Error(JSON.stringify(err))
     } catch {}
   }
-  return new Error(err);
-};
+  return new Error(err)
+}
 
 export const ensurePresent = <T>(value: T | null | undefined): T => {
-  if (value == null) throw new LorikeetError(`Expected a value to be given but received ${value} instead.`);
-  return value;
-};
+  if (value == null) throw new LorikeetError(`Expected a value to be given but received ${value} instead.`)
+  return value
+}
 
 /**
  * Read an environment variable.
@@ -1018,65 +1018,65 @@ export const ensurePresent = <T>(value: T | null | undefined): T => {
  */
 export const readEnv = (env: string): string | undefined => {
   if (typeof process !== 'undefined') {
-    return process.env?.[env]?.trim() ?? undefined;
+    return process.env?.[env]?.trim() ?? undefined
   }
   if (typeof Deno !== 'undefined') {
-    return Deno.env?.get?.(env)?.trim();
+    return Deno.env?.get?.(env)?.trim()
   }
-  return undefined;
-};
+  return undefined
+}
 
 export const coerceInteger = (value: unknown): number => {
-  if (typeof value === 'number') return Math.round(value);
-  if (typeof value === 'string') return parseInt(value, 10);
+  if (typeof value === 'number') return Math.round(value)
+  if (typeof value === 'string') return parseInt(value, 10)
 
-  throw new LorikeetError(`Could not coerce ${value} (type: ${typeof value}) into a number`);
-};
+  throw new LorikeetError(`Could not coerce ${value} (type: ${typeof value}) into a number`)
+}
 
 export const coerceFloat = (value: unknown): number => {
-  if (typeof value === 'number') return value;
-  if (typeof value === 'string') return parseFloat(value);
+  if (typeof value === 'number') return value
+  if (typeof value === 'string') return parseFloat(value)
 
-  throw new LorikeetError(`Could not coerce ${value} (type: ${typeof value}) into a number`);
-};
+  throw new LorikeetError(`Could not coerce ${value} (type: ${typeof value}) into a number`)
+}
 
 export const coerceBoolean = (value: unknown): boolean => {
-  if (typeof value === 'boolean') return value;
-  if (typeof value === 'string') return value === 'true';
-  return Boolean(value);
-};
+  if (typeof value === 'boolean') return value
+  if (typeof value === 'string') return value === 'true'
+  return Boolean(value)
+}
 
 export const maybeCoerceInteger = (value: unknown): number | undefined => {
   if (value === undefined) {
-    return undefined;
+    return undefined
   }
-  return coerceInteger(value);
-};
+  return coerceInteger(value)
+}
 
 export const maybeCoerceFloat = (value: unknown): number | undefined => {
   if (value === undefined) {
-    return undefined;
+    return undefined
   }
-  return coerceFloat(value);
-};
+  return coerceFloat(value)
+}
 
 export const maybeCoerceBoolean = (value: unknown): boolean | undefined => {
   if (value === undefined) {
-    return undefined;
+    return undefined
   }
-  return coerceBoolean(value);
-};
+  return coerceBoolean(value)
+}
 
 // https://stackoverflow.com/a/34491287
 export function isEmptyObj(obj: Object | null | undefined): boolean {
-  if (!obj) return true;
-  for (const _k in obj) return false;
-  return true;
+  if (!obj) return true
+  for (const _k in obj) return false
+  return true
 }
 
 // https://eslint.org/docs/latest/rules/no-prototype-builtins
 export function hasOwn(obj: Object, key: string): boolean {
-  return Object.prototype.hasOwnProperty.call(obj, key);
+  return Object.prototype.hasOwnProperty.call(obj, key)
 }
 
 /**
@@ -1087,23 +1087,23 @@ export function hasOwn(obj: Object, key: string): boolean {
  */
 function applyHeadersMut(targetHeaders: Headers, newHeaders: Headers): void {
   for (const k in newHeaders) {
-    if (!hasOwn(newHeaders, k)) continue;
-    const lowerKey = k.toLowerCase();
-    if (!lowerKey) continue;
+    if (!hasOwn(newHeaders, k)) continue
+    const lowerKey = k.toLowerCase()
+    if (!lowerKey) continue
 
-    const val = newHeaders[k];
+    const val = newHeaders[k]
 
     if (val === null) {
-      delete targetHeaders[lowerKey];
+      delete targetHeaders[lowerKey]
     } else if (val !== undefined) {
-      targetHeaders[lowerKey] = val;
+      targetHeaders[lowerKey] = val
     }
   }
 }
 
 export function debug(action: string, ...args: any[]) {
   if (typeof process !== 'undefined' && process?.env?.['DEBUG'] === 'true') {
-    console.log(`Lorikeet:DEBUG:${action}`, ...args);
+    console.log(`Lorikeet:DEBUG:${action}`, ...args)
   }
 }
 
@@ -1112,11 +1112,11 @@ export function debug(action: string, ...args: any[]) {
  */
 const uuid4 = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0;
-    const v = c === 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-};
+    const r = (Math.random() * 16) | 0
+    const v = c === 'x' ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
+}
 
 export const isRunningInBrowser = () => {
   return (
@@ -1126,37 +1126,37 @@ export const isRunningInBrowser = () => {
     typeof window.document !== 'undefined' &&
     // @ts-ignore
     typeof navigator !== 'undefined'
-  );
-};
+  )
+}
 
 export interface HeadersProtocol {
-  get: (header: string) => string | null | undefined;
+  get: (header: string) => string | null | undefined
 }
-export type HeadersLike = Record<string, string | string[] | undefined> | HeadersProtocol;
+export type HeadersLike = Record<string, string | string[] | undefined> | HeadersProtocol
 
 export const isHeadersProtocol = (headers: any): headers is HeadersProtocol => {
-  return typeof headers?.get === 'function';
-};
+  return typeof headers?.get === 'function'
+}
 
 export const getRequiredHeader = (headers: HeadersLike | Headers, header: string): string => {
-  const foundHeader = getHeader(headers, header);
+  const foundHeader = getHeader(headers, header)
   if (foundHeader === undefined) {
-    throw new Error(`Could not find ${header} header`);
+    throw new Error(`Could not find ${header} header`)
   }
-  return foundHeader;
-};
+  return foundHeader
+}
 
 export const getHeader = (headers: HeadersLike | Headers, header: string): string | undefined => {
-  const lowerCasedHeader = header.toLowerCase();
+  const lowerCasedHeader = header.toLowerCase()
   if (isHeadersProtocol(headers)) {
     // to deal with the case where the header looks like Stainless-Event-Id
     const intercapsHeader =
       header[0]?.toUpperCase() +
-      header.substring(1).replace(/([^\w])(\w)/g, (_m, g1, g2) => g1 + g2.toUpperCase());
+      header.substring(1).replace(/([^\w])(\w)/g, (_m, g1, g2) => g1 + g2.toUpperCase())
     for (const key of [header, lowerCasedHeader, header.toUpperCase(), intercapsHeader]) {
-      const value = headers.get(key);
+      const value = headers.get(key)
       if (value) {
-        return value;
+        return value
       }
     }
   }
@@ -1164,33 +1164,33 @@ export const getHeader = (headers: HeadersLike | Headers, header: string): strin
   for (const [key, value] of Object.entries(headers)) {
     if (key.toLowerCase() === lowerCasedHeader) {
       if (Array.isArray(value)) {
-        if (value.length <= 1) return value[0];
-        console.warn(`Received ${value.length} entries for the ${header} header, using the first entry.`);
-        return value[0];
+        if (value.length <= 1) return value[0]
+        console.warn(`Received ${value.length} entries for the ${header} header, using the first entry.`)
+        return value[0]
       }
-      return value;
+      return value
     }
   }
 
-  return undefined;
-};
+  return undefined
+}
 
 /**
  * Encodes a string to Base64 format.
  */
 export const toBase64 = (str: string | null | undefined): string => {
-  if (!str) return '';
+  if (!str) return ''
   if (typeof Buffer !== 'undefined') {
-    return Buffer.from(str).toString('base64');
+    return Buffer.from(str).toString('base64')
   }
 
   if (typeof btoa !== 'undefined') {
-    return btoa(str);
+    return btoa(str)
   }
 
-  throw new LorikeetError('Cannot generate b64 string; Expected `Buffer` or `btoa` to be defined');
-};
+  throw new LorikeetError('Cannot generate b64 string; Expected `Buffer` or `btoa` to be defined')
+}
 
 export function isObj(obj: unknown): obj is Record<string, unknown> {
-  return obj != null && typeof obj === 'object' && !Array.isArray(obj);
+  return obj != null && typeof obj === 'object' && !Array.isArray(obj)
 }

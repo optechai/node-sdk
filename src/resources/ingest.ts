@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import * as Core from '../core';
-import * as IngestAPI from './ingest';
+import { APIResource } from '../resource'
+import * as Core from '../core'
+import * as IngestAPI from './ingest'
 
 export class Ingest extends APIResource {
   /**
@@ -12,7 +12,7 @@ export class Ingest extends APIResource {
     body: IngestValidateParams,
     options?: Core.RequestOptions,
   ): Core.APIPromise<IngestValidateResponse> {
-    return this._client.post('/ingest/validate', { body, ...options });
+    return this._client.post('/ingest/validate', { body, ...options })
   }
 
   /**
@@ -29,35 +29,35 @@ export class Ingest extends APIResource {
       body,
       ...options,
       headers: { Accept: '*/*', ...options?.headers },
-    });
+    })
   }
 }
 
 export interface IngestValidateResponse {
-  code?: 200;
+  code?: 200
 
   /**
    * The return data for the tool request.
    */
-  data?: string;
+  data?: string
 }
 
 export interface IngestValidateParams {
   /**
    * The return data for the tool request.
    */
-  data: unknown;
+  data: unknown
 }
 
 export interface IngestWebhooksParams {
   /**
    * The return data for the tool request.
    */
-  data: unknown;
+  data: unknown
 }
 
 export namespace Ingest {
-  export import IngestValidateResponse = IngestAPI.IngestValidateResponse;
-  export import IngestValidateParams = IngestAPI.IngestValidateParams;
-  export import IngestWebhooksParams = IngestAPI.IngestWebhooksParams;
+  export import IngestValidateResponse = IngestAPI.IngestValidateResponse
+  export import IngestValidateParams = IngestAPI.IngestValidateParams
+  export import IngestWebhooksParams = IngestAPI.IngestWebhooksParams
 }

@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import type { Lorikeet } from './index';
+import type { Lorikeet } from './index'
 
 export class APIResource {
-  protected _client: Lorikeet;
+  protected _client: Lorikeet
 
   constructor(client: Lorikeet) {
-    this._client = client;
+    this._client = client
   }
 }
