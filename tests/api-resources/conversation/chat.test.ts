@@ -31,8 +31,11 @@ describe('resource chat', () => {
     })
   })
 
-  test('get', async () => {
-    const responsePromise = client.conversation.chat.get({})
+  test('get: only required params', async () => {
+    const responsePromise = client.conversation.chat.get({
+      conversationId: 'conversationId',
+      conversationPollParam: { conversationId: 'conversationId' },
+    })
     const rawResponse = await responsePromise.asResponse()
     expect(rawResponse).toBeInstanceOf(Response)
     const response = await responsePromise
@@ -40,6 +43,13 @@ describe('resource chat', () => {
     const dataAndResponse = await responsePromise.withResponse()
     expect(dataAndResponse.data).toBe(response)
     expect(dataAndResponse.response).toBe(rawResponse)
+  })
+
+  test('get: required and optional params', async () => {
+    const response = await client.conversation.chat.get({
+      conversationId: 'conversationId',
+      conversationPollParam: { conversationId: 'conversationId' },
+    })
   })
 
   test('start: only required params', async () => {

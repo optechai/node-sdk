@@ -3,6 +3,7 @@
 import * as Errors from './error'
 import * as Uploads from './uploads'
 import { type Agent } from './_shims/index'
+import * as qs from './internal/qs'
 import * as Core from './core'
 import * as API from './resources/index'
 
@@ -151,6 +152,10 @@ export class Lorikeet extends Core.APIClient {
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
     return { Authorization: `Bearer ${this.clientId}` }
+  }
+
+  protected override stringifyQuery(query: Record<string, unknown>): string {
+    return qs.stringify(query, { arrayFormat: 'comma' })
   }
 
   static Lorikeet = this
