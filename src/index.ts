@@ -151,7 +151,7 @@ export class Lorikeet extends Core.APIClient {
   }
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
-    const signature = generateSignature(JSON.stringify(opts.body), this.clientSecret)
+    const signature = generateSignature(opts.body as string, this.clientSecret)
     return {
       // backwards compatibility
       'x-optech-webhook-signature': signature,
