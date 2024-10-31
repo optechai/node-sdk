@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.11 (2024-10-31)
+
+Full Changelog: [v0.1.0-alpha.10...v0.1.0-alpha.11](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.10...v0.1.0-alpha.11)
+
+### Features
+
+* fix: add more refined publish npm to always publish next ([68525e9](https://github.com/optechai/node-sdk/commit/68525e9213d289cf167444232ad0aabd534287aa))
+
 ## 0.1.0-alpha.10 (2024-10-31)
 
 Full Changelog: [v0.1.0-alpha.9...v0.1.0-alpha.10](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.9...v0.1.0-alpha.10)
