@@ -5,8 +5,9 @@ import * as Core from '../core'
 import * as TokenAPI from './token'
 
 export class Token extends APIResource {
-  create(options?: Core.RequestOptions): Core.APIPromise<void> {
+  create(body: TokenCreateParams, options?: Core.RequestOptions): Core.APIPromise<void> {
     return this._client.post('/ingest/token', {
+      body,
       ...options,
       headers: { Accept: '*/*', ...options?.headers },
     })
