@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.10 (2024-10-31)
+
+Full Changelog: [v0.1.0-alpha.9...v0.1.0-alpha.10](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.9...v0.1.0-alpha.10)
+
+### Features
+
+* fix: update the way auth headers are constructed ([952d4ed](https://github.com/optechai/node-sdk/commit/952d4ed907c082f37c47b0dac5f5c75889d9d363))
+
 ## 0.1.0-alpha.9 (2024-10-31)
 
 Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
