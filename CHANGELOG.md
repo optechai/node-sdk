@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.0-alpha.12 (2024-10-31)
+
+Full Changelog: [v0.1.0-alpha.11...v0.1.0-alpha.12](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.11...v0.1.0-alpha.12)
+
+### Features
+
+* chore: account for empty body ([1186ba5](https://github.com/optechai/node-sdk/commit/1186ba5e86f3976fc3949cf1e20c52f45561ee8c))
+* chore: adjust generated test ([ab4b394](https://github.com/optechai/node-sdk/commit/ab4b39448fced35c60ff9bffbf714dad2b631e2c))
+* feat: adjust signature generation to use raw body ([7db7f2f](https://github.com/optechai/node-sdk/commit/7db7f2f9571ff31bd6c84086d8d10aa0a49beda1))
+
 ## 0.1.0-alpha.11 (2024-10-31)
 
 Full Changelog: [v0.1.0-alpha.10...v0.1.0-alpha.11](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.10...v0.1.0-alpha.11)
