@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.9 (2024-10-31)
+
+Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
+
+### Bug Fixes
+
+* **api:** stainless config updates ([#30](https://github.com/optechai/node-sdk/issues/30)) ([e83c14c](https://github.com/optechai/node-sdk/commit/e83c14c123f2c421a922d4bfe26a2ec84223a6d3))
+
 ## 0.1.0-alpha.8 (2024-10-31)
 
 Full Changelog: [v0.1.0-alpha.7...v0.1.0-alpha.8](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.7...v0.1.0-alpha.8)
