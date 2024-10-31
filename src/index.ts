@@ -89,7 +89,7 @@ export class Lorikeet extends Core.APIClient {
    *
    * @param {string | undefined} [opts.clientId=process.env['LORIKEET_CLIENT_ID'] ?? undefined]
    * @param {string | undefined} [opts.clientSecret=process.env['LORIKEET_CLIENT_SECRET'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['LORIKEET_BASE_URL'] ?? http://api.lorikeetcx.ai] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['LORIKEET_BASE_URL'] ?? https://api.lorikeetcx.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
    * @param {Core.Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -118,7 +118,7 @@ export class Lorikeet extends Core.APIClient {
       clientId,
       clientSecret,
       ...opts,
-      baseURL: baseURL || `http://api.lorikeetcx.ai`,
+      baseURL: baseURL || `https://api.lorikeetcx.ai`,
     }
 
     super({
