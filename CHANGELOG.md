@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.8 (2024-10-31)
+
+Full Changelog: [v0.1.0-alpha.7...v0.1.0-alpha.8](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.7...v0.1.0-alpha.8)
+
+### Features
+
+* feat: add auth ([3e564ab](https://github.com/optechai/node-sdk/commit/3e564abee9abd0168ec7abf891254d26e3831c55))
+
 ## 0.1.0-alpha.7 (2024-10-30)
 
 Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)
