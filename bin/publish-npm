@@ -23,3 +23,8 @@ fi
 
 # Publish with the appropriate tag
 pnpm publish --access public --tag "$TAG" --no-git-checks
+
+# associate the current version with the next tag
+if [[ "$TAG" != "latest" ]]; then
+  pnpm dist-tag add "@lorikeetai/node-sdk@$VERSION" next
+fi
