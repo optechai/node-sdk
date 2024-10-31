@@ -20,7 +20,7 @@ or products provided by Lorikeet please follow the respective company's security
 
 ### Lorikeet Terms and Policies
 
-Please contact founders@lorikeet.ai for any questions or concerns regarding security of our services.
+Please contact support@lorikeetcx.ai for any questions or concerns regarding security of our services.
 
 ---
 

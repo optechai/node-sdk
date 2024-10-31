@@ -169,13 +169,13 @@ describe('instantiate client', () => {
     test('empty env variable', () => {
       process.env['LORIKEET_BASE_URL'] = '' // empty
       const client = new Lorikeet({ clientId: 'My Client ID', clientSecret: 'My Client Secret' })
-      expect(client.baseURL).toEqual('http://api.lorikeetcx.ai')
+      expect(client.baseURL).toEqual('https://api.lorikeetcx.ai')
     })
 
     test('blank env variable', () => {
       process.env['LORIKEET_BASE_URL'] = '  ' // blank
       const client = new Lorikeet({ clientId: 'My Client ID', clientSecret: 'My Client Secret' })
-      expect(client.baseURL).toEqual('http://api.lorikeetcx.ai')
+      expect(client.baseURL).toEqual('https://api.lorikeetcx.ai')
     })
   })
 
