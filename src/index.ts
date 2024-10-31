@@ -151,7 +151,13 @@ export class Lorikeet extends Core.APIClient {
   }
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
-    return { Authorization: `Bearer ${this.clientId}` }
+    const signature = generateSignature(JSON.stringify(opts.body), this.clientSecret)
+    return {
+      // backwards compatibility
+      'x-optech-webhook-signature': signature,
+      'x-lorikeet-signature': signature,
+      authorization: `Bearer ${this.clientId}`,
+    }
   }
 
   protected override stringifyQuery(query: Record<string, unknown>): string {
@@ -197,6 +203,7 @@ export const {
 
 export import toFile = Uploads.toFile
 export import fileFromPath = Uploads.fileFromPath
+import { generateSignature } from './lib/generate-signature'
 
 export namespace Lorikeet {
   export import RequestOptions = Core.RequestOptions
