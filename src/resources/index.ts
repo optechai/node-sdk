@@ -2,4 +2,4 @@
 
 export { Conversation } from './conversation/conversation';
 export { Ingest } from './ingest';
-export { TokenCreateParams, Token } from './token';
+export { Token, type TokenCreateParams } from './token';

@@ -2,17 +2,30 @@
 
 import { APIResource } from '../../resource';
 import * as ChatAPI from './chat';
+import {
+  Chat,
+  ChatGenerateParams,
+  ChatGenerateResponse,
+  ChatGetParams,
+  ChatGetResponse,
+  ChatStartParams,
+  ChatStartResponse,
+} from './chat';
 
 export class Conversation extends APIResource {
   chat: ChatAPI.Chat = new ChatAPI.Chat(this._client);
 }
 
-export namespace Conversation {
-  export import Chat = ChatAPI.Chat;
-  export import ChatGenerateResponse = ChatAPI.ChatGenerateResponse;
-  export import ChatGetResponse = ChatAPI.ChatGetResponse;
-  export import ChatStartResponse = ChatAPI.ChatStartResponse;
-  export import ChatGenerateParams = ChatAPI.ChatGenerateParams;
-  export import ChatGetParams = ChatAPI.ChatGetParams;
-  export import ChatStartParams = ChatAPI.ChatStartParams;
+Conversation.Chat = Chat;
+
+export declare namespace Conversation {
+  export {
+    Chat as Chat,
+    type ChatGenerateResponse as ChatGenerateResponse,
+    type ChatGetResponse as ChatGetResponse,
+    type ChatStartResponse as ChatStartResponse,
+    type ChatGenerateParams as ChatGenerateParams,
+    type ChatGetParams as ChatGetParams,
+    type ChatStartParams as ChatStartParams,
+  };
 }
