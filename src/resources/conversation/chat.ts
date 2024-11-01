@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../resource'
 import * as Core from '../../core'
-import * as ChatAPI from './chat'
 
 export class Chat extends APIResource {
   generate(body: ChatGenerateParams, options?: Core.RequestOptions): Core.APIPromise<ChatGenerateResponse> {
@@ -92,11 +91,13 @@ export interface ChatStartParams {
   customerId: string
 }
 
-export namespace Chat {
-  export import ChatGenerateResponse = ChatAPI.ChatGenerateResponse
-  export import ChatGetResponse = ChatAPI.ChatGetResponse
-  export import ChatStartResponse = ChatAPI.ChatStartResponse
-  export import ChatGenerateParams = ChatAPI.ChatGenerateParams
-  export import ChatGetParams = ChatAPI.ChatGetParams
-  export import ChatStartParams = ChatAPI.ChatStartParams
+export declare namespace Chat {
+  export {
+    type ChatGenerateResponse as ChatGenerateResponse,
+    type ChatGetResponse as ChatGetResponse,
+    type ChatStartResponse as ChatStartResponse,
+    type ChatGenerateParams as ChatGenerateParams,
+    type ChatGetParams as ChatGetParams,
+    type ChatStartParams as ChatStartParams,
+  }
 }
