@@ -2,7 +2,6 @@
 
 import { APIResource } from '../resource'
 import * as Core from '../core'
-import * as TokenAPI from './token'
 
 export class Token extends APIResource {
   create(body: TokenCreateParams, options?: Core.RequestOptions): Core.APIPromise<void> {
@@ -36,6 +35,6 @@ export interface TokenCreateParams {
   remoteId: string
 }
 
-export namespace Token {
-  export import TokenCreateParams = TokenAPI.TokenCreateParams
+export declare namespace Token {
+  export { type TokenCreateParams as TokenCreateParams }
 }

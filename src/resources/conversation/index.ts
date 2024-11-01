@@ -1,12 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
-  ChatGenerateResponse,
-  ChatGetResponse,
-  ChatStartResponse,
-  ChatGenerateParams,
-  ChatGetParams,
-  ChatStartParams,
   Chat,
+  type ChatGenerateResponse,
+  type ChatGetResponse,
+  type ChatStartResponse,
+  type ChatGenerateParams,
+  type ChatGetParams,
+  type ChatStartParams,
 } from './chat'
 export { Conversation } from './conversation'
