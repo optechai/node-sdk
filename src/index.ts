@@ -1,10 +1,13 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as Errors from './error';
-import * as Uploads from './uploads';
 import { type Agent } from './_shims/index';
 import * as Core from './core';
+import * as Errors from './error';
+import * as Uploads from './uploads';
 import * as API from './resources/index';
+import { Ingest } from './resources/ingest';
+import { Token, TokenCreateParams } from './resources/token';
+import { Conversation } from './resources/conversation/conversation';
 
 export interface ClientOptions {
   /**
@@ -174,34 +177,35 @@ export class Lorikeet extends Core.APIClient {
   static fileFromPath = Uploads.fileFromPath;
 }
 
-export const {
-  LorikeetError,
-  APIError,
-  APIConnectionError,
-  APIConnectionTimeoutError,
-  APIUserAbortError,
-  NotFoundError,
-  ConflictError,
-  RateLimitError,
-  BadRequestError,
-  AuthenticationError,
-  InternalServerError,
-  PermissionDeniedError,
-  UnprocessableEntityError,
-} = Errors;
+export const LorikeetError = Errors.LorikeetError;
+export const APIError = Errors.APIError;
+export const APIConnectionError = Errors.APIConnectionError;
+export const APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
+export const APIUserAbortError = Errors.APIUserAbortError;
+export const NotFoundError = Errors.NotFoundError;
+export const ConflictError = Errors.ConflictError;
+export const RateLimitError = Errors.RateLimitError;
+export const BadRequestError = Errors.BadRequestError;
+export const AuthenticationError = Errors.AuthenticationError;
+export const InternalServerError = Errors.InternalServerError;
+export const PermissionDeniedError = Errors.PermissionDeniedError;
+export const UnprocessableEntityError = Errors.UnprocessableEntityError;
 
 export import toFile = Uploads.toFile;
 export import fileFromPath = Uploads.fileFromPath;
 
-export namespace Lorikeet {
-  export import RequestOptions = Core.RequestOptions;
+Lorikeet.Conversation = Conversation;
+Lorikeet.Token = Token;
+Lorikeet.Ingest = Ingest;
 
-  export import Conversation = API.Conversation;
+export declare namespace Lorikeet {
+  export type RequestOptions = Core.RequestOptions;
 
-  export import Token = API.Token;
-  export import TokenCreateParams = API.TokenCreateParams;
+  export { Conversation as Conversation };
 
-  export import Ingest = API.Ingest;
+  export { Token as Token, type TokenCreateParams as TokenCreateParams };
+
+  export { Ingest as Ingest };
 }
 
 export default Lorikeet;
