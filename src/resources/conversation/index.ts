@@ -10,3 +10,4 @@ export {
   type ChatStartParams,
 } from './chat';
 export { Conversation } from './conversation';
+export { Email, type EmailStartResponse, type EmailStartParams } from './email';

@@ -5,7 +5,7 @@ import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
-import { Ingest } from './resources/ingest';
+import { Ingest, IngestTestParams } from './resources/ingest';
 import { Token, TokenCreateParams } from './resources/token';
 import { Conversation } from './resources/conversation/conversation';
 
@@ -207,7 +207,7 @@ export declare namespace Lorikeet {
 
   export { Token as Token, type TokenCreateParams as TokenCreateParams };
 
-  export { Ingest as Ingest };
+  export { Ingest as Ingest, type IngestTestParams as IngestTestParams };
 }
 
 export default Lorikeet;
