@@ -1,5 +1,15 @@
 # Conversation
 
+## Email
+
+Types:
+
+- <code><a href="./src/resources/conversation/email.ts">EmailStartResponse</a></code>
+
+Methods:
+
+- <code title="post /conversation/email/create">client.conversation.email.<a href="./src/resources/conversation/email.ts">start</a>({ ...params }) -> EmailStartResponse</code>
+
 ## Chat
 
 Types:
@@ -24,4 +34,5 @@ Methods:
 
 Methods:
 
+- <code title="post /ingest/test/{toolId}">client.ingest.<a href="./src/resources/ingest.ts">test</a>(toolId, { ...params }) -> void</code>
 - <code title="post /ingest/validate">client.ingest.<a href="./src/resources/ingest.ts">validate</a>() -> void</code>
