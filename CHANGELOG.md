@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-beta.2 (2024-11-04)
+
+Full Changelog: [v0.1.0-beta.1...v0.1.0-beta.2](https://github.com/optechai/node-sdk/compare/v0.1.0-beta.1...v0.1.0-beta.2)
+
+### Chores
+
+* **internal:** version bump ([#48](https://github.com/optechai/node-sdk/issues/48)) ([1f6cf7d](https://github.com/optechai/node-sdk/commit/1f6cf7de5a57381296fde1f73bb2a48cd47ff152))
+
 ## 0.1.0-beta.1 (2024-11-04)
 
 Full Changelog: [v0.1.0-alpha.13...v0.1.0-beta.1](https://github.com/optechai/node-sdk/compare/v0.1.0-alpha.13...v0.1.0-beta.1)
