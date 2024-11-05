@@ -6,7 +6,7 @@ import * as Errors from './error'
 import * as Uploads from './uploads'
 import * as API from './resources/index'
 import { Ingest, IngestTestParams } from './resources/ingest'
-import { Token, TokenCreateParams } from './resources/token'
+import { Token, TokenCreateParams, TokenCreateResponse } from './resources/token'
 import { Conversation } from './resources/conversation/conversation'
 
 export interface ClientOptions {
@@ -220,7 +220,11 @@ export declare namespace Lorikeet {
 
   export { Conversation as Conversation }
 
-  export { Token as Token, type TokenCreateParams as TokenCreateParams }
+  export {
+    Token as Token,
+    type TokenCreateResponse as TokenCreateResponse,
+    type TokenCreateParams as TokenCreateParams,
+  }
 
   export { Ingest as Ingest, type IngestTestParams as IngestTestParams }
 }
