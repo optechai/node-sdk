@@ -9,7 +9,7 @@ export class Ingest extends APIResource {
       body,
       ...options,
       headers: { Accept: '*/*', ...options?.headers },
-    });
+    })
   }
 
   validate(options?: Core.RequestOptions): Core.APIPromise<void> {
@@ -24,14 +24,14 @@ export interface IngestTestParams {
   /**
    * The data to simulate a test response for.
    */
-  inputs: unknown;
+  inputs: unknown
 
   /**
    * The subscriber id to simulate a test response for.
    */
-  subscriberId: string;
+  subscriberId: string
 }
 
 export declare namespace Ingest {
-  export { type IngestTestParams as IngestTestParams };
+  export { type IngestTestParams as IngestTestParams }
 }
