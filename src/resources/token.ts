@@ -4,14 +4,16 @@ import { APIResource } from '../resource'
 import * as Core from '../core'
 
 export class Token extends APIResource {
-  create(body: TokenCreateParams, options?: Core.RequestOptions): Core.APIPromise<void> {
+  create(body: TokenCreateParams, options?: Core.RequestOptions): Core.APIPromise<string> {
     return this._client.post('/ingest/token', {
       body,
       ...options,
-      headers: { Accept: '*/*', ...options?.headers },
+      headers: { Accept: 'application/json', ...options?.headers },
     })
   }
 }
+
+export type TokenCreateResponse = string
 
 export interface TokenCreateParams {
   /**
@@ -36,5 +38,5 @@ export interface TokenCreateParams {
 }
 
 export declare namespace Token {
-  export { type TokenCreateParams as TokenCreateParams }
+  export { type TokenCreateResponse as TokenCreateResponse, type TokenCreateParams as TokenCreateParams }
 }
