@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-beta.3 (2024-11-05)
+
+Full Changelog: [v0.1.0-beta.2...v0.1.0-beta.3](https://github.com/optechai/node-sdk/compare/v0.1.0-beta.2...v0.1.0-beta.3)
+
+### Features
+
+* chore: remove custom runner ([858d6cb](https://github.com/optechai/node-sdk/commit/858d6cb370342f02c305e066d765364f41559568))
+
+
+### Chores
+
+* **internal:** version bump ([#51](https://github.com/optechai/node-sdk/issues/51)) ([a13fa42](https://github.com/optechai/node-sdk/commit/a13fa426430b92681081e6a066e3b85a11fd2591))
+
 ## 0.1.0-beta.2 (2024-11-04)
 
 Full Changelog: [v0.1.0-beta.1...v0.1.0-beta.2](https://github.com/optechai/node-sdk/compare/v0.1.0-beta.1...v0.1.0-beta.2)
