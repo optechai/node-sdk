@@ -8,6 +8,6 @@ export {
   type ChatGenerateParams,
   type ChatGetParams,
   type ChatStartParams,
-} from './chat'
-export { Conversation } from './conversation'
-export { Email, type EmailStartResponse, type EmailStartParams } from './email'
+} from './chat';
+export { Conversation } from './conversation';
+export { Email, type EmailStartResponse, type EmailStartParams } from './email';

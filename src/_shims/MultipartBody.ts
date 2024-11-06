@@ -4,6 +4,6 @@
 export class MultipartBody {
   constructor(public body: any) {}
   get [Symbol.toStringTag](): string {
-    return 'MultipartBody'
+    return 'MultipartBody';
   }
 }

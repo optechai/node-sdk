@@ -1,9 +1,9 @@
 /**
  * Disclaimer: modules in _shims aren't intended to be imported by SDK users.
  */
-import { MultipartBody } from './MultipartBody'
-import { type RequestOptions } from '../core'
-import { type Shims } from './registry'
+import { MultipartBody } from './MultipartBody';
+import { type RequestOptions } from '../core';
+import { type Shims } from './registry';
 
 export function getRuntime({ manuallyImported }: { manuallyImported?: boolean } = {}): Shims {
   const recommendation =
@@ -12,24 +12,24 @@ export function getRuntime({ manuallyImported }: { manuallyImported?: boolean } 
     : `Add one of these imports before your first \`import … from '@lorikeetai/node-sdk'\`:
 - \`import '@lorikeetai/node-sdk/shims/node'\` (if you're running on Node)
 - \`import '@lorikeetai/node-sdk/shims/web'\` (otherwise)
-`
+`;
 
-  let _fetch, _Request, _Response, _Headers
+  let _fetch, _Request, _Response, _Headers;
   try {
     // @ts-ignore
-    _fetch = fetch
+    _fetch = fetch;
     // @ts-ignore
-    _Request = Request
+    _Request = Request;
     // @ts-ignore
-    _Response = Response
+    _Response = Response;
     // @ts-ignore
-    _Headers = Headers
+    _Headers = Headers;
   } catch (error) {
     throw new Error(
       `this environment is missing the following Web Fetch API type: ${
         (error as any).message
       }. ${recommendation}`,
-    )
+    );
   }
 
   return {
@@ -46,7 +46,7 @@ export function getRuntime({ manuallyImported }: { manuallyImported?: boolean } 
           constructor() {
             throw new Error(
               `file uploads aren't supported in this environment yet as 'FormData' is undefined. ${recommendation}`,
-            )
+            );
           }
         }
       ),
@@ -56,7 +56,7 @@ export function getRuntime({ manuallyImported }: { manuallyImported?: boolean } 
           constructor() {
             throw new Error(
               `file uploads aren't supported in this environment yet as 'Blob' is undefined. ${recommendation}`,
-            )
+            );
           }
         }
       ),
@@ -68,7 +68,7 @@ export function getRuntime({ manuallyImported }: { manuallyImported?: boolean } 
           constructor() {
             throw new Error(
               `file uploads aren't supported in this environment yet as 'File' is undefined. ${recommendation}`,
-            )
+            );
           }
         }
       ),
@@ -80,7 +80,7 @@ export function getRuntime({ manuallyImported }: { manuallyImported?: boolean } 
           constructor() {
             throw new Error(
               `streaming isn't supported in this environment yet as 'ReadableStream' is undefined. ${recommendation}`,
-            )
+            );
           }
         }
       ),
@@ -96,8 +96,8 @@ export function getRuntime({ manuallyImported }: { manuallyImported?: boolean } 
     fileFromPath: () => {
       throw new Error(
         'The `fileFromPath` function is only supported in Node. See the README for more details: https://www.github.com/optechai/node-sdk#file-uploads',
-      )
+      );
     },
     isFsReadStream: (value: any) => false,
-  }
+  };
 }

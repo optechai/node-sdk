@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource'
-import * as Core from '../core'
+import { APIResource } from '../resource';
+import * as Core from '../core';
 
 export class Token extends APIResource {
   create(body: TokenCreateParams, options?: Core.RequestOptions): Core.APIPromise<string> {
@@ -9,34 +9,34 @@ export class Token extends APIResource {
       body,
       ...options,
       headers: { Accept: 'application/json', ...options?.headers },
-    })
+    });
   }
 }
 
-export type TokenCreateResponse = string
+export type TokenCreateResponse = string;
 
 export interface TokenCreateParams {
   /**
    * The email of the user.
    */
-  email: string
+  email: string;
 
   /**
    * The first name of the user.
    */
-  firstName: string
+  firstName: string;
 
   /**
    * The last name of the user.
    */
-  lastName: string
+  lastName: string;
 
   /**
    * The unique identifier of the user in your system.
    */
-  remoteId: string
+  remoteId: string;
 }
 
 export declare namespace Token {
-  export { type TokenCreateResponse as TokenCreateResponse, type TokenCreateParams as TokenCreateParams }
+  export { type TokenCreateResponse as TokenCreateResponse, type TokenCreateParams as TokenCreateParams };
 }

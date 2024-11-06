@@ -7,4 +7,4 @@ module.exports = {
     'unused-imports/no-unused-imports': 'error',
   },
   root: true,
-}
+};

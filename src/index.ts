@@ -1,32 +1,32 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { type Agent } from './_shims/index'
-import * as Core from './core'
-import * as Errors from './error'
-import * as Uploads from './uploads'
-import * as API from './resources/index'
-import { Customer, CustomerCreateParams, CustomerCreateResponse } from './resources/customer'
-import { Ingest, IngestTestParams } from './resources/ingest'
-import { Token, TokenCreateParams, TokenCreateResponse } from './resources/token'
-import { Conversation } from './resources/conversation/conversation'
+import { type Agent } from './_shims/index';
+import * as Core from './core';
+import * as Errors from './error';
+import * as Uploads from './uploads';
+import * as API from './resources/index';
+import { Customer, CustomerCreateParams, CustomerCreateResponse } from './resources/customer';
+import { Ingest, IngestTestParams } from './resources/ingest';
+import { Token, TokenCreateParams, TokenCreateResponse } from './resources/token';
+import { Conversation } from './resources/conversation/conversation';
 
 export interface ClientOptions {
   /**
    * client identifier authentication associated with the account.
    */
-  clientId?: string | undefined
+  clientId?: string | undefined;
 
   /**
    * Secret key pulled from the Lorikeet App
    */
-  clientSecret?: string | undefined
+  clientSecret?: string | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
    * Defaults to process.env['LORIKEET_BASE_URL'].
    */
-  baseURL?: string | null | undefined
+  baseURL?: string | null | undefined;
 
   /**
    * The maximum amount of time (in milliseconds) that the client should wait for a response
@@ -35,7 +35,7 @@ export interface ClientOptions {
    * Note that request timeouts are retried by default, so in a worst-case scenario you may wait
    * much longer than this timeout before the promise succeeds or fails.
    */
-  timeout?: number
+  timeout?: number;
 
   /**
    * An HTTP agent used to manage HTTP(S) connections.
@@ -43,7 +43,7 @@ export interface ClientOptions {
    * If not provided, an agent will be constructed by default in the Node.js environment,
    * otherwise no agent is used.
    */
-  httpAgent?: Agent
+  httpAgent?: Agent;
 
   /**
    * Specify a custom `fetch` function implementation.
@@ -51,7 +51,7 @@ export interface ClientOptions {
    * If not provided, we use `node-fetch` on Node.js and otherwise expect that `fetch` is
    * defined globally.
    */
-  fetch?: Core.Fetch | undefined
+  fetch?: Core.Fetch | undefined;
 
   /**
    * The maximum number of times that the client will retry a request in case of a
@@ -59,7 +59,7 @@ export interface ClientOptions {
    *
    * @default 2
    */
-  maxRetries?: number
+  maxRetries?: number;
 
   /**
    * Default headers to include with every request to the API.
@@ -67,7 +67,7 @@ export interface ClientOptions {
    * These can be removed in individual requests by explicitly setting the
    * header to `undefined` or `null` in request options.
    */
-  defaultHeaders?: Core.Headers
+  defaultHeaders?: Core.Headers;
 
   /**
    * Default query parameters to include with every request to the API.
@@ -75,17 +75,17 @@ export interface ClientOptions {
    * These can be removed in individual requests by explicitly setting the
    * param to `undefined` in request options.
    */
-  defaultQuery?: Core.DefaultQuery
+  defaultQuery?: Core.DefaultQuery;
 }
 
 /**
  * API Client for interfacing with the Lorikeet API.
  */
 export class Lorikeet extends Core.APIClient {
-  clientId: string
-  clientSecret: string
+  clientId: string;
+  clientSecret: string;
 
-  private _options: ClientOptions
+  private _options: ClientOptions;
 
   /**
    * API Client for interfacing with the Lorikeet API.
@@ -109,12 +109,12 @@ export class Lorikeet extends Core.APIClient {
     if (clientId === undefined) {
       throw new Errors.LorikeetError(
         "The LORIKEET_CLIENT_ID environment variable is missing or empty; either provide it, or instantiate the Lorikeet client with an clientId option, like new Lorikeet({ clientId: 'My Client ID' }).",
-      )
+      );
     }
     if (clientSecret === undefined) {
       throw new Errors.LorikeetError(
         "The LORIKEET_CLIENT_SECRET environment variable is missing or empty; either provide it, or instantiate the Lorikeet client with an clientSecret option, like new Lorikeet({ clientSecret: 'My Client Secret' }).",
-      )
+      );
     }
 
     const options: ClientOptions = {
@@ -122,7 +122,7 @@ export class Lorikeet extends Core.APIClient {
       clientSecret,
       ...opts,
       baseURL: baseURL || `https://api.lorikeetcx.ai`,
-    }
+    };
 
     super({
       baseURL: options.baseURL!,
@@ -130,28 +130,28 @@ export class Lorikeet extends Core.APIClient {
       httpAgent: options.httpAgent,
       maxRetries: options.maxRetries,
       fetch: options.fetch,
-    })
+    });
 
-    this._options = options
+    this._options = options;
 
-    this.clientId = clientId
-    this.clientSecret = clientSecret
+    this.clientId = clientId;
+    this.clientSecret = clientSecret;
   }
 
-  conversation: API.Conversation = new API.Conversation(this)
-  token: API.Token = new API.Token(this)
-  customer: API.Customer = new API.Customer(this)
-  ingest: API.Ingest = new API.Ingest(this)
+  conversation: API.Conversation = new API.Conversation(this);
+  token: API.Token = new API.Token(this);
+  customer: API.Customer = new API.Customer(this);
+  ingest: API.Ingest = new API.Ingest(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
-    return this._options.defaultQuery
+    return this._options.defaultQuery;
   }
 
   protected override defaultHeaders(opts: Core.FinalRequestOptions): Core.Headers {
     return {
       ...super.defaultHeaders(opts),
       ...this._options.defaultHeaders,
-    }
+    };
   }
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
@@ -163,34 +163,34 @@ export class Lorikeet extends Core.APIClient {
         : JSON.stringify(opts.body, null, 2)
       : '',
       this.clientSecret,
-    )
+    );
     return {
       // backwards compatibility
       'x-optech-webhook-signature': signature,
       'x-lorikeet-signature': signature,
       authorization: `Bearer ${this.clientId}`,
-    }
+    };
   }
 
-  static Lorikeet = this
-  static DEFAULT_TIMEOUT = 60000 // 1 minute
+  static Lorikeet = this;
+  static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static LorikeetError = Errors.LorikeetError
-  static APIError = Errors.APIError
-  static APIConnectionError = Errors.APIConnectionError
-  static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError
-  static APIUserAbortError = Errors.APIUserAbortError
-  static NotFoundError = Errors.NotFoundError
-  static ConflictError = Errors.ConflictError
-  static RateLimitError = Errors.RateLimitError
-  static BadRequestError = Errors.BadRequestError
-  static AuthenticationError = Errors.AuthenticationError
-  static InternalServerError = Errors.InternalServerError
-  static PermissionDeniedError = Errors.PermissionDeniedError
-  static UnprocessableEntityError = Errors.UnprocessableEntityError
+  static LorikeetError = Errors.LorikeetError;
+  static APIError = Errors.APIError;
+  static APIConnectionError = Errors.APIConnectionError;
+  static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
+  static APIUserAbortError = Errors.APIUserAbortError;
+  static NotFoundError = Errors.NotFoundError;
+  static ConflictError = Errors.ConflictError;
+  static RateLimitError = Errors.RateLimitError;
+  static BadRequestError = Errors.BadRequestError;
+  static AuthenticationError = Errors.AuthenticationError;
+  static InternalServerError = Errors.InternalServerError;
+  static PermissionDeniedError = Errors.PermissionDeniedError;
+  static UnprocessableEntityError = Errors.UnprocessableEntityError;
 
-  static toFile = Uploads.toFile
-  static fileFromPath = Uploads.fileFromPath
+  static toFile = Uploads.toFile;
+  static fileFromPath = Uploads.fileFromPath;
 }
 
 export {
@@ -207,35 +207,35 @@ export {
   InternalServerError,
   PermissionDeniedError,
   UnprocessableEntityError,
-} from './error'
+} from './error';
 
-export import toFile = Uploads.toFile
-export import fileFromPath = Uploads.fileFromPath
-import { generateSignature } from './lib/generate-signature'
+export import toFile = Uploads.toFile;
+export import fileFromPath = Uploads.fileFromPath;
+import { generateSignature } from './lib/generate-signature';
 
-Lorikeet.Conversation = Conversation
-Lorikeet.Token = Token
-Lorikeet.Customer = Customer
-Lorikeet.Ingest = Ingest
+Lorikeet.Conversation = Conversation;
+Lorikeet.Token = Token;
+Lorikeet.Customer = Customer;
+Lorikeet.Ingest = Ingest;
 
 export declare namespace Lorikeet {
-  export type RequestOptions = Core.RequestOptions
+  export type RequestOptions = Core.RequestOptions;
 
-  export { Conversation as Conversation }
+  export { Conversation as Conversation };
 
   export {
     Token as Token,
     type TokenCreateResponse as TokenCreateResponse,
     type TokenCreateParams as TokenCreateParams,
-  }
+  };
 
   export {
     Customer as Customer,
     type CustomerCreateResponse as CustomerCreateResponse,
     type CustomerCreateParams as CustomerCreateParams,
-  }
+  };
 
-  export { Ingest as Ingest, type IngestTestParams as IngestTestParams }
+  export { Ingest as Ingest, type IngestTestParams as IngestTestParams };
 }
 
-export default Lorikeet
+export default Lorikeet;

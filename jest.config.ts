@@ -1,4 +1,4 @@
-import type { JestConfigWithTsJest } from 'ts-jest'
+import type { JestConfigWithTsJest } from 'ts-jest';
 
 const config: JestConfigWithTsJest = {
   preset: 'ts-jest/presets/default-esm',
@@ -18,6 +18,6 @@ const config: JestConfigWithTsJest = {
     '<rootDir>/deno_tests/',
   ],
   testPathIgnorePatterns: ['scripts'],
-}
+};
 
-export default config
+export default config;
