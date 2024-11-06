@@ -9,9 +9,14 @@ const client = new Lorikeet({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource email', () => {
-  test('start: only required params', async () => {
-    const responsePromise = client.conversation.email.start({ customerId: {} });
+describe('resource customer', () => {
+  test('create: only required params', async () => {
+    const responsePromise = client.customer.create({
+      email: 'lori@keet.com',
+      firstName: 'Lori',
+      lastName: 'Keet',
+      remoteId: '1234567890',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,10 +26,13 @@ describe('resource email', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('start: required and optional params', async () => {
-    const response = await client.conversation.email.start({
-      customerId: {},
-      subject: 'Question about order tracking number',
+  test('create: required and optional params', async () => {
+    const response = await client.customer.create({
+      email: 'lori@keet.com',
+      firstName: 'Lori',
+      lastName: 'Keet',
+      remoteId: '1234567890',
+      displayName: 'Lori Keet',
     });
   });
 });

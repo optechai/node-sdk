@@ -5,15 +5,15 @@ import * as Core from '../../core'
 
 export class Chat extends APIResource {
   generate(body: ChatGenerateParams, options?: Core.RequestOptions): Core.APIPromise<ChatGenerateResponse> {
-    return this._client.post('/conversation/chat/message', { body, ...options })
+    return this._client.post('/v1/conversation/chat/message', { body, ...options })
   }
 
   get(query: ChatGetParams, options?: Core.RequestOptions): Core.APIPromise<ChatGetResponse> {
-    return this._client.get('/conversation/chat/message', { query, ...options })
+    return this._client.get('/v1/conversation/chat/message', { query, ...options })
   }
 
   start(body: ChatStartParams, options?: Core.RequestOptions): Core.APIPromise<ChatStartResponse> {
-    return this._client.post('/conversation/chat/create', { body, ...options })
+    return this._client.post('/v1/conversation/chat/create', { body, ...options })
   }
 }
 
@@ -21,7 +21,7 @@ export interface ChatGenerateResponse {
   /**
    * The ID of the conversation
    */
-  conversationId: string
+  conversationId: unknown
 
   /**
    * The timestamp of when the message was created in our system.
@@ -39,7 +39,7 @@ export interface ChatGetResponse {
   /**
    * The ID of the conversation
    */
-  conversationId: string
+  conversationId: unknown
 
   /**
    * The timestamp of when the message was created in our system.
@@ -57,7 +57,7 @@ export interface ChatStartResponse {
   /**
    * The ID of the conversation
    */
-  conversationId: string
+  conversationId: unknown
 
   /**
    * The timestamp of the when the conversation was created in our system.
@@ -69,7 +69,7 @@ export interface ChatGenerateParams {
   /**
    * The ID of the conversation
    */
-  conversationId: string
+  conversationId: unknown
 
   /**
    * The message to be sent to the user. This endpoint supports markdown.
@@ -88,7 +88,12 @@ export interface ChatStartParams {
   /**
    * The ID of the customer. If omitted, a new customer will be created.
    */
-  customerId: string
+  customerId: unknown
+
+  /**
+   * The timestamp of the when the conversation was created in our system.
+   */
+  subject?: string
 }
 
 export declare namespace Chat {
