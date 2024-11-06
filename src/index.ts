@@ -5,6 +5,7 @@ import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
+import { Customer, CustomerCreateParams, CustomerCreateResponse } from './resources/customer';
 import { Ingest, IngestTestParams } from './resources/ingest';
 import { Token, TokenCreateParams, TokenCreateResponse } from './resources/token';
 import { Conversation } from './resources/conversation/conversation';
@@ -139,6 +140,7 @@ export class Lorikeet extends Core.APIClient {
 
   conversation: API.Conversation = new API.Conversation(this);
   token: API.Token = new API.Token(this);
+  customer: API.Customer = new API.Customer(this);
   ingest: API.Ingest = new API.Ingest(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
@@ -198,6 +200,7 @@ export import fileFromPath = Uploads.fileFromPath;
 
 Lorikeet.Conversation = Conversation;
 Lorikeet.Token = Token;
+Lorikeet.Customer = Customer;
 Lorikeet.Ingest = Ingest;
 
 export declare namespace Lorikeet {
@@ -209,6 +212,12 @@ export declare namespace Lorikeet {
     Token as Token,
     type TokenCreateResponse as TokenCreateResponse,
     type TokenCreateParams as TokenCreateParams,
+  };
+
+  export {
+    Customer as Customer,
+    type CustomerCreateResponse as CustomerCreateResponse,
+    type CustomerCreateParams as CustomerCreateParams,
   };
 
   export { Ingest as Ingest, type IngestTestParams as IngestTestParams };
