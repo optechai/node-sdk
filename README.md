@@ -28,12 +28,9 @@ const client = new Lorikeet({
 });
 
 async function main() {
-  const token = await client.token.create({
-    email: 'lori@lorikeetcx.ai',
-    firstName: 'Lori',
-    lastName: 'Keet',
-    remoteId: 'remoteId',
-  });
+  const response = await client.conversation.chat.start({ customerId: 'blah' });
+
+  console.log(response.conversationId);
 }
 
 main();
@@ -53,13 +50,8 @@ const client = new Lorikeet({
 });
 
 async function main() {
-  const params: Lorikeet.TokenCreateParams = {
-    email: 'lori@lorikeetcx.ai',
-    firstName: 'Lori',
-    lastName: 'Keet',
-    remoteId: 'remoteId',
-  };
-  const token: string = await client.token.create(params);
+  const params: Lorikeet.Conversation.ChatStartParams = { customerId: 'blah' };
+  const response: Lorikeet.Conversation.ChatStartResponse = await client.conversation.chat.start(params);
 }
 
 main();
@@ -76,17 +68,15 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const token = await client.token
-    .create({ email: 'lori@lorikeetcx.ai', firstName: 'Lori', lastName: 'Keet', remoteId: 'remoteId' })
-    .catch(async (err) => {
-      if (err instanceof Lorikeet.APIError) {
-        console.log(err.status); // 400
-        console.log(err.name); // BadRequestError
-        console.log(err.headers); // {server: 'nginx', ...}
-      } else {
-        throw err;
-      }
-    });
+  const response = await client.conversation.chat.start({ customerId: 'blah' }).catch(async (err) => {
+    if (err instanceof Lorikeet.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 }
 
 main();
@@ -122,7 +112,7 @@ const client = new Lorikeet({
 });
 
 // Or, configure per-request:
-await client.token.create({ email: 'lori@lorikeetcx.ai', firstName: 'Lori', lastName: 'Keet', remoteId: 'remoteId' }, {
+await client.conversation.chat.start({ customerId: 'blah' }, {
   maxRetries: 5,
 });
 ```
@@ -140,7 +130,7 @@ const client = new Lorikeet({
 });
 
 // Override per-request:
-await client.token.create({ email: 'lori@lorikeetcx.ai', firstName: 'Lori', lastName: 'Keet', remoteId: 'remoteId' }, {
+await client.conversation.chat.start({ customerId: 'blah' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -161,17 +151,15 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new Lorikeet();
 
-const response = await client.token
-  .create({ email: 'lori@lorikeetcx.ai', firstName: 'Lori', lastName: 'Keet', remoteId: 'remoteId' })
-  .asResponse();
+const response = await client.conversation.chat.start({ customerId: 'blah' }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: token, response: raw } = await client.token
-  .create({ email: 'lori@lorikeetcx.ai', firstName: 'Lori', lastName: 'Keet', remoteId: 'remoteId' })
+const { data: response, response: raw } = await client.conversation.chat
+  .start({ customerId: 'blah' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(token);
+console.log(response.conversationId);
 ```
 
 ### Making custom/undocumented requests
@@ -276,8 +264,8 @@ const client = new Lorikeet({
 });
 
 // Override per-request:
-await client.token.create(
-  { email: 'lori@lorikeetcx.ai', firstName: 'Lori', lastName: 'Keet', remoteId: 'remoteId' },
+await client.conversation.chat.start(
+  { customerId: 'blah' },
   {
     httpAgent: new http.Agent({ keepAlive: false }),
   },
