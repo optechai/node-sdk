@@ -2,27 +2,7 @@
 
 ## Email
 
-Types:
-
-- <code><a href="./src/resources/conversation/email.ts">EmailStartResponse</a></code>
-
-Methods:
-
-- <code title="post /conversation/email/create">client.conversation.email.<a href="./src/resources/conversation/email.ts">start</a>({ ...params }) -> EmailStartResponse</code>
-
 ## Chat
-
-Types:
-
-- <code><a href="./src/resources/conversation/chat.ts">ChatGenerateResponse</a></code>
-- <code><a href="./src/resources/conversation/chat.ts">ChatGetResponse</a></code>
-- <code><a href="./src/resources/conversation/chat.ts">ChatStartResponse</a></code>
-
-Methods:
-
-- <code title="post /conversation/chat/message">client.conversation.chat.<a href="./src/resources/conversation/chat.ts">generate</a>({ ...params }) -> ChatGenerateResponse</code>
-- <code title="get /conversation/chat/message">client.conversation.chat.<a href="./src/resources/conversation/chat.ts">get</a>({ ...params }) -> ChatGetResponse</code>
-- <code title="post /conversation/chat/create">client.conversation.chat.<a href="./src/resources/conversation/chat.ts">start</a>({ ...params }) -> ChatStartResponse</code>
 
 # Token
 
