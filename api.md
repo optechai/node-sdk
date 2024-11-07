@@ -24,17 +24,17 @@ Methods:
 - <code title="get /v1/conversation/chat/message">client.conversation.chat.<a href="./src/resources/conversation/chat.ts">get</a>({ ...params }) -> ChatGetResponse</code>
 - <code title="post /v1/conversation/chat/create">client.conversation.chat.<a href="./src/resources/conversation/chat.ts">start</a>({ ...params }) -> ChatStartResponse</code>
 
-# Token
-
 # Customer
 
 Types:
 
 - <code><a href="./src/resources/customer.ts">CustomerCreateResponse</a></code>
+- <code><a href="./src/resources/customer.ts">CustomerTokenResponse</a></code>
 
 Methods:
 
 - <code title="post /v1/customer">client.customer.<a href="./src/resources/customer.ts">create</a>({ ...params }) -> CustomerCreateResponse</code>
+- <code title="post /v1/customer/token">client.customer.<a href="./src/resources/customer.ts">token</a>({ ...params }) -> string</code>
 
 # Ingest
 
