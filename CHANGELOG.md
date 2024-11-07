@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.2.0 (2024-11-07)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/optechai/node-sdk/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* chore: re-add prettier formatting ([4329850](https://github.com/optechai/node-sdk/commit/4329850f92d35ef676d64c716b1a795756d07f81))
+* chore: run format ([4a3a193](https://github.com/optechai/node-sdk/commit/4a3a193d1cf2cecfeab8945970cc95afcab8a9a2))
+
+
+### Chores
+
+* **internal:** version bump ([#66](https://github.com/optechai/node-sdk/issues/66)) ([ceeac75](https://github.com/optechai/node-sdk/commit/ceeac75db5f11ed8d763fd1a73e65a0d310b7313))
+* little whoopsie ([6ad3de4](https://github.com/optechai/node-sdk/commit/6ad3de4610c7b5639c246fa7e7de3a78ea952089))
+* re-add prettier formatting ([fdbaae6](https://github.com/optechai/node-sdk/commit/fdbaae608e3c80f0be78474f2dfba95f7fcb366d))
+* run format ([82e0c78](https://github.com/optechai/node-sdk/commit/82e0c7871984c2c3d6812f50008df8866976427f))
+
+
+### Documentation
+
+* add example ([115fd30](https://github.com/optechai/node-sdk/commit/115fd30d7b09be6d0bd3836d480fe9ae35c568ba))
+
 ## 0.1.0 (2024-11-06)
 
 Full Changelog: [v0.1.0-beta.4...v0.1.0](https://github.com/optechai/node-sdk/compare/v0.1.0-beta.4...v0.1.0)
