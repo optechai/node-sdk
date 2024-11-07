@@ -35,4 +35,29 @@ describe('resource customer', () => {
       displayName: 'Lori Keet',
     });
   });
+
+  test('token: only required params', async () => {
+    const responsePromise = client.customer.token({
+      email: 'lori@lorikeetcx.ai',
+      firstName: 'Lori',
+      lastName: 'Keet',
+      remoteId: 'remoteId',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('token: required and optional params', async () => {
+    const response = await client.customer.token({
+      email: 'lori@lorikeetcx.ai',
+      firstName: 'Lori',
+      lastName: 'Keet',
+      remoteId: 'remoteId',
+    });
+  });
 });
