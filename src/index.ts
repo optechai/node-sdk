@@ -5,9 +5,14 @@ import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
-import { Customer, CustomerCreateParams, CustomerCreateResponse } from './resources/customer';
+import {
+  Customer,
+  CustomerCreateParams,
+  CustomerCreateResponse,
+  CustomerTokenParams,
+  CustomerTokenResponse,
+} from './resources/customer';
 import { Ingest, IngestTestParams } from './resources/ingest';
-import { Token } from './resources/token';
 import { Conversation } from './resources/conversation/conversation';
 
 export interface ClientOptions {
@@ -139,7 +144,6 @@ export class Lorikeet extends Core.APIClient {
   }
 
   conversation: API.Conversation = new API.Conversation(this);
-  token: API.Token = new API.Token(this);
   customer: API.Customer = new API.Customer(this);
   ingest: API.Ingest = new API.Ingest(this);
 
@@ -199,7 +203,6 @@ export import toFile = Uploads.toFile;
 export import fileFromPath = Uploads.fileFromPath;
 
 Lorikeet.Conversation = Conversation;
-Lorikeet.Token = Token;
 Lorikeet.Customer = Customer;
 Lorikeet.Ingest = Ingest;
 
@@ -208,12 +211,12 @@ export declare namespace Lorikeet {
 
   export { Conversation as Conversation };
 
-  export { Token as Token };
-
   export {
     Customer as Customer,
     type CustomerCreateResponse as CustomerCreateResponse,
+    type CustomerTokenResponse as CustomerTokenResponse,
     type CustomerCreateParams as CustomerCreateParams,
+    type CustomerTokenParams as CustomerTokenParams,
   };
 
   export { Ingest as Ingest, type IngestTestParams as IngestTestParams };
