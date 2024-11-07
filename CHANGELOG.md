@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0 (2024-11-07)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/optechai/node-sdk/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** api update ([#70](https://github.com/optechai/node-sdk/issues/70)) ([c0a94ee](https://github.com/optechai/node-sdk/commit/c0a94ee18502b2e75ebf589751aebac8c320dfcd))
+* **api:** fix spec, rename token import ([#72](https://github.com/optechai/node-sdk/issues/72)) ([05f7e25](https://github.com/optechai/node-sdk/commit/05f7e2530ec27260fd864d1de3c4e45e4337ffef))
+
 ## 0.2.0 (2024-11-07)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/optechai/node-sdk/compare/v0.1.0...v0.2.0)
