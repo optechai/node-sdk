@@ -26,14 +26,6 @@ Methods:
 
 # Token
 
-Types:
-
-- <code><a href="./src/resources/token.ts">TokenCreateResponse</a></code>
-
-Methods:
-
-- <code title="post /ingest/token">client.token.<a href="./src/resources/token.ts">create</a>({ ...params }) -> string</code>
-
 # Customer
 
 Types:

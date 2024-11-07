@@ -29,10 +29,41 @@ export interface ChatGenerateResponse {
   createdAt: string;
 
   /**
-   * The message to be sent back to the user. If empty, the message is still being
-   * processed.
+   * The created message. This endpoint supports markdown.
    */
-  message: string;
+  message: ChatGenerateResponse.Message;
+
+  /**
+   * The timestamp of when the ticket was last updated in our system.
+   */
+  updatedAt: string;
+}
+
+export namespace ChatGenerateResponse {
+  /**
+   * The created message. This endpoint supports markdown.
+   */
+  export interface Message {
+    /**
+     * The ID of the conversation message
+     */
+    id: string;
+
+    /**
+     * The content of the message. Markdown on plain text.
+     */
+    content: string;
+
+    /**
+     * The raw content of the message. Usually HTML.
+     */
+    rawContent: string;
+
+    /**
+     * The type of the message
+     */
+    type: 'CUSTOMER' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | 'BOT_RESPONSE';
+  }
 }
 
 export interface ChatGetResponse {
@@ -47,10 +78,41 @@ export interface ChatGetResponse {
   createdAt: string;
 
   /**
-   * The message to be sent back to the user. If empty, the message is still being
-   * processed.
+   * The created message. This endpoint supports markdown.
    */
-  message: string;
+  message: ChatGetResponse.Message;
+
+  /**
+   * The timestamp of when the ticket was last updated in our system.
+   */
+  updatedAt: string;
+}
+
+export namespace ChatGetResponse {
+  /**
+   * The created message. This endpoint supports markdown.
+   */
+  export interface Message {
+    /**
+     * The ID of the conversation message
+     */
+    id: string;
+
+    /**
+     * The content of the message. Markdown on plain text.
+     */
+    content: string;
+
+    /**
+     * The raw content of the message. Usually HTML.
+     */
+    rawContent: string;
+
+    /**
+     * The type of the message
+     */
+    type: 'CUSTOMER' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | 'BOT_RESPONSE';
+  }
 }
 
 export interface ChatStartResponse {
