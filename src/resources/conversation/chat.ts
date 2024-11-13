@@ -24,7 +24,7 @@ export interface ChatGenerateResponse {
   conversationId: unknown;
 
   /**
-   * The timestamp of when the message was created in our system.
+   * The timestamp of when the last message was created in our system.
    */
   createdAt: string;
 
@@ -73,7 +73,7 @@ export interface ChatGetResponse {
   conversationId: unknown;
 
   /**
-   * The timestamp of when the message was created in our system.
+   * The timestamp of when the last message was created in our system.
    */
   createdAt: string;
 
