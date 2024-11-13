@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../resource';
 import * as Core from '../../core';
+import { pollUntil } from '@lorikeetai/node-sdk/lib/poll-until';
 
 export class Chat extends APIResource {
   generate(body: ChatGenerateParams, options?: Core.RequestOptions): Core.APIPromise<ChatGenerateResponse> {
@@ -14,6 +15,16 @@ export class Chat extends APIResource {
 
   start(body: ChatStartParams, options?: Core.RequestOptions): Core.APIPromise<ChatStartResponse> {
     return this._client.post('/v1/conversation/chat/create', { body, ...options });
+  }
+
+  poll(query: ChatGetParams, options?: Core.RequestOptions): Core.APIPromise<ChatGetResponse> {
+    const start = new Date().toISOString();
+    return pollUntil<ChatGetResponse>(
+      () => this._client.get('/v1/conversation/chat/message', { query, ...options }),
+      {
+        condition: (conversation) => conversation.createdAt > start,
+      },
+    ) as Core.APIPromise<ChatGetResponse>;
   }
 }
 
