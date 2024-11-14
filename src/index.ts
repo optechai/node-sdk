@@ -14,6 +14,7 @@ import {
 } from './resources/customer';
 import { Ingest, IngestTestParams } from './resources/ingest';
 import { Conversation } from './resources/conversation/conversation';
+import { generateSignature } from './lib/generate-signature';
 
 export interface ClientOptions {
   /**
@@ -197,30 +198,9 @@ export class Lorikeet extends Core.APIClient {
   static fileFromPath = Uploads.fileFromPath;
 }
 
-export {
-  LorikeetError,
-  APIError,
-  APIConnectionError,
-  APIConnectionTimeoutError,
-  APIUserAbortError,
-  NotFoundError,
-  ConflictError,
-  RateLimitError,
-  BadRequestError,
-  AuthenticationError,
-  InternalServerError,
-  PermissionDeniedError,
-  UnprocessableEntityError,
-} from './error';
-
-export import toFile = Uploads.toFile;
-export import fileFromPath = Uploads.fileFromPath;
-import { generateSignature } from './lib/generate-signature';
-
 Lorikeet.Conversation = Conversation;
 Lorikeet.Customer = Customer;
 Lorikeet.Ingest = Ingest;
-
 export declare namespace Lorikeet {
   export type RequestOptions = Core.RequestOptions;
 
@@ -236,5 +216,24 @@ export declare namespace Lorikeet {
 
   export { Ingest as Ingest, type IngestTestParams as IngestTestParams };
 }
+
+export { toFile, fileFromPath } from '@lorikeetai/node-sdk/uploads';
+export {
+  LorikeetError,
+  APIError,
+  APIConnectionError,
+  APIConnectionTimeoutError,
+  APIUserAbortError,
+  NotFoundError,
+  ConflictError,
+  RateLimitError,
+  BadRequestError,
+  AuthenticationError,
+  InternalServerError,
+  PermissionDeniedError,
+  UnprocessableEntityError,
+} from '@lorikeetai/node-sdk/error';
+
+export { generateSignature } from '@lorikeetai/node-sdk/lib/generate-signature';
 
 export default Lorikeet;

@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.3.1 (2024-11-14)
+
+Full Changelog: [v0.3.0...v0.3.1](https://github.com/optechai/node-sdk/compare/v0.3.0...v0.3.1)
+
+### Features
+
+* **api:** api update ([#75](https://github.com/optechai/node-sdk/issues/75)) ([108e553](https://github.com/optechai/node-sdk/commit/108e55335bea22bc946e43fd7661fd77cafa7d59))
+* **api:** api update ([#78](https://github.com/optechai/node-sdk/issues/78)) ([6009b30](https://github.com/optechai/node-sdk/commit/6009b30741c6835942cc1886f5ca9aa53df2e7f0))
+* **api:** api update ([#79](https://github.com/optechai/node-sdk/issues/79)) ([381205e](https://github.com/optechai/node-sdk/commit/381205e424f2ea33c6d13da2342d431153319e56))
+
+
+### Bug Fixes
+
+* add poll ([22f1f28](https://github.com/optechai/node-sdk/commit/22f1f287ba8383b5c129aa7029c36d8a46389499))
+
 ## 0.3.0 (2024-11-07)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/optechai/node-sdk/compare/v0.2.0...v0.3.0)

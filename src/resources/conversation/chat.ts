@@ -35,7 +35,7 @@ export interface ChatGenerateResponse {
   conversationId: unknown;
 
   /**
-   * The timestamp of when the message was created in our system.
+   * The timestamp of when the last message was created in our system.
    */
   createdAt: string;
 
@@ -84,7 +84,7 @@ export interface ChatGetResponse {
   conversationId: unknown;
 
   /**
-   * The timestamp of when the message was created in our system.
+   * The timestamp of when the last message was created in our system.
    */
   createdAt: string;
 
@@ -162,6 +162,11 @@ export interface ChatStartParams {
    * The ID of the customer. If omitted, a new customer will be created.
    */
   customerId: unknown;
+
+  /**
+   * The public key associated with this agent
+   */
+  publicKey: string;
 
   /**
    * The timestamp of the when the conversation was created in our system.
