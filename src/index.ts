@@ -14,6 +14,7 @@ import {
 } from './resources/customer';
 import { Ingest, IngestTestParams } from './resources/ingest';
 import { Conversation } from './resources/conversation/conversation';
+import { generateSignature } from './lib/generate-signature';
 
 export interface ClientOptions {
   /**
@@ -232,5 +233,7 @@ export {
   PermissionDeniedError,
   UnprocessableEntityError,
 } from '@lorikeetai/node-sdk/error';
+
+export { generateSignature } from '@lorikeetai/node-sdk/lib/generate-signature';
 
 export default Lorikeet;
