@@ -153,6 +153,11 @@ export interface ChatStartParams {
   customerId: unknown;
 
   /**
+   * The public key associated with this agent
+   */
+  publicKey: string;
+
+  /**
    * The timestamp of the when the conversation was created in our system.
    */
   subject?: string;
