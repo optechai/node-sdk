@@ -41,7 +41,7 @@ describe('resource chat', () => {
   });
 
   test('start: only required params', async () => {
-    const responsePromise = client.conversation.chat.start({ customerId: {} });
+    const responsePromise = client.conversation.chat.start({ customerId: {}, publicKey: 'publicKey' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -54,6 +54,7 @@ describe('resource chat', () => {
   test('start: required and optional params', async () => {
     const response = await client.conversation.chat.start({
       customerId: {},
+      publicKey: 'publicKey',
       subject: 'Question about order tracking number',
     });
   });
