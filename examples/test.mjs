@@ -11,6 +11,7 @@ const customer = await client.customer.create({
 });
 
 const conversation = await client.conversation.chat.start({
+  publicKey: process.env.LORIKEET_PUBLIC_KEY,
   customerId: customer.id,
 });
 
