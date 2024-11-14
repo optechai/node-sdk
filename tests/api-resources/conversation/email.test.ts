@@ -11,7 +11,7 @@ const client = new Lorikeet({
 
 describe('resource email', () => {
   test('start: only required params', async () => {
-    const responsePromise = client.conversation.email.start({ customerId: {} });
+    const responsePromise = client.conversation.email.start({ customerId: {}, publicKey: 'publicKey' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,6 +24,7 @@ describe('resource email', () => {
   test('start: required and optional params', async () => {
     const response = await client.conversation.email.start({
       customerId: {},
+      publicKey: 'publicKey',
       subject: 'Question about order tracking number',
     });
   });
