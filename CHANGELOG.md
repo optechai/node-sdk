@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.2 (2024-11-15)
+
+Full Changelog: [v0.3.1...v0.3.2](https://github.com/optechai/node-sdk/compare/v0.3.1...v0.3.2)
+
+### Chores
+
+* **internal:** version bump ([#80](https://github.com/optechai/node-sdk/issues/80)) ([769ddc7](https://github.com/optechai/node-sdk/commit/769ddc76f3ded51a5615e29ed44d8782f5246a8b))
+* rebuild project due to codegen change ([#83](https://github.com/optechai/node-sdk/issues/83)) ([491f0d8](https://github.com/optechai/node-sdk/commit/491f0d82637f8ab76db9c8236b8f4ed2d099d0a6))
+* tweak docs example ([302c7e0](https://github.com/optechai/node-sdk/commit/302c7e0a489055456e01adf22d163ed6059135e9))
+
 ## 0.3.1 (2024-11-14)
 
 Full Changelog: [v0.3.0...v0.3.1](https://github.com/optechai/node-sdk/compare/v0.3.0...v0.3.1)
