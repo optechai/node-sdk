@@ -217,7 +217,7 @@ export declare namespace Lorikeet {
   export { Ingest as Ingest, type IngestTestParams as IngestTestParams };
 }
 
-export { toFile, fileFromPath } from '@lorikeetai/node-sdk/uploads';
+export { toFile, fileFromPath } from './uploads';
 export {
   LorikeetError,
   APIError,
@@ -232,7 +232,7 @@ export {
   InternalServerError,
   PermissionDeniedError,
   UnprocessableEntityError,
-} from '@lorikeetai/node-sdk/error';
+} from './error';
 
 export { generateSignature } from '@lorikeetai/node-sdk/lib/generate-signature';
 
