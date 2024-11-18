@@ -46,7 +46,7 @@ export interface CustomerCreateResponse {
   /**
    * The id of the customer in the subscriber system
    */
-  remoteId: unknown;
+  remoteId: string;
 
   /**
    * The display name of the customer
@@ -75,7 +75,7 @@ export interface CustomerCreateParams {
   /**
    * The id of the customer in the subscriber system
    */
-  remoteId: unknown;
+  remoteId: string;
 
   /**
    * The display name of the customer
