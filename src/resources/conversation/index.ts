@@ -10,4 +10,12 @@ export {
   type ChatStartParams,
 } from './chat';
 export { Conversation } from './conversation';
-export { Email, type EmailStartResponse, type EmailStartParams } from './email';
+export {
+  Email,
+  type EmailGenerateResponse,
+  type EmailGetResponse,
+  type EmailStartResponse,
+  type EmailGenerateParams,
+  type EmailGetParams,
+  type EmailStartParams,
+} from './email';

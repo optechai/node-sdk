@@ -12,7 +12,15 @@ import {
   ChatStartResponse,
 } from './chat';
 import * as EmailAPI from './email';
-import { Email, EmailStartParams, EmailStartResponse } from './email';
+import {
+  Email,
+  EmailGenerateParams,
+  EmailGenerateResponse,
+  EmailGetParams,
+  EmailGetResponse,
+  EmailStartParams,
+  EmailStartResponse,
+} from './email';
 
 export class Conversation extends APIResource {
   email: EmailAPI.Email = new EmailAPI.Email(this._client);
@@ -25,7 +33,11 @@ Conversation.Chat = Chat;
 export declare namespace Conversation {
   export {
     Email as Email,
+    type EmailGenerateResponse as EmailGenerateResponse,
+    type EmailGetResponse as EmailGetResponse,
     type EmailStartResponse as EmailStartResponse,
+    type EmailGenerateParams as EmailGenerateParams,
+    type EmailGetParams as EmailGetParams,
     type EmailStartParams as EmailStartParams,
   };
 

@@ -10,6 +10,42 @@ const client = new Lorikeet({
 });
 
 describe('resource email', () => {
+  test('generate: only required params', async () => {
+    const responsePromise = client.conversation.email.generate({
+      conversationId: 'conversationId',
+      message: 'message',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('generate: required and optional params', async () => {
+    const response = await client.conversation.email.generate({
+      conversationId: 'conversationId',
+      message: 'message',
+    });
+  });
+
+  test('get: only required params', async () => {
+    const responsePromise = client.conversation.email.get({ conversationId: 'conversationId' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('get: required and optional params', async () => {
+    const response = await client.conversation.email.get({ conversationId: 'conversationId' });
+  });
+
   test('start: only required params', async () => {
     const responsePromise = client.conversation.email.start({
       customerId: 'customerId',

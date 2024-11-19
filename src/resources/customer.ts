@@ -8,6 +8,10 @@ export class Customer extends APIResource {
     return this._client.post('/v1/customer', { body, ...options });
   }
 
+  get(id: string, options?: Core.RequestOptions): Core.APIPromise<CustomerGetResponse> {
+    return this._client.get(`/v1/customer/${id}`, options);
+  }
+
   token(body: CustomerTokenParams, options?: Core.RequestOptions): Core.APIPromise<string> {
     return this._client.post('/v1/customer/token', {
       body,
@@ -18,6 +22,43 @@ export class Customer extends APIResource {
 }
 
 export interface CustomerCreateResponse {
+  /**
+   * The id of the customer in the subscriber system
+   */
+  id: unknown;
+
+  /**
+   * The timestamp of the when the customer was created in our system
+   */
+  createdAt: string;
+
+  /**
+   * The email of the customer
+   */
+  email: string;
+
+  /**
+   * The first name of the customer
+   */
+  firstName: string;
+
+  /**
+   * The last name of the customer
+   */
+  lastName: string;
+
+  /**
+   * The id of the customer in the subscriber system
+   */
+  remoteId: string;
+
+  /**
+   * The display name of the customer
+   */
+  displayName?: string;
+}
+
+export interface CustomerGetResponse {
   /**
    * The id of the customer in the subscriber system
    */
@@ -108,6 +149,7 @@ export interface CustomerTokenParams {
 export declare namespace Customer {
   export {
     type CustomerCreateResponse as CustomerCreateResponse,
+    type CustomerGetResponse as CustomerGetResponse,
     type CustomerTokenResponse as CustomerTokenResponse,
     type CustomerCreateParams as CustomerCreateParams,
     type CustomerTokenParams as CustomerTokenParams,
