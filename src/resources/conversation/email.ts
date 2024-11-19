@@ -13,7 +13,7 @@ export interface EmailStartResponse {
   /**
    * The ID of the conversation
    */
-  conversationId: unknown;
+  conversationId: string;
 
   /**
    * The timestamp of the when the conversation was created in our system.
@@ -25,7 +25,7 @@ export interface EmailStartParams {
   /**
    * The ID of the customer. If omitted, a new customer will be created.
    */
-  customerId: unknown;
+  customerId: string;
 
   /**
    * The public key associated with this agent
