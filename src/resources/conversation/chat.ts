@@ -36,7 +36,7 @@ export interface ChatGenerateResponse {
   /**
    * The full list of messages. This endpoint supports markdown.
    */
-  messages: ChatGenerateResponse.Messages;
+  messages: Array<ChatGenerateResponse.Message>;
 
   /**
    * The timestamp of when the ticket was last updated in our system.
@@ -45,10 +45,7 @@ export interface ChatGenerateResponse {
 }
 
 export namespace ChatGenerateResponse {
-  /**
-   * The full list of messages. This endpoint supports markdown.
-   */
-  export interface Messages {
+  export interface Message {
     /**
      * The ID of the conversation message
      */
@@ -95,7 +92,7 @@ export interface ChatGetResponse {
   /**
    * The full list of messages. This endpoint supports markdown.
    */
-  messages: ChatGetResponse.Messages;
+  messages: Array<ChatGetResponse.Message>;
 
   /**
    * The timestamp of when the ticket was last updated in our system.
@@ -104,10 +101,7 @@ export interface ChatGetResponse {
 }
 
 export namespace ChatGetResponse {
-  /**
-   * The full list of messages. This endpoint supports markdown.
-   */
-  export interface Messages {
+  export interface Message {
     /**
      * The ID of the conversation message
      */
