@@ -41,17 +41,22 @@ export interface ChatGenerateResponse {
   /**
    * The ID of the conversation
    */
-  conversationId: unknown;
+  conversationId: string;
 
   /**
-   * The timestamp of when the last message was created in our system.
+   * The timestamp of the when the conversation was created in our system.
    */
   createdAt: string;
 
   /**
-   * The created message. This endpoint supports markdown.
+   * The latest message type - useful for polling
    */
-  message: ChatGenerateResponse.Message;
+  latestMessageType: 'CUSTOMER' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | 'BOT_RESPONSE';
+
+  /**
+   * The full list of messages. This endpoint supports markdown.
+   */
+  messages: Array<ChatGenerateResponse.Message>;
 
   /**
    * The timestamp of when the ticket was last updated in our system.
@@ -60,9 +65,6 @@ export interface ChatGenerateResponse {
 }
 
 export namespace ChatGenerateResponse {
-  /**
-   * The created message. This endpoint supports markdown.
-   */
   export interface Message {
     /**
      * The ID of the conversation message
@@ -73,6 +75,11 @@ export namespace ChatGenerateResponse {
      * The content of the message. Markdown on plain text.
      */
     content: string;
+
+    /**
+     * The timestamp of the message.
+     */
+    createdAt: string;
 
     /**
      * The raw content of the message. Usually HTML.
@@ -90,17 +97,22 @@ export interface ChatGetResponse {
   /**
    * The ID of the conversation
    */
-  conversationId: unknown;
+  conversationId: string;
 
   /**
-   * The timestamp of when the last message was created in our system.
+   * The timestamp of the when the conversation was created in our system.
    */
   createdAt: string;
 
   /**
-   * The created message. This endpoint supports markdown.
+   * The latest message type - useful for polling
    */
-  message: ChatGetResponse.Message;
+  latestMessageType: 'CUSTOMER' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | 'BOT_RESPONSE';
+
+  /**
+   * The full list of messages. This endpoint supports markdown.
+   */
+  messages: Array<ChatGetResponse.Message>;
 
   /**
    * The timestamp of when the ticket was last updated in our system.
@@ -109,9 +121,6 @@ export interface ChatGetResponse {
 }
 
 export namespace ChatGetResponse {
-  /**
-   * The created message. This endpoint supports markdown.
-   */
   export interface Message {
     /**
      * The ID of the conversation message
@@ -122,6 +131,11 @@ export namespace ChatGetResponse {
      * The content of the message. Markdown on plain text.
      */
     content: string;
+
+    /**
+     * The timestamp of the message.
+     */
+    createdAt: string;
 
     /**
      * The raw content of the message. Usually HTML.
@@ -139,7 +153,7 @@ export interface ChatStartResponse {
   /**
    * The ID of the conversation
    */
-  conversationId: unknown;
+  conversationId: string;
 
   /**
    * The timestamp of the when the conversation was created in our system.
@@ -151,7 +165,7 @@ export interface ChatGenerateParams {
   /**
    * The ID of the conversation
    */
-  conversationId: unknown;
+  conversationId: string;
 
   /**
    * The message to be sent to the user. This endpoint supports markdown.
@@ -170,7 +184,7 @@ export interface ChatStartParams {
   /**
    * The ID of the customer. If omitted, a new customer will be created.
    */
-  customerId: unknown;
+  customerId: string;
 
   /**
    * The public key associated with this agent

@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.4.0 (2024-11-19)
+
+Full Changelog: [v0.3.2...v0.4.0](https://github.com/optechai/node-sdk/compare/v0.3.2...v0.4.0)
+
+### Features
+
+* **api:** api update ([#84](https://github.com/optechai/node-sdk/issues/84)) ([5bbd6f8](https://github.com/optechai/node-sdk/commit/5bbd6f8ef96296dd546a7b0a3c10350362018993))
+* **api:** api update ([#86](https://github.com/optechai/node-sdk/issues/86)) ([40ab47e](https://github.com/optechai/node-sdk/commit/40ab47e3f6ebe7ddf6e8acc46a052386e07eb158))
+* **api:** api update ([#88](https://github.com/optechai/node-sdk/issues/88)) ([1064286](https://github.com/optechai/node-sdk/commit/10642868394250a1cd542fbd448aa638896df5f7))
+* **api:** api update ([#90](https://github.com/optechai/node-sdk/issues/90)) ([6951b44](https://github.com/optechai/node-sdk/commit/6951b443591763648a0db529075c8ec7882313f0))
+* **api:** manual updates / ignore endpoints ([#89](https://github.com/optechai/node-sdk/issues/89)) ([a68b265](https://github.com/optechai/node-sdk/commit/a68b26515443db2c9522f5d6ad8e0c56ccfac5b0))
+
 ## 0.3.2 (2024-11-15)
 
 Full Changelog: [v0.3.1...v0.3.2](https://github.com/optechai/node-sdk/compare/v0.3.1...v0.3.2)
