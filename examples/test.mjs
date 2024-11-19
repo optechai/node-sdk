@@ -1,4 +1,10 @@
 import lorikeet from '@lorikeetai/node-sdk';
+import readline from 'readline/promises';
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
 const client = new lorikeet.Lorikeet();
 
@@ -15,9 +21,20 @@ const conversation = await client.conversation.chat.start({
   customerId: customer.id,
 });
 
-const message = await client.conversation.chat.generate({
-  conversationId: conversation.conversationId,
-  message: 'Hi there, I was wondering if you could help me with something?',
-});
+while (true) {
+  const message = await rl.question('You: ');
+  await client.conversation.chat.generate({
+    conversationId: conversation.conversationId,
+    content: message,
+  });
+  const response = await client.conversation.chat.poll(
+    {
+      conversationId: conversation.conversationId,
+    },
+    { timeout: 40_000 },
+  );
 
-console.log(message);
+  console.log(`Bot: ${response.messages[response.messages.length - 1].content}`);
+}
+
+rl.close();
