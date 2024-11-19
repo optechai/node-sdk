@@ -93,6 +93,8 @@ export class Lorikeet extends Core.APIClient {
 
   private _options: ClientOptions;
 
+  private _events: Map<string, Array<(...args: any[]) => void>> = new Map();
+
   /**
    * API Client for interfacing with the Lorikeet API.
    *

@@ -1,4 +1,5 @@
 import lorikeet from '@lorikeetai/node-sdk';
+import readline from 'node:readline';
 
 const client = new lorikeet.Lorikeet();
 
@@ -15,9 +16,21 @@ const conversation = await client.conversation.chat.start({
   customerId: customer.id,
 });
 
-const message = await client.conversation.chat.generate({
-  conversationId: conversation.conversationId,
-  message: 'Hi there, I was wondering if you could help me with something?',
+console.log('Conversation started:', conversation);
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
 });
 
-console.log(message);
+async function onMessage(message) {
+  console.log('Received message:', message);
+  rl.question('Enter your message: ', async (answer) => {
+    const message = await client.conversation.chat.generate({
+      conversationId: conversation.conversationId,
+      message: answer,
+    });
+  });
+}
+
+client.conversation.chat.on('message', onMessage);

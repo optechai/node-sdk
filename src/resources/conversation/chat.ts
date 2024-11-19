@@ -17,7 +17,11 @@ export class Chat extends APIResource {
     return this._client.post('/v1/conversation/chat/create', { body, ...options });
   }
 
-  poll(query: ChatGetParams, options?: Core.RequestOptions): Core.APIPromise<ChatGetResponse> {
+  on<TMessage extends string>(event: TMessage, listener: (...args: any[]) => void): void {
+    this._on(event, listener);
+  }
+
+  private poll(query: ChatGetParams, options?: Core.RequestOptions): Core.APIPromise<ChatGetResponse> {
     const start = new Date().toISOString();
     return pollUntil<ChatGetResponse>(
       () => this._client.get('/v1/conversation/chat/message', { query, ...options }),
