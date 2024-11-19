@@ -36,7 +36,7 @@ export interface EmailGenerateResponse {
   /**
    * The full list of messages. This endpoint supports markdown.
    */
-  messages: EmailGenerateResponse.Messages;
+  messages: Array<EmailGenerateResponse.Message>;
 
   /**
    * The timestamp of when the ticket was last updated in our system.
@@ -45,10 +45,7 @@ export interface EmailGenerateResponse {
 }
 
 export namespace EmailGenerateResponse {
-  /**
-   * The full list of messages. This endpoint supports markdown.
-   */
-  export interface Messages {
+  export interface Message {
     /**
      * The ID of the conversation message
      */
@@ -95,7 +92,7 @@ export interface EmailGetResponse {
   /**
    * The full list of messages. This endpoint supports markdown.
    */
-  messages: EmailGetResponse.Messages;
+  messages: Array<EmailGetResponse.Message>;
 
   /**
    * The timestamp of when the ticket was last updated in our system.
@@ -104,10 +101,7 @@ export interface EmailGetResponse {
 }
 
 export namespace EmailGetResponse {
-  /**
-   * The full list of messages. This endpoint supports markdown.
-   */
-  export interface Messages {
+  export interface Message {
     /**
      * The ID of the conversation message
      */
