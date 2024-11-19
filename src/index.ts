@@ -9,10 +9,12 @@ import {
   Customer,
   CustomerCreateParams,
   CustomerCreateResponse,
+  CustomerGetResponse,
   CustomerTokenParams,
   CustomerTokenResponse,
 } from './resources/customer';
 import { Ingest, IngestTestParams } from './resources/ingest';
+import { Workflow } from './resources/workflow';
 import { Conversation } from './resources/conversation/conversation';
 
 export interface ClientOptions {
@@ -145,6 +147,7 @@ export class Lorikeet extends Core.APIClient {
 
   conversation: API.Conversation = new API.Conversation(this);
   customer: API.Customer = new API.Customer(this);
+  workflow: API.Workflow = new API.Workflow(this);
   ingest: API.Ingest = new API.Ingest(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
@@ -185,6 +188,7 @@ export class Lorikeet extends Core.APIClient {
 
 Lorikeet.Conversation = Conversation;
 Lorikeet.Customer = Customer;
+Lorikeet.Workflow = Workflow;
 Lorikeet.Ingest = Ingest;
 export declare namespace Lorikeet {
   export type RequestOptions = Core.RequestOptions;
@@ -194,10 +198,13 @@ export declare namespace Lorikeet {
   export {
     Customer as Customer,
     type CustomerCreateResponse as CustomerCreateResponse,
+    type CustomerGetResponse as CustomerGetResponse,
     type CustomerTokenResponse as CustomerTokenResponse,
     type CustomerCreateParams as CustomerCreateParams,
     type CustomerTokenParams as CustomerTokenParams,
   };
+
+  export { Workflow as Workflow };
 
   export { Ingest as Ingest, type IngestTestParams as IngestTestParams };
 }

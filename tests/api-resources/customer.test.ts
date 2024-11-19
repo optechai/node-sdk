@@ -36,6 +36,24 @@ describe('resource customer', () => {
     });
   });
 
+  test('get', async () => {
+    const responsePromise = client.customer.get('id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('get: request options instead of params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(client.customer.get('id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
+      Lorikeet.NotFoundError,
+    );
+  });
+
   test('token: only required params', async () => {
     const responsePromise = client.customer.token({
       email: 'lori@lorikeetcx.ai',
