@@ -22,7 +22,16 @@ export class Chat extends APIResource {
     return pollUntil<ChatGetResponse>(
       () => this._client.get('/v1/conversation/chat/message', { query, ...options }),
       {
-        condition: (conversation) => conversation.createdAt > start,
+        timeout: 180_000,
+        interval: 5_000,
+        condition: (conversation) => {
+          // @ts-expect-error - wait till regen'd
+          if (conversation.latestMessageType === 'BOT_RESPONSE') {
+            return true;
+          }
+
+          return false;
+        },
       },
     ) as Core.APIPromise<ChatGetResponse>;
   }

@@ -18,7 +18,7 @@ interface PollUntilOptions<TData> {
 /** Utility function to poll an endpoint. */
 export const pollUntil = async <T>(
   fn: () => Promise<T>,
-  { condition = (result) => !!result, interval = 1000, timeout = 20000 }: PollUntilOptions<T>,
+  { condition = (result) => !!result, interval = 3000, timeout = 30000 }: PollUntilOptions<T>,
 ): Promise<T> => {
   const startTime = Date.now();
 

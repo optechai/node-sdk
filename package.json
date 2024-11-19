@@ -13,6 +13,7 @@
   ],
   "private": false,
   "scripts": {
+    "dev": "node --env-file=.env ./examples/test.mjs",
     "test": "./scripts/test",
     "build": "./scripts/build",
     "prepublishOnly": "echo 'to publish, run pnpm build && (cd dist; pnpm publish)' && exit 1",
