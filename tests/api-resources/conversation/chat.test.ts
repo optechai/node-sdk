@@ -11,7 +11,10 @@ const client = new Lorikeet({
 
 describe('resource chat', () => {
   test('generate: only required params', async () => {
-    const responsePromise = client.conversation.chat.generate({ conversationId: {}, message: 'message' });
+    const responsePromise = client.conversation.chat.generate({
+      conversationId: 'conversationId',
+      message: 'message',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,7 +25,10 @@ describe('resource chat', () => {
   });
 
   test('generate: required and optional params', async () => {
-    const response = await client.conversation.chat.generate({ conversationId: {}, message: 'message' });
+    const response = await client.conversation.chat.generate({
+      conversationId: 'conversationId',
+      message: 'message',
+    });
   });
 
   test('get: only required params', async () => {
@@ -41,7 +47,10 @@ describe('resource chat', () => {
   });
 
   test('start: only required params', async () => {
-    const responsePromise = client.conversation.chat.start({ customerId: {}, publicKey: 'publicKey' });
+    const responsePromise = client.conversation.chat.start({
+      customerId: 'customerId',
+      publicKey: 'publicKey',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -53,7 +62,7 @@ describe('resource chat', () => {
 
   test('start: required and optional params', async () => {
     const response = await client.conversation.chat.start({
-      customerId: {},
+      customerId: 'customerId',
       publicKey: 'publicKey',
       subject: 'Question about order tracking number',
     });
