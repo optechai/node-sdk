@@ -18,21 +18,22 @@ const customer = await client.customer.create({
 
 const conversation = await client.conversation.chat.start({
   publicKey: process.env.LORIKEET_PUBLIC_KEY,
+  subject: 'Conversation initiated from SDK example repo',
   customerId: customer.id,
 });
+
+console.log(`Conversation ID: ${conversation.conversationId}`);
+console.log(`url: https://app.lorikeetcx.ai/conversation/${conversation.conversationId}\n`);
 
 while (true) {
   const message = await rl.question('You: ');
   await client.conversation.chat.generate({
     conversationId: conversation.conversationId,
-    content: message,
+    message,
   });
-  const response = await client.conversation.chat.poll(
-    {
-      conversationId: conversation.conversationId,
-    },
-    { timeout: 40_000 },
-  );
+  const response = await client.conversation.chat.poll({
+    conversationId: conversation.conversationId,
+  });
 
   console.log(`Bot: ${response.messages[response.messages.length - 1].content}`);
 }
