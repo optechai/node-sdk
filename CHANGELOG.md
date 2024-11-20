@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.1 (2024-11-20)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/optechai/node-sdk/compare/v0.4.0...v0.4.1)
+
+### Chores
+
+* **internal:** version bump ([#93](https://github.com/optechai/node-sdk/issues/93)) ([d1dd557](https://github.com/optechai/node-sdk/commit/d1dd55783a548cf6f41c7a2b9e197470406dbf1e))
+* remove redundant word in comment ([#95](https://github.com/optechai/node-sdk/issues/95)) ([4e5f199](https://github.com/optechai/node-sdk/commit/4e5f19965cbb44b2e9d58048c1b74cd6ef45e50c))
+* update logic for bot response bolling ([3a7ba21](https://github.com/optechai/node-sdk/commit/3a7ba213594537573238a2a450c0d790d991dffc))
+
 ## 0.4.0 (2024-11-19)
 
 Full Changelog: [v0.3.2...v0.4.0](https://github.com/optechai/node-sdk/compare/v0.3.2...v0.4.0)
