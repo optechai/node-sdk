@@ -5,18 +5,64 @@ import * as Core from '../../core';
 import { pollUntil } from '@lorikeetai/node-sdk/lib/poll-until';
 
 export class Chat extends APIResource {
+  /**
+   * __chat.generate__
+   *
+   * Generate a chat message for a conversation. This endpoint will return immediately, polling will be required to get the response.
+   *
+   * The `latestMessageType` field in the response can be used to determine if the response is ready.
+   *
+   * If the `latestMessageType` is `BOT_RESPONSE`, the response is ready.
+   * For a more ergonomic way to poll, use the `message` method.
+   *
+   * ** WARNING ** This endpoint is not idempotent. If you call it multiple times, you will generate multiple messages.
+   *
+   * @see {@link Chat.message}
+   */
   generate(body: ChatGenerateParams, options?: Core.RequestOptions): Core.APIPromise<ChatGenerateResponse> {
     return this._client.post('/v1/conversation/chat/message', { body, ...options });
   }
 
+  /**
+   * __chat.get__
+   *
+   * Returns a chat message for a conversation. This endpoint will return the latest state of the conversation.
+   */
   get(query: ChatGetParams, options?: Core.RequestOptions): Core.APIPromise<ChatGetResponse> {
     return this._client.get('/v1/conversation/chat/message', { query, ...options });
   }
 
+  /**
+   * __chat.start__
+   *
+   * Start a chat conversation. This endpoint will return immediately.
+   *
+   * The `conversationId` field in the response can be used to generate messages.
+   *
+   * ** WARNING ** This endpoint is not idempotent. If you call it multiple times, you will generate multiple conversations.
+   */
   start(body: ChatStartParams, options?: Core.RequestOptions): Core.APIPromise<ChatStartResponse> {
     return this._client.post('/v1/conversation/chat/create', { body, ...options });
   }
 
+  /**
+   * Returns a chat message for a conversation. This endpoint will poll until a response is ready.
+   *
+   * When it return the response is the latest message type that is of type `BOT_RESPONSE`.
+   *
+   * @see {@link Chat.poll}
+   */
+  message(body: ChatGenerateParams, options?: Core.RequestOptions): Core.APIPromise<ChatGetResponse> {
+    return this.generate(body, options).then((response) =>
+      this.poll({ conversationId: response.conversationId }, options),
+    ) as Core.APIPromise<ChatGetResponse>;
+  }
+
+  /**
+   * __chat.get__
+   *
+   * Polls until it returns a BOT chat message for a conversation.
+   */
   poll(query: ChatGetParams, options?: Core.RequestOptions): Core.APIPromise<ChatGetResponse> {
     return pollUntil<ChatGetResponse>(
       () => this._client.get('/v1/conversation/chat/message', { query, ...options }),
