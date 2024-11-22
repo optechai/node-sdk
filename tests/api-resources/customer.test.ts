@@ -16,6 +16,7 @@ describe('resource customer', () => {
       firstName: 'Lori',
       lastName: 'Keet',
       remoteId: '1234567890',
+      subscriberCustomerId: '1234567890',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -32,6 +33,7 @@ describe('resource customer', () => {
       firstName: 'Lori',
       lastName: 'Keet',
       remoteId: '1234567890',
+      subscriberCustomerId: '1234567890',
       displayName: 'Lori Keet',
     });
   });
@@ -56,10 +58,11 @@ describe('resource customer', () => {
 
   test('token: only required params', async () => {
     const responsePromise = client.customer.token({
-      email: 'lori@lorikeetcx.ai',
+      email: 'lori@keet.com',
       firstName: 'Lori',
       lastName: 'Keet',
-      remoteId: 'remoteId',
+      remoteId: '1234567890',
+      subscriberCustomerId: '1234567890',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -72,10 +75,12 @@ describe('resource customer', () => {
 
   test('token: required and optional params', async () => {
     const response = await client.customer.token({
-      email: 'lori@lorikeetcx.ai',
+      email: 'lori@keet.com',
       firstName: 'Lori',
       lastName: 'Keet',
-      remoteId: 'remoteId',
+      remoteId: '1234567890',
+      subscriberCustomerId: '1234567890',
+      displayName: 'Lori Keet',
     });
   });
 });
