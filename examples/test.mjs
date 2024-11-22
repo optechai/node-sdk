@@ -1,3 +1,6 @@
+/**
+ * @ts-check
+ */
 import lorikeet from '@lorikeetai/node-sdk';
 import readline from 'readline/promises';
 
@@ -27,11 +30,8 @@ console.log(`url: https://app.lorikeetcx.ai/conversation/${conversation.conversa
 
 while (true) {
   const message = await rl.question('You: ');
-  await client.conversation.chat.generate({
-    conversationId: conversation.conversationId,
+  const response = await client.conversation.chat.message({
     message,
-  });
-  const response = await client.conversation.chat.poll({
     conversationId: conversation.conversationId,
   });
 
