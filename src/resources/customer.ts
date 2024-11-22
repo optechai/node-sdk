@@ -48,9 +48,16 @@ export interface CustomerCreateResponse {
   lastName: string;
 
   /**
-   * The id of the customer in the subscriber system
+   * The id of the customer in the ticketing system. For the SDK this needs to be
+   * stable and unique
    */
   remoteId: string;
+
+  /**
+   * The id of the customer in your own primary database or a unique identifier, for
+   * example a cookie
+   */
+  subscriberCustomerId: string;
 
   /**
    * The display name of the customer
@@ -85,9 +92,16 @@ export interface CustomerGetResponse {
   lastName: string;
 
   /**
-   * The id of the customer in the subscriber system
+   * The id of the customer in the ticketing system. For the SDK this needs to be
+   * stable and unique
    */
   remoteId: string;
+
+  /**
+   * The id of the customer in your own primary database or a unique identifier, for
+   * example a cookie
+   */
+  subscriberCustomerId: string;
 
   /**
    * The display name of the customer
@@ -114,9 +128,16 @@ export interface CustomerCreateParams {
   lastName: string;
 
   /**
-   * The id of the customer in the subscriber system
+   * The id of the customer in the ticketing system. For the SDK this needs to be
+   * stable and unique
    */
   remoteId: string;
+
+  /**
+   * The id of the customer in your own primary database or a unique identifier, for
+   * example a cookie
+   */
+  subscriberCustomerId: string;
 
   /**
    * The display name of the customer
@@ -126,24 +147,36 @@ export interface CustomerCreateParams {
 
 export interface CustomerTokenParams {
   /**
-   * The email of the user.
+   * The email of the customer
    */
   email: string;
 
   /**
-   * The first name of the user.
+   * The first name of the customer
    */
   firstName: string;
 
   /**
-   * The last name of the user.
+   * The last name of the customer
    */
   lastName: string;
 
   /**
-   * The unique identifier of the user in your ticketing system.
+   * The id of the customer in the ticketing system. For the SDK this needs to be
+   * stable and unique
    */
   remoteId: string;
+
+  /**
+   * The id of the customer in your own primary database or a unique identifier, for
+   * example a cookie
+   */
+  subscriberCustomerId: string;
+
+  /**
+   * The display name of the customer
+   */
+  displayName?: string;
 }
 
 export declare namespace Customer {
