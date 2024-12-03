@@ -39,7 +39,7 @@ describe('resource customer', () => {
   });
 
   test('get', async () => {
-    const responsePromise = client.customer.get('id');
+    const responsePromise = client.customer.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -51,9 +51,9 @@ describe('resource customer', () => {
 
   test('get: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.customer.get('id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Lorikeet.NotFoundError,
-    );
+    await expect(
+      client.customer.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Lorikeet.NotFoundError);
   });
 
   test('token: only required params', async () => {
