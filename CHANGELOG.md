@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.0 (2024-12-03)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/optechai/node-sdk/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** api update ([#103](https://github.com/optechai/node-sdk/issues/103)) ([8d13189](https://github.com/optechai/node-sdk/commit/8d13189d8e121cd012358ad6d91f24113d5ba12e))
+* **internal:** make git install file structure match npm ([#101](https://github.com/optechai/node-sdk/issues/101)) ([3870c33](https://github.com/optechai/node-sdk/commit/3870c334741c6e805070d2c150d14d0351f69537))
+
 ## 0.5.0 (2024-11-22)
 
 Full Changelog: [v0.4.1...v0.5.0](https://github.com/optechai/node-sdk/compare/v0.4.1...v0.5.0)
