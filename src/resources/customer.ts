@@ -25,7 +25,7 @@ export interface CustomerCreateResponse {
   /**
    * The id of the customer in the subscriber system
    */
-  id: unknown;
+  id: string;
 
   /**
    * The timestamp of the when the customer was created in our system
@@ -69,7 +69,7 @@ export interface CustomerGetResponse {
   /**
    * The id of the customer in the subscriber system
    */
-  id: unknown;
+  id: string;
 
   /**
    * The timestamp of the when the customer was created in our system
