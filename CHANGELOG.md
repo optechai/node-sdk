@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.1 (2024-12-06)
+
+Full Changelog: [v0.6.0...v0.6.1](https://github.com/optechai/node-sdk/compare/v0.6.0...v0.6.1)
+
+### Bug Fixes
+
+* pass through timeout options on requests ([329f35a](https://github.com/optechai/node-sdk/commit/329f35a5a0dbcefdbf9a23e5343fa9685fb49d8a))
+
 ## 0.6.0 (2024-12-03)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/optechai/node-sdk/compare/v0.5.0...v0.6.0)
