@@ -28,6 +28,7 @@ describe('resource email', () => {
     const response = await client.conversation.email.generate({
       conversationId: 'conversationId',
       message: 'message',
+      customer: {},
     });
   });
 

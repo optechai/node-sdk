@@ -10,14 +10,8 @@ const client = new Lorikeet({
 });
 
 describe('resource customer', () => {
-  test('create: only required params', async () => {
-    const responsePromise = client.customer.create({
-      email: 'lori@keet.com',
-      firstName: 'Lori',
-      lastName: 'Keet',
-      remoteId: '1234567890',
-      subscriberCustomerId: '1234567890',
-    });
+  test('create', async () => {
+    const responsePromise = client.customer.create({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -27,25 +21,8 @@ describe('resource customer', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('create: required and optional params', async () => {
-    const response = await client.customer.create({
-      email: 'lori@keet.com',
-      firstName: 'Lori',
-      lastName: 'Keet',
-      remoteId: '1234567890',
-      subscriberCustomerId: '1234567890',
-      displayName: 'Lori Keet',
-    });
-  });
-
-  test('update: only required params', async () => {
-    const responsePromise = client.customer.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      email: 'lori@keet.com',
-      firstName: 'Lori',
-      lastName: 'Keet',
-      remoteId: '1234567890',
-      subscriberCustomerId: '1234567890',
-    });
+  test('update', async () => {
+    const responsePromise = client.customer.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -53,17 +30,6 @@ describe('resource customer', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('update: required and optional params', async () => {
-    const response = await client.customer.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      email: 'lori@keet.com',
-      firstName: 'Lori',
-      lastName: 'Keet',
-      remoteId: '1234567890',
-      subscriberCustomerId: '1234567890',
-      displayName: 'Lori Keet',
-    });
   });
 
   test('get', async () => {
@@ -84,14 +50,8 @@ describe('resource customer', () => {
     ).rejects.toThrow(Lorikeet.NotFoundError);
   });
 
-  test('token: only required params', async () => {
-    const responsePromise = client.customer.token({
-      email: 'lori@keet.com',
-      firstName: 'Lori',
-      lastName: 'Keet',
-      remoteId: '1234567890',
-      subscriberCustomerId: '1234567890',
-    });
+  test('token', async () => {
+    const responsePromise = client.customer.token({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -99,16 +59,5 @@ describe('resource customer', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('token: required and optional params', async () => {
-    const response = await client.customer.token({
-      email: 'lori@keet.com',
-      firstName: 'Lori',
-      lastName: 'Keet',
-      remoteId: '1234567890',
-      subscriberCustomerId: '1234567890',
-      displayName: 'Lori Keet',
-    });
   });
 });
