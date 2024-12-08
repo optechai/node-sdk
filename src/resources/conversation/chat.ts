@@ -209,6 +209,12 @@ export interface ChatGenerateParams {
    * The message to be sent to the user. This endpoint supports markdown.
    */
   message: string;
+
+  /**
+   * Any additional customer information, that has changed in the course of the
+   * conversation.
+   */
+  customer?: unknown;
 }
 
 export interface ChatGetParams {
