@@ -8,6 +8,14 @@ export class Customer extends APIResource {
     return this._client.post('/v1/customer', { body, ...options });
   }
 
+  update(
+    id: string,
+    body: CustomerUpdateParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<CustomerUpdateResponse> {
+    return this._client.put(`/v1/customer/${id}`, { body, ...options });
+  }
+
   get(id: string, options?: Core.RequestOptions): Core.APIPromise<CustomerGetResponse> {
     return this._client.get(`/v1/customer/${id}`, options);
   }
@@ -22,6 +30,50 @@ export class Customer extends APIResource {
 }
 
 export interface CustomerCreateResponse {
+  /**
+   * The id of the customer in the subscriber system
+   */
+  id: string;
+
+  /**
+   * The timestamp of the when the customer was created in our system
+   */
+  createdAt: string;
+
+  /**
+   * The email of the customer
+   */
+  email: string;
+
+  /**
+   * The first name of the customer
+   */
+  firstName: string;
+
+  /**
+   * The last name of the customer
+   */
+  lastName: string;
+
+  /**
+   * The id of the customer in the ticketing system. For the SDK this needs to be
+   * stable and unique
+   */
+  remoteId: string;
+
+  /**
+   * The id of the customer in your own primary database or a unique identifier, for
+   * example a cookie
+   */
+  subscriberCustomerId: string;
+
+  /**
+   * The display name of the customer
+   */
+  displayName?: string;
+}
+
+export interface CustomerUpdateResponse {
   /**
    * The id of the customer in the subscriber system
    */
@@ -145,6 +197,40 @@ export interface CustomerCreateParams {
   displayName?: string;
 }
 
+export interface CustomerUpdateParams {
+  /**
+   * The email of the customer
+   */
+  email: string;
+
+  /**
+   * The first name of the customer
+   */
+  firstName: string;
+
+  /**
+   * The last name of the customer
+   */
+  lastName: string;
+
+  /**
+   * The id of the customer in the ticketing system. For the SDK this needs to be
+   * stable and unique
+   */
+  remoteId: string;
+
+  /**
+   * The id of the customer in your own primary database or a unique identifier, for
+   * example a cookie
+   */
+  subscriberCustomerId: string;
+
+  /**
+   * The display name of the customer
+   */
+  displayName?: string;
+}
+
 export interface CustomerTokenParams {
   /**
    * The email of the customer
@@ -182,9 +268,11 @@ export interface CustomerTokenParams {
 export declare namespace Customer {
   export {
     type CustomerCreateResponse as CustomerCreateResponse,
+    type CustomerUpdateResponse as CustomerUpdateResponse,
     type CustomerGetResponse as CustomerGetResponse,
     type CustomerTokenResponse as CustomerTokenResponse,
     type CustomerCreateParams as CustomerCreateParams,
+    type CustomerUpdateParams as CustomerUpdateParams,
     type CustomerTokenParams as CustomerTokenParams,
   };
 }

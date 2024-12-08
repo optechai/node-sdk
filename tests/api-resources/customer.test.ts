@@ -38,6 +38,34 @@ describe('resource customer', () => {
     });
   });
 
+  test('update: only required params', async () => {
+    const responsePromise = client.customer.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      email: 'lori@keet.com',
+      firstName: 'Lori',
+      lastName: 'Keet',
+      remoteId: '1234567890',
+      subscriberCustomerId: '1234567890',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('update: required and optional params', async () => {
+    const response = await client.customer.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      email: 'lori@keet.com',
+      firstName: 'Lori',
+      lastName: 'Keet',
+      remoteId: '1234567890',
+      subscriberCustomerId: '1234567890',
+      displayName: 'Lori Keet',
+    });
+  });
+
   test('get', async () => {
     const responsePromise = client.customer.get('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
