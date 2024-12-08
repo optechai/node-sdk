@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.6.1 (2024-12-08)
+
+Full Changelog: [v0.6.0...v0.6.1](https://github.com/optechai/node-sdk/compare/v0.6.0...v0.6.1)
+
+### Features
+
+* **api:** add customer update endpoint ([#107](https://github.com/optechai/node-sdk/issues/107)) ([e7d6625](https://github.com/optechai/node-sdk/commit/e7d66251001a5dd4e175b9b08bf62ecd0b6bdd8d))
+
+
+### Bug Fixes
+
+* pass through timeout options on requests ([329f35a](https://github.com/optechai/node-sdk/commit/329f35a5a0dbcefdbf9a23e5343fa9685fb49d8a))
+
 ## 0.6.0 (2024-12-03)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/optechai/node-sdk/compare/v0.5.0...v0.6.0)
