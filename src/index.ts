@@ -12,6 +12,8 @@ import {
   CustomerGetResponse,
   CustomerTokenParams,
   CustomerTokenResponse,
+  CustomerUpdateParams,
+  CustomerUpdateResponse,
 } from './resources/customer';
 import { Ingest, IngestTestParams } from './resources/ingest';
 import { Workflow } from './resources/workflow';
@@ -213,9 +215,11 @@ export declare namespace Lorikeet {
   export {
     Customer as Customer,
     type CustomerCreateResponse as CustomerCreateResponse,
+    type CustomerUpdateResponse as CustomerUpdateResponse,
     type CustomerGetResponse as CustomerGetResponse,
     type CustomerTokenResponse as CustomerTokenResponse,
     type CustomerCreateParams as CustomerCreateParams,
+    type CustomerUpdateParams as CustomerUpdateParams,
     type CustomerTokenParams as CustomerTokenParams,
   };
 
