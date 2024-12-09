@@ -41,36 +41,36 @@ export interface CustomerCreateResponse {
   createdAt: string;
 
   /**
+   * The display name of the customer
+   */
+  displayName?: string;
+
+  /**
    * The email of the customer
    */
-  email: string;
+  email?: string;
 
   /**
    * The first name of the customer
    */
-  firstName: string;
+  firstName?: string;
 
   /**
    * The last name of the customer
    */
-  lastName: string;
+  lastName?: string;
 
   /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId: string;
+  remoteId?: string;
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for
    * example a cookie
    */
-  subscriberCustomerId: string;
-
-  /**
-   * The display name of the customer
-   */
-  displayName?: string;
+  subscriberCustomerId?: string;
 }
 
 export interface CustomerUpdateResponse {
@@ -85,36 +85,36 @@ export interface CustomerUpdateResponse {
   createdAt: string;
 
   /**
+   * The display name of the customer
+   */
+  displayName?: string;
+
+  /**
    * The email of the customer
    */
-  email: string;
+  email?: string;
 
   /**
    * The first name of the customer
    */
-  firstName: string;
+  firstName?: string;
 
   /**
    * The last name of the customer
    */
-  lastName: string;
+  lastName?: string;
 
   /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId: string;
+  remoteId?: string;
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for
    * example a cookie
    */
-  subscriberCustomerId: string;
-
-  /**
-   * The display name of the customer
-   */
-  displayName?: string;
+  subscriberCustomerId?: string;
 }
 
 export interface CustomerGetResponse {
@@ -129,140 +129,140 @@ export interface CustomerGetResponse {
   createdAt: string;
 
   /**
+   * The display name of the customer
+   */
+  displayName?: string;
+
+  /**
    * The email of the customer
    */
-  email: string;
+  email?: string;
 
   /**
    * The first name of the customer
    */
-  firstName: string;
+  firstName?: string;
 
   /**
    * The last name of the customer
    */
-  lastName: string;
+  lastName?: string;
 
   /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId: string;
+  remoteId?: string;
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for
    * example a cookie
    */
-  subscriberCustomerId: string;
-
-  /**
-   * The display name of the customer
-   */
-  displayName?: string;
+  subscriberCustomerId?: string;
 }
 
 export type CustomerTokenResponse = string;
 
 export interface CustomerCreateParams {
   /**
+   * The display name of the customer
+   */
+  displayName?: string;
+
+  /**
    * The email of the customer
    */
-  email: string;
+  email?: string;
 
   /**
    * The first name of the customer
    */
-  firstName: string;
+  firstName?: string;
 
   /**
    * The last name of the customer
    */
-  lastName: string;
+  lastName?: string;
 
   /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId: string;
+  remoteId?: string;
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for
    * example a cookie
    */
-  subscriberCustomerId: string;
-
-  /**
-   * The display name of the customer
-   */
-  displayName?: string;
+  subscriberCustomerId?: string;
 }
 
 export interface CustomerUpdateParams {
   /**
+   * The display name of the customer
+   */
+  displayName?: string;
+
+  /**
    * The email of the customer
    */
-  email: string;
+  email?: string;
 
   /**
    * The first name of the customer
    */
-  firstName: string;
+  firstName?: string;
 
   /**
    * The last name of the customer
    */
-  lastName: string;
+  lastName?: string;
 
   /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId: string;
+  remoteId?: string;
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for
    * example a cookie
    */
-  subscriberCustomerId: string;
-
-  /**
-   * The display name of the customer
-   */
-  displayName?: string;
+  subscriberCustomerId?: string;
 }
 
 export interface CustomerTokenParams {
   /**
+   * The display name of the customer
+   */
+  displayName?: string;
+
+  /**
    * The email of the customer
    */
-  email: string;
+  email?: string;
 
   /**
    * The first name of the customer
    */
-  firstName: string;
+  firstName?: string;
 
   /**
    * The last name of the customer
    */
-  lastName: string;
+  lastName?: string;
 
   /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId: string;
+  remoteId?: string;
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for
    * example a cookie
    */
-  subscriberCustomerId: string;
-
-  /**
-   * The display name of the customer
-   */
-  displayName?: string;
+  subscriberCustomerId?: string;
 }
 
 export declare namespace Customer {

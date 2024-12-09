@@ -28,6 +28,7 @@ describe('resource chat', () => {
     const response = await client.conversation.chat.generate({
       conversationId: 'conversationId',
       message: 'message',
+      customer: {},
     });
   });
 
