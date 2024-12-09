@@ -28,6 +28,12 @@ const conversation = await client.conversation.chat.start({
 console.log(`Conversation ID: ${conversation.conversationId}`);
 console.log(`url: https://app.lorikeetcx.ai/conversation/${conversation.conversationId}\n`);
 
+const firstMessaage = await client.conversation.chat.get({
+  conversationId: conversation.conversationId,
+});
+
+console.log(`Bot: ${firstMessaage.messages[0].content}`);
+
 while (true) {
   const message = await rl.question('You: ');
   const response = await client.conversation.chat.message({
