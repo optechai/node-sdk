@@ -28,7 +28,14 @@ describe('resource chat', () => {
     const response = await client.conversation.chat.generate({
       conversationId: 'conversationId',
       message: 'message',
-      customer: {},
+      customer: {
+        displayName: 'Lori Keet',
+        email: 'lori@keet.com',
+        firstName: 'Lori',
+        lastName: 'Keet',
+        remoteId: '1234567890',
+        subscriberCustomerId: '1234567890',
+      },
     });
   });
 
