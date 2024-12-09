@@ -156,7 +156,47 @@ export interface ChatGenerateParams {
    * Any additional customer information, that has changed in the course of the
    * conversation.
    */
-  customer?: unknown;
+  customer?: ChatGenerateParams.Customer;
+}
+
+export namespace ChatGenerateParams {
+  /**
+   * Any additional customer information, that has changed in the course of the
+   * conversation.
+   */
+  export interface Customer {
+    /**
+     * The display name of the customer
+     */
+    displayName?: string;
+
+    /**
+     * The email of the customer
+     */
+    email?: string;
+
+    /**
+     * The first name of the customer
+     */
+    firstName?: string;
+
+    /**
+     * The last name of the customer
+     */
+    lastName?: string;
+
+    /**
+     * The id of the customer in the ticketing system. For the SDK this needs to be
+     * stable and unique
+     */
+    remoteId?: string;
+
+    /**
+     * The id of the customer in your own primary database or a unique identifier, for
+     * example a cookie
+     */
+    subscriberCustomerId?: string;
+  }
 }
 
 export interface ChatGetParams {
