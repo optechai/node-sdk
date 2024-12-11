@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.6.3 (2024-12-11)
+
+Full Changelog: [v0.6.2...v0.6.3](https://github.com/optechai/node-sdk/compare/v0.6.2...v0.6.3)
+
+### Features
+
+* **api:** api update ([#114](https://github.com/optechai/node-sdk/issues/114)) ([feb19dc](https://github.com/optechai/node-sdk/commit/feb19dc361072483bbdf0a7aa7470493bce136bd))
+
+
+### Chores
+
+* include initial message ([ff0a560](https://github.com/optechai/node-sdk/commit/ff0a560221469d121015435bb56c9d6a8f7eef82))
+* **internal:** remove unnecessary getRequestClient function ([#115](https://github.com/optechai/node-sdk/issues/115)) ([58fe3ae](https://github.com/optechai/node-sdk/commit/58fe3ae26058bd94eca16ca8513fd06d6850bfe7))
+
 ## 0.6.2 (2024-12-09)
 
 Full Changelog: [v0.6.1...v0.6.2](https://github.com/optechai/node-sdk/compare/v0.6.1...v0.6.2)
