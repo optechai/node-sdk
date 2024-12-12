@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
-
-import Lorikeet from '@lorikeetai/node-sdk';
 import { Response } from 'node-fetch';
+import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
   clientId: 'My Client ID',

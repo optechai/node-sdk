@@ -454,7 +454,7 @@ export abstract class APIClient {
         return this.retryRequest(options, retriesRemaining, responseHeaders);
       }
 
-      const errText = await response.text().catch((e) => castToError(e).message);
+      const errText = await response.text().catch((e: any) => castToError(e).message);
       const errJSON = safeJSON(errText);
       const errMessage = errJSON ? undefined : errText;
       const retryMessage = retriesRemaining ? `(error; no more retries left)` : `(error; not retryable)`;
@@ -834,7 +834,7 @@ const getPlatformProperties = (): PlatformProperties => {
       'X-Stainless-Arch': normalizeArch(Deno.build.arch),
       'X-Stainless-Runtime': 'deno',
       'X-Stainless-Runtime-Version':
-        typeof Deno.version === 'string' ? Deno.version : Deno.version?.deno ?? 'unknown',
+        typeof Deno.version === 'string' ? Deno.version : (Deno.version?.deno ?? 'unknown'),
     };
   }
   if (typeof EdgeRuntime !== 'undefined') {

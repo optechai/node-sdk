@@ -18,6 +18,7 @@ import {
 import { Ingest, IngestTestParams } from './resources/ingest';
 import { Workflow } from './resources/workflow';
 import { Conversation } from './resources/conversation/conversation';
+import { generateSignature } from './lib/generate-signature';
 
 export interface ClientOptions {
   /**
@@ -164,7 +165,21 @@ export class Lorikeet extends Core.APIClient {
   }
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
-    return { Authorization: `Bearer ${this.clientId}` };
+    // this won't work for GET requests
+    const signature = generateSignature(
+      opts.body ?
+        typeof opts.body === 'string' ?
+          opts.body
+        : JSON.stringify(opts.body, null, 2)
+      : '',
+      this.clientSecret,
+    );
+    return {
+      // backwards compatibility
+      'x-optech-webhook-signature': signature,
+      'x-lorikeet-signature': signature,
+      authorization: `Bearer ${this.clientId}`,
+    };
   }
 
   static Lorikeet = this;
@@ -229,5 +244,7 @@ export {
   PermissionDeniedError,
   UnprocessableEntityError,
 } from './error';
+
+export { generateSignature } from '@lorikeetai/node-sdk/lib/generate-signature';
 
 export default Lorikeet;
