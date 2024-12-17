@@ -52,6 +52,11 @@ export namespace ChatGenerateResponse {
     id: string;
 
     /**
+     * Attachments that were attached to the message
+     */
+    attachments: Array<Message.Attachment>;
+
+    /**
      * The content of the message. Markdown on plain text.
      */
     content: string;
@@ -70,6 +75,25 @@ export namespace ChatGenerateResponse {
      * The type of the message
      */
     type: 'CUSTOMER' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | 'BOT_RESPONSE';
+  }
+
+  export namespace Message {
+    export interface Attachment {
+      /**
+       * The name of the attachment
+       */
+      name: string;
+
+      /**
+       * The type of the attachment
+       */
+      type: string;
+
+      /**
+       * The URL of the attachment
+       */
+      url: string;
+    }
   }
 }
 
@@ -108,6 +132,11 @@ export namespace ChatGetResponse {
     id: string;
 
     /**
+     * Attachments that were attached to the message
+     */
+    attachments: Array<Message.Attachment>;
+
+    /**
      * The content of the message. Markdown on plain text.
      */
     content: string;
@@ -127,6 +156,25 @@ export namespace ChatGetResponse {
      */
     type: 'CUSTOMER' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | 'BOT_RESPONSE';
   }
+
+  export namespace Message {
+    export interface Attachment {
+      /**
+       * The name of the attachment
+       */
+      name: string;
+
+      /**
+       * The type of the attachment
+       */
+      type: string;
+
+      /**
+       * The URL of the attachment
+       */
+      url: string;
+    }
+  }
 }
 
 export interface ChatStartResponse {
@@ -142,6 +190,11 @@ export interface ChatStartResponse {
 }
 
 export interface ChatGenerateParams {
+  /**
+   * Attachments to be sent with the message
+   */
+  attachments: Array<ChatGenerateParams.Attachment>;
+
   /**
    * The ID of the conversation
    */
@@ -160,6 +213,23 @@ export interface ChatGenerateParams {
 }
 
 export namespace ChatGenerateParams {
+  export interface Attachment {
+    /**
+     * The name of the attachment
+     */
+    name: string;
+
+    /**
+     * The type of the attachment
+     */
+    type: string;
+
+    /**
+     * The URL of the attachment
+     */
+    url: string;
+  }
+
   /**
    * Any additional customer information, that has changed in the course of the
    * conversation.
