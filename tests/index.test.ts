@@ -201,7 +201,7 @@ describe('instantiate client', () => {
     expect(client.clientSecret).toBe('My Client Secret');
   });
 
-  test('with overriden environment variable arguments', () => {
+  test('with overridden environment variable arguments', () => {
     // set options via env var
     process.env['LORIKEET_CLIENT_ID'] = 'another My Client ID';
     process.env['LORIKEET_CLIENT_SECRET'] = 'another My Client Secret';
