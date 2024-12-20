@@ -52,11 +52,6 @@ export namespace EmailGenerateResponse {
     id: string;
 
     /**
-     * Attachments that were attached to the message
-     */
-    attachments: Array<Message.Attachment>;
-
-    /**
      * The content of the message. Markdown on plain text.
      */
     content: string;
@@ -75,25 +70,6 @@ export namespace EmailGenerateResponse {
      * The type of the message
      */
     type: 'CUSTOMER' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | 'BOT_RESPONSE';
-  }
-
-  export namespace Message {
-    export interface Attachment {
-      /**
-       * The name of the attachment
-       */
-      name: string;
-
-      /**
-       * The type of the attachment
-       */
-      type: string;
-
-      /**
-       * The URL of the attachment
-       */
-      url: string;
-    }
   }
 }
 
@@ -132,11 +108,6 @@ export namespace EmailGetResponse {
     id: string;
 
     /**
-     * Attachments that were attached to the message
-     */
-    attachments: Array<Message.Attachment>;
-
-    /**
      * The content of the message. Markdown on plain text.
      */
     content: string;
@@ -156,25 +127,6 @@ export namespace EmailGetResponse {
      */
     type: 'CUSTOMER' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | 'BOT_RESPONSE';
   }
-
-  export namespace Message {
-    export interface Attachment {
-      /**
-       * The name of the attachment
-       */
-      name: string;
-
-      /**
-       * The type of the attachment
-       */
-      type: string;
-
-      /**
-       * The URL of the attachment
-       */
-      url: string;
-    }
-  }
 }
 
 export interface EmailStartResponse {
@@ -190,11 +142,6 @@ export interface EmailStartResponse {
 }
 
 export interface EmailGenerateParams {
-  /**
-   * Attachments to be sent with the message
-   */
-  attachments: Array<EmailGenerateParams.Attachment>;
-
   /**
    * The ID of the conversation
    */
@@ -213,23 +160,6 @@ export interface EmailGenerateParams {
 }
 
 export namespace EmailGenerateParams {
-  export interface Attachment {
-    /**
-     * The name of the attachment
-     */
-    name: string;
-
-    /**
-     * The type of the attachment
-     */
-    type: string;
-
-    /**
-     * The URL of the attachment
-     */
-    url: string;
-  }
-
   /**
    * Any additional customer information, that has changed in the course of the
    * conversation.
