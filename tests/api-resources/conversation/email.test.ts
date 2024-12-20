@@ -12,6 +12,7 @@ const client = new Lorikeet({
 describe('resource email', () => {
   test('generate: only required params', async () => {
     const responsePromise = client.conversation.email.generate({
+      attachments: [{ name: 'example.jpg', type: 'image/jpeg', url: 'https://example.com/example.jpg' }],
       conversationId: 'conversationId',
       message: 'message',
     });
@@ -26,6 +27,7 @@ describe('resource email', () => {
 
   test('generate: required and optional params', async () => {
     const response = await client.conversation.email.generate({
+      attachments: [{ name: 'example.jpg', type: 'image/jpeg', url: 'https://example.com/example.jpg' }],
       conversationId: 'conversationId',
       message: 'message',
       customer: {
