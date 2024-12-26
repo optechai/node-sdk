@@ -3,7 +3,7 @@
   "exclude": ["src/_shims/**/*-deno.ts"],
   "compilerOptions": {
     "target": "es2020",
-    "lib": ["es2020"],
+    "lib": ["es2022"],
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -32,7 +32,7 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-		"isolatedModules": false,
+    "isolatedModules": false,
 
     "skipLibCheck": true
   }

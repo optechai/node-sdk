@@ -2,6 +2,7 @@ CHANGELOG.md
 /ecosystem-tests/*/**
 /node_modules
 /deno
+pnpm-lock.yaml
 
 # don't format tsc output, will break source maps
 /dist
