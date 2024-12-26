@@ -28,7 +28,14 @@ describe('resource email', () => {
     const response = await client.conversation.email.generate({
       conversationId: 'conversationId',
       message: 'message',
-      customer: {},
+      customer: {
+        displayName: 'Lori Keet',
+        email: 'lori@keet.com',
+        firstName: 'Lori',
+        lastName: 'Keet',
+        remoteId: '1234567890',
+        subscriberCustomerId: '1234567890',
+      },
     });
   });
 
