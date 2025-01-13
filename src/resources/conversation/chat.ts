@@ -97,6 +97,11 @@ export interface ChatGenerateResponse {
   messages: Array<ChatGenerateResponse.Message>;
 
   /**
+   * The status of the conversation
+   */
+  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
+
+  /**
    * The timestamp of when the ticket was last updated in our system.
    */
   updatedAt: string;
@@ -177,6 +182,11 @@ export interface ChatGetResponse {
   messages: Array<ChatGetResponse.Message>;
 
   /**
+   * The status of the conversation
+   */
+  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
+
+  /**
    * The timestamp of when the ticket was last updated in our system.
    */
   updatedAt: string;
@@ -245,6 +255,11 @@ export interface ChatStartResponse {
    * The timestamp of the when the conversation was created in our system.
    */
   createdAt: string;
+
+  /**
+   * The status of the conversation
+   */
+  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
 }
 
 export interface ChatGenerateParams {

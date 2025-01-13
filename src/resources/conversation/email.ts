@@ -39,6 +39,11 @@ export interface EmailGenerateResponse {
   messages: Array<EmailGenerateResponse.Message>;
 
   /**
+   * The status of the conversation
+   */
+  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
+
+  /**
    * The timestamp of when the ticket was last updated in our system.
    */
   updatedAt: string;
@@ -119,6 +124,11 @@ export interface EmailGetResponse {
   messages: Array<EmailGetResponse.Message>;
 
   /**
+   * The status of the conversation
+   */
+  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
+
+  /**
    * The timestamp of when the ticket was last updated in our system.
    */
   updatedAt: string;
@@ -187,6 +197,11 @@ export interface EmailStartResponse {
    * The timestamp of the when the conversation was created in our system.
    */
   createdAt: string;
+
+  /**
+   * The status of the conversation
+   */
+  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
 }
 
 export interface EmailGenerateParams {
