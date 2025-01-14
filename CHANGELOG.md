@@ -6,11 +6,18 @@ Full Changelog: [v0.6.3...v0.7.0](https://github.com/optechai/node-sdk/compare/v
 
 ### Features
 
-* **api:** api update ([#120](https://github.com/optechai/node-sdk/issues/120)) ([16500dd](https://github.com/optechai/node-sdk/commit/16500dd356f213a64749895a870ee17f7085e359))
-* **api:** api update ([#122](https://github.com/optechai/node-sdk/issues/122)) ([101a2d4](https://github.com/optechai/node-sdk/commit/101a2d42c31c8b73711801e585590901875fd64a))
-* **api:** api update ([#123](https://github.com/optechai/node-sdk/issues/123)) ([183ccab](https://github.com/optechai/node-sdk/commit/183ccab00fb2ebfe8fab9a4fe4de7effb2edec23))
-* **api:** api update ([#130](https://github.com/optechai/node-sdk/issues/130)) ([231084a](https://github.com/optechai/node-sdk/commit/231084a7d2d3ac077e5518d58bb836e878580c2c))
+* **api:** Support for attachments in ticket messages ([#120](https://github.com/optechai/node-sdk/issues/120)) ([16500dd](https://github.com/optechai/node-sdk/commit/16500dd356f213a64749895a870ee17f7085e359))
+* **api:** Supports conversation status in response ([#130](https://github.com/optechai/node-sdk/issues/130)) ([231084a](https://github.com/optechai/node-sdk/commit/231084a7d2d3ac077e5518d58bb836e878580c2c))
 
+#### Conversation status
+
+* `status` allows users to determine previously opaque aspects of response generation
+  - `Unprocessed`: We have not done anything to the ticket.
+  - `Processing`: The ticket is being processed. This includes cases where we are waiting for the customer to reply.
+  - `Unhandled`: Not enough workflows matched this ticket, so we did nothing.
+  - `Escalated`: We tried to respond to the ticket, but had to escalate it to a human.
+  - `Responded`: We have responded to the ticket.
+  - `Error`: A system error occurred while processing the ticket.
 
 ### Bug Fixes
 
