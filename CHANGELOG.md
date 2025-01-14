@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.7.0 (2025-01-14)
+
+Full Changelog: [v0.6.3...v0.7.0](https://github.com/optechai/node-sdk/compare/v0.6.3...v0.7.0)
+
+### Features
+
+* **api:** api update ([#120](https://github.com/optechai/node-sdk/issues/120)) ([16500dd](https://github.com/optechai/node-sdk/commit/16500dd356f213a64749895a870ee17f7085e359))
+* **api:** api update ([#122](https://github.com/optechai/node-sdk/issues/122)) ([101a2d4](https://github.com/optechai/node-sdk/commit/101a2d42c31c8b73711801e585590901875fd64a))
+* **api:** api update ([#123](https://github.com/optechai/node-sdk/issues/123)) ([183ccab](https://github.com/optechai/node-sdk/commit/183ccab00fb2ebfe8fab9a4fe4de7effb2edec23))
+* **api:** api update ([#130](https://github.com/optechai/node-sdk/issues/130)) ([231084a](https://github.com/optechai/node-sdk/commit/231084a7d2d3ac077e5518d58bb836e878580c2c))
+
+
+### Bug Fixes
+
+* **client:** normalize method ([#124](https://github.com/optechai/node-sdk/issues/124)) ([5322c3a](https://github.com/optechai/node-sdk/commit/5322c3a9dff3fd9f738654595588a096a54d375d))
+
+
+### Chores
+
+* **internal:** codegen related update ([#116](https://github.com/optechai/node-sdk/issues/116)) ([743e222](https://github.com/optechai/node-sdk/commit/743e222028c225f85732862e73a29296de0b6790))
+* **internal:** codegen related update ([#125](https://github.com/optechai/node-sdk/issues/125)) ([a4102dc](https://github.com/optechai/node-sdk/commit/a4102dcfd5cb9198ec107cae96fe0a39b730fdd2))
+* **internal:** codegen related update ([#128](https://github.com/optechai/node-sdk/issues/128)) ([7f49512](https://github.com/optechai/node-sdk/commit/7f4951278344f7a7b614cf6a089c1ca9e4c1e11d))
+* **internal:** codegen related update ([#129](https://github.com/optechai/node-sdk/issues/129)) ([4fab784](https://github.com/optechai/node-sdk/commit/4fab784307d3b38fa248a0ee0ef5b1a71f02dfb4))
+* **internal:** fix some typos ([#121](https://github.com/optechai/node-sdk/issues/121)) ([da09487](https://github.com/optechai/node-sdk/commit/da094874f675024cb18bc0a6f1f0a32ddb909faf))
+* **internal:** update isAbsoluteURL ([#119](https://github.com/optechai/node-sdk/issues/119)) ([d1020ed](https://github.com/optechai/node-sdk/commit/d1020ed87895b4b145fb389155e6bf80aec7fc69))
+* **types:** nicer error class types + jsdocs ([#118](https://github.com/optechai/node-sdk/issues/118)) ([371255e](https://github.com/optechai/node-sdk/commit/371255e9bb0ac71b11f14c2c2a23a1b3753102f2))
+
 ## 0.6.3 (2024-12-11)
 
 Full Changelog: [v0.6.2...v0.6.3](https://github.com/optechai/node-sdk/compare/v0.6.2...v0.6.3)

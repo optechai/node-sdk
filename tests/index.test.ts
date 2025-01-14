@@ -128,6 +128,24 @@ describe('instantiate client', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
+  test('normalized method', async () => {
+    let capturedRequest: RequestInit | undefined;
+    const testFetch = async (url: RequestInfo, init: RequestInit = {}): Promise<Response> => {
+      capturedRequest = init;
+      return new Response(JSON.stringify({}), { headers: { 'Content-Type': 'application/json' } });
+    };
+
+    const client = new Lorikeet({
+      baseURL: 'http://localhost:5000/',
+      clientId: 'My Client ID',
+      clientSecret: 'My Client Secret',
+      fetch: testFetch,
+    });
+
+    await client.patch('/foo');
+    expect(capturedRequest?.method).toEqual('PATCH');
+  });
+
   describe('baseUrl', () => {
     test('trailing slash', () => {
       const client = new Lorikeet({
@@ -201,7 +219,7 @@ describe('instantiate client', () => {
     expect(client.clientSecret).toBe('My Client Secret');
   });
 
-  test('with overriden environment variable arguments', () => {
+  test('with overridden environment variable arguments', () => {
     // set options via env var
     process.env['LORIKEET_CLIENT_ID'] = 'another My Client ID';
     process.env['LORIKEET_CLIENT_SECRET'] = 'another My Client Secret';

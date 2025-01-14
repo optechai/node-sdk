@@ -89,12 +89,17 @@ export interface ChatGenerateResponse {
   /**
    * The latest message type - useful for polling
    */
-  latestMessageType: 'CUSTOMER' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | 'BOT_RESPONSE';
+  latestMessageType: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE';
 
   /**
    * The full list of messages. This endpoint supports markdown.
    */
   messages: Array<ChatGenerateResponse.Message>;
+
+  /**
+   * The status of the conversation
+   */
+  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
 
   /**
    * The timestamp of when the ticket was last updated in our system.
@@ -108,6 +113,11 @@ export namespace ChatGenerateResponse {
      * The ID of the conversation message
      */
     id: string;
+
+    /**
+     * Attachments that were attached to the message
+     */
+    attachments: Array<Message.Attachment>;
 
     /**
      * The content of the message. Markdown on plain text.
@@ -127,7 +137,26 @@ export namespace ChatGenerateResponse {
     /**
      * The type of the message
      */
-    type: 'CUSTOMER' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | 'BOT_RESPONSE';
+    type: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE';
+  }
+
+  export namespace Message {
+    export interface Attachment {
+      /**
+       * The name of the attachment
+       */
+      name: string;
+
+      /**
+       * The type of the attachment
+       */
+      type: string;
+
+      /**
+       * The URL of the attachment
+       */
+      url: string;
+    }
   }
 }
 
@@ -145,12 +174,17 @@ export interface ChatGetResponse {
   /**
    * The latest message type - useful for polling
    */
-  latestMessageType: 'CUSTOMER' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | 'BOT_RESPONSE';
+  latestMessageType: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE';
 
   /**
    * The full list of messages. This endpoint supports markdown.
    */
   messages: Array<ChatGetResponse.Message>;
+
+  /**
+   * The status of the conversation
+   */
+  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
 
   /**
    * The timestamp of when the ticket was last updated in our system.
@@ -164,6 +198,11 @@ export namespace ChatGetResponse {
      * The ID of the conversation message
      */
     id: string;
+
+    /**
+     * Attachments that were attached to the message
+     */
+    attachments: Array<Message.Attachment>;
 
     /**
      * The content of the message. Markdown on plain text.
@@ -183,7 +222,26 @@ export namespace ChatGetResponse {
     /**
      * The type of the message
      */
-    type: 'CUSTOMER' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | 'BOT_RESPONSE';
+    type: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE';
+  }
+
+  export namespace Message {
+    export interface Attachment {
+      /**
+       * The name of the attachment
+       */
+      name: string;
+
+      /**
+       * The type of the attachment
+       */
+      type: string;
+
+      /**
+       * The URL of the attachment
+       */
+      url: string;
+    }
   }
 }
 
@@ -197,9 +255,19 @@ export interface ChatStartResponse {
    * The timestamp of the when the conversation was created in our system.
    */
   createdAt: string;
+
+  /**
+   * The status of the conversation
+   */
+  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
 }
 
 export interface ChatGenerateParams {
+  /**
+   * Attachments to be sent with the message
+   */
+  attachments: Array<ChatGenerateParams.Attachment>;
+
   /**
    * The ID of the conversation
    */
@@ -218,6 +286,23 @@ export interface ChatGenerateParams {
 }
 
 export namespace ChatGenerateParams {
+  export interface Attachment {
+    /**
+     * The name of the attachment
+     */
+    name: string;
+
+    /**
+     * The type of the attachment
+     */
+    type: string;
+
+    /**
+     * The URL of the attachment
+     */
+    url: string;
+  }
+
   /**
    * Any additional customer information, that has changed in the course of the
    * conversation.
