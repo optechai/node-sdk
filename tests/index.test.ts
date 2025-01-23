@@ -101,6 +101,16 @@ describe('instantiate client', () => {
     expect(response).toEqual({ url: 'http://localhost:5000/foo', custom: true });
   });
 
+  test('explicit global fetch', async () => {
+    // make sure the global fetch type is assignable to our Fetch type
+    const client = new Lorikeet({
+      baseURL: 'http://localhost:5000/',
+      clientId: 'My Client ID',
+      clientSecret: 'My Client Secret',
+      fetch: defaultFetch,
+    });
+  });
+
   test('custom signal', async () => {
     const client = new Lorikeet({
       baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
