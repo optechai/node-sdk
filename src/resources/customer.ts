@@ -21,11 +21,7 @@ export class Customer extends APIResource {
   }
 
   token(body: CustomerTokenParams, options?: Core.RequestOptions): Core.APIPromise<string> {
-    return this._client.post('/v1/customer/token', {
-      body,
-      ...options,
-      headers: { Accept: 'application/json', ...options?.headers },
-    });
+    return this._client.post('/v1/customer/token', { body, ...options });
   }
 }
 

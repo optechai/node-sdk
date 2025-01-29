@@ -87,6 +87,12 @@ export interface ChatGenerateResponse {
   createdAt: string;
 
   /**
+   * The events that have occurred in the conversation. Can be used for deriving more
+   * information about the conversation.
+   */
+  events: Array<ChatGenerateResponse.Event>;
+
+  /**
    * The latest message type - useful for polling
    */
   latestMessageType: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE';
@@ -108,6 +114,34 @@ export interface ChatGenerateResponse {
 }
 
 export namespace ChatGenerateResponse {
+  export interface Event {
+    /**
+     * The ID of the event
+     */
+    id: string;
+
+    /**
+     * The timestamp of the event
+     */
+    createdAt: string;
+
+    /**
+     * Any specific data associated with the event
+     */
+    data: unknown;
+
+    /**
+     * The type of the event
+     */
+    type:
+      | 'ASSIGNED'
+      | 'CLOSED'
+      | 'ESCALATED'
+      | 'ESCALATION_REQUEST'
+      | 'PROCESSING_CANCELLED'
+      | 'HOSTILE_MESSAGE';
+  }
+
   export interface Message {
     /**
      * The ID of the conversation message
@@ -172,6 +206,12 @@ export interface ChatGetResponse {
   createdAt: string;
 
   /**
+   * The events that have occurred in the conversation. Can be used for deriving more
+   * information about the conversation.
+   */
+  events: Array<ChatGetResponse.Event>;
+
+  /**
    * The latest message type - useful for polling
    */
   latestMessageType: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE';
@@ -193,6 +233,34 @@ export interface ChatGetResponse {
 }
 
 export namespace ChatGetResponse {
+  export interface Event {
+    /**
+     * The ID of the event
+     */
+    id: string;
+
+    /**
+     * The timestamp of the event
+     */
+    createdAt: string;
+
+    /**
+     * Any specific data associated with the event
+     */
+    data: unknown;
+
+    /**
+     * The type of the event
+     */
+    type:
+      | 'ASSIGNED'
+      | 'CLOSED'
+      | 'ESCALATED'
+      | 'ESCALATION_REQUEST'
+      | 'PROCESSING_CANCELLED'
+      | 'HOSTILE_MESSAGE';
+  }
+
   export interface Message {
     /**
      * The ID of the conversation message
@@ -257,9 +325,45 @@ export interface ChatStartResponse {
   createdAt: string;
 
   /**
+   * The events that have occurred in the conversation. Can be used for deriving more
+   * information about the conversation.
+   */
+  events: Array<ChatStartResponse.Event>;
+
+  /**
    * The status of the conversation
    */
   status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
+}
+
+export namespace ChatStartResponse {
+  export interface Event {
+    /**
+     * The ID of the event
+     */
+    id: string;
+
+    /**
+     * The timestamp of the event
+     */
+    createdAt: string;
+
+    /**
+     * Any specific data associated with the event
+     */
+    data: unknown;
+
+    /**
+     * The type of the event
+     */
+    type:
+      | 'ASSIGNED'
+      | 'CLOSED'
+      | 'ESCALATED'
+      | 'ESCALATION_REQUEST'
+      | 'PROCESSING_CANCELLED'
+      | 'HOSTILE_MESSAGE';
+  }
 }
 
 export interface ChatGenerateParams {
