@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.8.0 (2025-01-29)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/optechai/node-sdk/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** api update ([#138](https://github.com/optechai/node-sdk/issues/138)) ([7b994e3](https://github.com/optechai/node-sdk/commit/7b994e3b0f6d4a382246122d528bb88a6cfcfd9a))
+
+
+### Chores
+
+* **internal:** codegen related update ([#136](https://github.com/optechai/node-sdk/issues/136)) ([554c219](https://github.com/optechai/node-sdk/commit/554c219849d9b1c718c9c4148dd918c33c6e73b6))
+* **internal:** codegen related update ([#137](https://github.com/optechai/node-sdk/issues/137)) ([ebbb7ea](https://github.com/optechai/node-sdk/commit/ebbb7eaffb055271ae5a3ccc0252016ae4f1b283))
+
 ## 0.7.0 (2025-01-14)
 
 Full Changelog: [v0.6.3...v0.7.0](https://github.com/optechai/node-sdk/compare/v0.6.3...v0.7.0)
