@@ -42,6 +42,12 @@ while (true) {
   });
 
   console.log(`Bot: ${response.messages[response.messages.length - 1].content}`);
+  const escalation = response.events.find((event) => event.type === 'ESCALATED');
+
+  if (escalation) {
+    console.log(`********\nESCALATION\n********\nReason: {${escalation.escalationReason}}`);
+    break;
+  }
 }
 
 rl.close();
