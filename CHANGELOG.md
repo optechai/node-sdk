@@ -6,7 +6,7 @@ Full Changelog: [v0.7.0...v0.8.0](https://github.com/optechai/node-sdk/compare/v
 
 ### Features
 
-* **api:** api update ([#138](https://github.com/optechai/node-sdk/issues/138)) ([7b994e3](https://github.com/optechai/node-sdk/commit/7b994e3b0f6d4a382246122d528bb88a6cfcfd9a))
+* **api:** SDK now returns events with richer information on things like topic matching, and escalations. ([#138](https://github.com/optechai/node-sdk/issues/138)) ([7b994e3](https://github.com/optechai/node-sdk/commit/7b994e3b0f6d4a382246122d528bb88a6cfcfd9a))
 
 
 ### Chores
