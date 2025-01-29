@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.1 (2025-01-29)
+
+Full Changelog: [v0.8.0...v0.8.1](https://github.com/optechai/node-sdk/compare/v0.8.0...v0.8.1)
+
+### Features
+
+* chore: rework examples to include events ([8fd630f](https://github.com/optechai/node-sdk/commit/8fd630ffac661e6c9b3278460fb4d76b4b052d48))
+
 ## 0.8.0 (2025-01-29)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/optechai/node-sdk/compare/v0.7.0...v0.8.0)
