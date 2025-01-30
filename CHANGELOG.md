@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.1 (2025-01-30)
+
+Full Changelog: [v0.9.0...v0.9.1](https://github.com/optechai/node-sdk/compare/v0.9.0...v0.9.1)
+
+### Chores
+
+* docs fix ([26b32f8](https://github.com/optechai/node-sdk/commit/26b32f8399cce4066b3d26424d1733c3b96eea8e))
+
 ## 0.9.0 (2025-01-30)
 
 Full Changelog: [v0.8.1...v0.9.0](https://github.com/optechai/node-sdk/compare/v0.8.1...v0.9.0)
