@@ -37,7 +37,7 @@ export interface ChatGenerateResponse {
   /**
    * The latest message type - useful for polling
    */
-  latestMessageType: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE';
+  latestMessageType: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | null;
 
   /**
    * The full list of messages. This endpoint supports markdown.
@@ -156,7 +156,7 @@ export interface ChatGetResponse {
   /**
    * The latest message type - useful for polling
    */
-  latestMessageType: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE';
+  latestMessageType: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | null;
 
   /**
    * The full list of messages. This endpoint supports markdown.
