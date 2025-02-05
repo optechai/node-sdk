@@ -40,6 +40,11 @@ export interface EmailGenerateResponse {
   latestMessageType: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | null;
 
   /**
+   * The url of the conversation in the Lorikeet dashboard
+   */
+  link: string;
+
+  /**
    * The full list of messages. This endpoint supports markdown.
    */
   messages: Array<EmailGenerateResponse.Message>;
@@ -159,6 +164,11 @@ export interface EmailGetResponse {
   latestMessageType: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | null;
 
   /**
+   * The url of the conversation in the Lorikeet dashboard
+   */
+  link: string;
+
+  /**
    * The full list of messages. This endpoint supports markdown.
    */
   messages: Array<EmailGetResponse.Message>;
@@ -271,6 +281,11 @@ export interface EmailStartResponse {
    * information about the conversation.
    */
   events: Array<EmailStartResponse.Event>;
+
+  /**
+   * The url of the conversation in the Lorikeet dashboard
+   */
+  link: string;
 
   /**
    * The status of the conversation
