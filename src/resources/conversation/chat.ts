@@ -98,6 +98,11 @@ export interface ChatGenerateResponse {
   latestMessageType: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | null;
 
   /**
+   * The url of the conversation in the Lorikeet dashboard
+   */
+  link: string;
+
+  /**
    * The full list of messages. This endpoint supports markdown.
    */
   messages: Array<ChatGenerateResponse.Message>;
@@ -217,6 +222,11 @@ export interface ChatGetResponse {
   latestMessageType: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | null;
 
   /**
+   * The url of the conversation in the Lorikeet dashboard
+   */
+  link: string;
+
+  /**
    * The full list of messages. This endpoint supports markdown.
    */
   messages: Array<ChatGetResponse.Message>;
@@ -329,6 +339,11 @@ export interface ChatStartResponse {
    * information about the conversation.
    */
   events: Array<ChatStartResponse.Event>;
+
+  /**
+   * The url of the conversation in the Lorikeet dashboard
+   */
+  link: string;
 
   /**
    * The status of the conversation
