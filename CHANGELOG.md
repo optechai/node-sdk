@@ -6,7 +6,7 @@ Full Changelog: [v0.9.0...v0.9.1](https://github.com/optechai/node-sdk/compare/v
 
 ### Features
 
-* **api:** api update ([#148](https://github.com/optechai/node-sdk/issues/148)) ([b69e96d](https://github.com/optechai/node-sdk/commit/b69e96d847b130418c4c8cd7826089f2e4ffccbe))
+* **api:** supply app link in conversation response ([#148](https://github.com/optechai/node-sdk/issues/148)) ([b69e96d](https://github.com/optechai/node-sdk/commit/b69e96d847b130418c4c8cd7826089f2e4ffccbe))
 * **client:** send `X-Stainless-Timeout` header ([#146](https://github.com/optechai/node-sdk/issues/146)) ([d608779](https://github.com/optechai/node-sdk/commit/d608779a9476f22aec184e959c394c3071e9492d))
 
 
