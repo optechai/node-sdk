@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.9.1 (2025-02-05)
+
+Full Changelog: [v0.9.0...v0.9.1](https://github.com/optechai/node-sdk/compare/v0.9.0...v0.9.1)
+
+### Features
+
+* **api:** api update ([#148](https://github.com/optechai/node-sdk/issues/148)) ([b69e96d](https://github.com/optechai/node-sdk/commit/b69e96d847b130418c4c8cd7826089f2e4ffccbe))
+* **client:** send `X-Stainless-Timeout` header ([#146](https://github.com/optechai/node-sdk/issues/146)) ([d608779](https://github.com/optechai/node-sdk/commit/d608779a9476f22aec184e959c394c3071e9492d))
+
+
+### Chores
+
+* docs fix ([26b32f8](https://github.com/optechai/node-sdk/commit/26b32f8399cce4066b3d26424d1733c3b96eea8e))
+
 ## 0.9.0 (2025-01-30)
 
 Full Changelog: [v0.8.1...v0.9.0](https://github.com/optechai/node-sdk/compare/v0.8.1...v0.9.0)
