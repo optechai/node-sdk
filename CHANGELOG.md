@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.2 (2025-02-14)
+
+Full Changelog: [v0.9.1...v0.9.2](https://github.com/optechai/node-sdk/compare/v0.9.1...v0.9.2)
+
+### Bug Fixes
+
+* **client:** fix export map for index exports ([#150](https://github.com/optechai/node-sdk/issues/150)) ([b907b3c](https://github.com/optechai/node-sdk/commit/b907b3c5d45e9ecf89b4d6b4330f430b23130b49))
+
 ## 0.9.1 (2025-02-05)
 
 Full Changelog: [v0.9.0...v0.9.1](https://github.com/optechai/node-sdk/compare/v0.9.0...v0.9.1)
