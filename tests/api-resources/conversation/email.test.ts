@@ -37,6 +37,7 @@ describe('resource email', () => {
         lastName: 'Keet',
         remoteId: '1234567890',
         subscriberCustomerId: '1234567890',
+        subscriberToken: 'subscriberToken',
       },
     });
   });
