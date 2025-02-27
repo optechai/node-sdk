@@ -67,6 +67,12 @@ export interface CustomerCreateResponse {
    * example a cookie
    */
   subscriberCustomerId?: string;
+
+  /**
+   * A token that can be used to authenticate the customer in the your system, like a
+   * JWT
+   */
+  subscriberToken?: string;
 }
 
 export interface CustomerUpdateResponse {
@@ -111,6 +117,12 @@ export interface CustomerUpdateResponse {
    * example a cookie
    */
   subscriberCustomerId?: string;
+
+  /**
+   * A token that can be used to authenticate the customer in the your system, like a
+   * JWT
+   */
+  subscriberToken?: string;
 }
 
 export interface CustomerGetResponse {
@@ -155,6 +167,12 @@ export interface CustomerGetResponse {
    * example a cookie
    */
   subscriberCustomerId?: string;
+
+  /**
+   * A token that can be used to authenticate the customer in the your system, like a
+   * JWT
+   */
+  subscriberToken?: string;
 }
 
 export type CustomerTokenResponse = string;
@@ -191,6 +209,12 @@ export interface CustomerCreateParams {
    * example a cookie
    */
   subscriberCustomerId?: string;
+
+  /**
+   * A token that can be used to authenticate the customer in the your system, like a
+   * JWT
+   */
+  subscriberToken?: string;
 }
 
 export interface CustomerUpdateParams {
@@ -225,6 +249,12 @@ export interface CustomerUpdateParams {
    * example a cookie
    */
   subscriberCustomerId?: string;
+
+  /**
+   * A token that can be used to authenticate the customer in the your system, like a
+   * JWT
+   */
+  subscriberToken?: string;
 }
 
 export interface CustomerTokenParams {
@@ -259,6 +289,12 @@ export interface CustomerTokenParams {
    * example a cookie
    */
   subscriberCustomerId?: string;
+
+  /**
+   * A token that can be used to authenticate the customer in the your system, like a
+   * JWT
+   */
+  subscriberToken?: string;
 }
 
 export declare namespace Customer {

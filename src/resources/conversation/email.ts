@@ -400,6 +400,12 @@ export namespace EmailGenerateParams {
      * example a cookie
      */
     subscriberCustomerId?: string;
+
+    /**
+     * A token that can be used to authenticate the customer in the your system, like a
+     * JWT
+     */
+    subscriberToken?: string;
   }
 }
 
