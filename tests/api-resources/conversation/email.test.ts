@@ -31,6 +31,7 @@ describe('resource email', () => {
       conversationId: 'conversationId',
       message: 'message',
       customer: {
+        avatarUrl: 'https://example.com/image.jpg',
         displayName: 'Lori Keet',
         email: 'lori@keet.com',
         firstName: 'Lori',
