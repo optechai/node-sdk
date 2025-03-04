@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.10.0 (2025-03-04)
+
+Full Changelog: [v0.9.2...v0.10.0](https://github.com/optechai/node-sdk/compare/v0.9.2...v0.10.0)
+
+### Features
+
+* **api:** api update ([#155](https://github.com/optechai/node-sdk/issues/155)) ([8dfa34b](https://github.com/optechai/node-sdk/commit/8dfa34bf5bde64ea5ff93aa9053848ae357e9aa7))
+* **api:** api update ([#157](https://github.com/optechai/node-sdk/issues/157)) ([1a99697](https://github.com/optechai/node-sdk/commit/1a99697aac37e75c479f7935f17a935dc58b4980))
+
+
+### Chores
+
+* **internal:** fix devcontainers setup ([#153](https://github.com/optechai/node-sdk/issues/153)) ([c0b34bb](https://github.com/optechai/node-sdk/commit/c0b34bb780a7438413fc0b0627fa28eacd3dfaa6))
+
+
+### Documentation
+
+* update URLs from stainlessapi.com to stainless.com ([#156](https://github.com/optechai/node-sdk/issues/156)) ([93920fa](https://github.com/optechai/node-sdk/commit/93920fa830b33f4d8e522accda6fc2ece62296ca))
+
 ## 0.9.2 (2025-02-14)
 
 Full Changelog: [v0.9.1...v0.9.2](https://github.com/optechai/node-sdk/compare/v0.9.1...v0.9.2)

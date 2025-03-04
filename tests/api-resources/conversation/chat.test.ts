@@ -31,12 +31,14 @@ describe('resource chat', () => {
       conversationId: 'conversationId',
       message: 'message',
       customer: {
+        avatarUrl: 'https://example.com/image.jpg',
         displayName: 'Lori Keet',
         email: 'lori@keet.com',
         firstName: 'Lori',
         lastName: 'Keet',
         remoteId: '1234567890',
         subscriberCustomerId: '1234567890',
+        subscriberToken: 'subscriberToken',
       },
     });
   });

@@ -428,6 +428,11 @@ export namespace ChatGenerateParams {
    */
   export interface Customer {
     /**
+     * The URL of the customer avatar
+     */
+    avatarUrl?: string;
+
+    /**
      * The display name of the customer
      */
     displayName?: string;
@@ -458,6 +463,12 @@ export namespace ChatGenerateParams {
      * example a cookie
      */
     subscriberCustomerId?: string;
+
+    /**
+     * A token that can be used to authenticate the customer in the your system, like a
+     * JWT
+     */
+    subscriberToken?: string;
   }
 }
 

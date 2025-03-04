@@ -37,6 +37,11 @@ export interface CustomerCreateResponse {
   createdAt: string;
 
   /**
+   * The URL of the customer avatar
+   */
+  avatarUrl?: string;
+
+  /**
    * The display name of the customer
    */
   displayName?: string;
@@ -67,6 +72,12 @@ export interface CustomerCreateResponse {
    * example a cookie
    */
   subscriberCustomerId?: string;
+
+  /**
+   * A token that can be used to authenticate the customer in the your system, like a
+   * JWT
+   */
+  subscriberToken?: string;
 }
 
 export interface CustomerUpdateResponse {
@@ -81,6 +92,11 @@ export interface CustomerUpdateResponse {
   createdAt: string;
 
   /**
+   * The URL of the customer avatar
+   */
+  avatarUrl?: string;
+
+  /**
    * The display name of the customer
    */
   displayName?: string;
@@ -111,6 +127,12 @@ export interface CustomerUpdateResponse {
    * example a cookie
    */
   subscriberCustomerId?: string;
+
+  /**
+   * A token that can be used to authenticate the customer in the your system, like a
+   * JWT
+   */
+  subscriberToken?: string;
 }
 
 export interface CustomerGetResponse {
@@ -125,6 +147,11 @@ export interface CustomerGetResponse {
   createdAt: string;
 
   /**
+   * The URL of the customer avatar
+   */
+  avatarUrl?: string;
+
+  /**
    * The display name of the customer
    */
   displayName?: string;
@@ -155,12 +182,23 @@ export interface CustomerGetResponse {
    * example a cookie
    */
   subscriberCustomerId?: string;
+
+  /**
+   * A token that can be used to authenticate the customer in the your system, like a
+   * JWT
+   */
+  subscriberToken?: string;
 }
 
 export type CustomerTokenResponse = string;
 
 export interface CustomerCreateParams {
   /**
+   * The URL of the customer avatar
+   */
+  avatarUrl?: string;
+
+  /**
    * The display name of the customer
    */
   displayName?: string;
@@ -191,10 +229,21 @@ export interface CustomerCreateParams {
    * example a cookie
    */
   subscriberCustomerId?: string;
+
+  /**
+   * A token that can be used to authenticate the customer in the your system, like a
+   * JWT
+   */
+  subscriberToken?: string;
 }
 
 export interface CustomerUpdateParams {
   /**
+   * The URL of the customer avatar
+   */
+  avatarUrl?: string;
+
+  /**
    * The display name of the customer
    */
   displayName?: string;
@@ -225,10 +274,21 @@ export interface CustomerUpdateParams {
    * example a cookie
    */
   subscriberCustomerId?: string;
+
+  /**
+   * A token that can be used to authenticate the customer in the your system, like a
+   * JWT
+   */
+  subscriberToken?: string;
 }
 
 export interface CustomerTokenParams {
   /**
+   * The URL of the customer avatar
+   */
+  avatarUrl?: string;
+
+  /**
    * The display name of the customer
    */
   displayName?: string;
@@ -237,6 +297,12 @@ export interface CustomerTokenParams {
    * The email of the customer
    */
   email?: string;
+
+  /**
+   * The expiry of the conversation initialization token, if not provided it will be
+   * set to 1 hour
+   */
+  expiry?: string;
 
   /**
    * The first name of the customer
@@ -259,6 +325,12 @@ export interface CustomerTokenParams {
    * example a cookie
    */
   subscriberCustomerId?: string;
+
+  /**
+   * A token that can be used to authenticate the customer in the your system, like a
+   * JWT
+   */
+  subscriberToken?: string;
 }
 
 export declare namespace Customer {
