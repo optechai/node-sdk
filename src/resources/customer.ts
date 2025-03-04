@@ -37,11 +37,6 @@ export interface CustomerCreateResponse {
   createdAt: string;
 
   /**
-   * The URL of the customer avatar
-   */
-  avatarUrl?: string;
-
-  /**
    * The display name of the customer
    */
   displayName?: string;
@@ -90,11 +85,6 @@ export interface CustomerUpdateResponse {
    * The timestamp of the when the customer was created in our system
    */
   createdAt: string;
-
-  /**
-   * The URL of the customer avatar
-   */
-  avatarUrl?: string;
 
   /**
    * The display name of the customer
@@ -147,11 +137,6 @@ export interface CustomerGetResponse {
   createdAt: string;
 
   /**
-   * The URL of the customer avatar
-   */
-  avatarUrl?: string;
-
-  /**
    * The display name of the customer
    */
   displayName?: string;
@@ -194,11 +179,6 @@ export type CustomerTokenResponse = string;
 
 export interface CustomerCreateParams {
   /**
-   * The URL of the customer avatar
-   */
-  avatarUrl?: string;
-
-  /**
    * The display name of the customer
    */
   displayName?: string;
@@ -238,11 +218,6 @@ export interface CustomerCreateParams {
 }
 
 export interface CustomerUpdateParams {
-  /**
-   * The URL of the customer avatar
-   */
-  avatarUrl?: string;
-
   /**
    * The display name of the customer
    */
@@ -284,11 +259,6 @@ export interface CustomerUpdateParams {
 
 export interface CustomerTokenParams {
   /**
-   * The URL of the customer avatar
-   */
-  avatarUrl?: string;
-
-  /**
    * The display name of the customer
    */
   displayName?: string;
@@ -297,12 +267,6 @@ export interface CustomerTokenParams {
    * The email of the customer
    */
   email?: string;
-
-  /**
-   * The expiry of the conversation initialization token, if not provided it will be
-   * set to 1 hour
-   */
-  expiry?: string;
 
   /**
    * The first name of the customer

@@ -428,11 +428,6 @@ export namespace ChatGenerateParams {
    */
   export interface Customer {
     /**
-     * The URL of the customer avatar
-     */
-    avatarUrl?: string;
-
-    /**
      * The display name of the customer
      */
     displayName?: string;
