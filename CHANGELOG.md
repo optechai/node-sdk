@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.11.0 (2025-03-05)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/optechai/node-sdk/compare/v0.10.0...v0.11.0)
+
+### Features
+
+* **api:** api update ([#160](https://github.com/optechai/node-sdk/issues/160)) ([fe2e559](https://github.com/optechai/node-sdk/commit/fe2e5591f18fdfa0ded655ee906266fc457c65b8))
+* **api:** api update ([#162](https://github.com/optechai/node-sdk/issues/162)) ([e3d8dfb](https://github.com/optechai/node-sdk/commit/e3d8dfb7ab81ba8f2ea15b78313a6c3ff350909d))
+
 ## 0.10.0 (2025-03-04)
 
 Full Changelog: [v0.9.2...v0.10.0](https://github.com/optechai/node-sdk/compare/v0.9.2...v0.10.0)
