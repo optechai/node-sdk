@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.11.0 (2025-03-11)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/optechai/node-sdk/compare/v0.10.0...v0.11.0)
+
+### Features
+
+* add SKIP_BREW env var to ./scripts/bootstrap ([#163](https://github.com/optechai/node-sdk/issues/163)) ([51a5407](https://github.com/optechai/node-sdk/commit/51a5407f36aea6fd0195cf93191b19596cfa6cd2))
+* **api:** api update ([#160](https://github.com/optechai/node-sdk/issues/160)) ([fe2e559](https://github.com/optechai/node-sdk/commit/fe2e5591f18fdfa0ded655ee906266fc457c65b8))
+* **api:** api update ([#162](https://github.com/optechai/node-sdk/issues/162)) ([e3d8dfb](https://github.com/optechai/node-sdk/commit/e3d8dfb7ab81ba8f2ea15b78313a6c3ff350909d))
+* **client:** accept RFC6838 JSON content types ([#164](https://github.com/optechai/node-sdk/issues/164)) ([a4074cb](https://github.com/optechai/node-sdk/commit/a4074cb2241b701a4514d2592c221cdfaefe3b4e))
+* feat: opt-7145 poll every second ([8d26f49](https://github.com/optechai/node-sdk/commit/8d26f492f08694506c68f9eed504ba4dc0f0bf88))
+
 ## 0.10.0 (2025-03-04)
 
 Full Changelog: [v0.9.2...v0.10.0](https://github.com/optechai/node-sdk/compare/v0.9.2...v0.10.0)
