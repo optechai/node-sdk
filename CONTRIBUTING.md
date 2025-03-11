@@ -6,7 +6,7 @@ Other package managers may work but are not officially supported for development
 To set up the repository, run:
 
 ```sh
-$ pnpm
+$ pnpm i
 $ pnpm build
 ```
 
