@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.11.1 (2025-03-14)
+
+Full Changelog: [v0.11.0...v0.11.1](https://github.com/optechai/node-sdk/compare/v0.11.0...v0.11.1)
+
+### Bug Fixes
+
+* **exports:** ensure resource imports don't require /index ([#168](https://github.com/optechai/node-sdk/issues/168)) ([2ff56f7](https://github.com/optechai/node-sdk/commit/2ff56f7f21c2b25d87aa56d78912c159dd2789d3))
+
 ## 0.11.0 (2025-03-11)
 
 Full Changelog: [v0.10.0...v0.11.0](https://github.com/optechai/node-sdk/compare/v0.10.0...v0.11.0)
