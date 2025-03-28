@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.11.1 (2025-03-28)
+
+Full Changelog: [v0.11.0...v0.11.1](https://github.com/optechai/node-sdk/compare/v0.11.0...v0.11.1)
+
+### Bug Fixes
+
+* avoid type error in certain environments ([#172](https://github.com/optechai/node-sdk/issues/172)) ([4531f6f](https://github.com/optechai/node-sdk/commit/4531f6fb26bb73697b786df4f3598b34671c005f))
+* **exports:** ensure resource imports don't require /index ([#168](https://github.com/optechai/node-sdk/issues/168)) ([2ff56f7](https://github.com/optechai/node-sdk/commit/2ff56f7f21c2b25d87aa56d78912c159dd2789d3))
+* **internal:** work around https://github.com/vercel/next.js/issues/76881 ([#173](https://github.com/optechai/node-sdk/issues/173)) ([f6b7617](https://github.com/optechai/node-sdk/commit/f6b76174d6af0626865ec727dcff701cc2973901))
+
+
+### Chores
+
+* **exports:** cleaner resource index imports ([#170](https://github.com/optechai/node-sdk/issues/170)) ([0caeba2](https://github.com/optechai/node-sdk/commit/0caeba23fd3863bbcd7231a80f924cf2d1f60182))
+* **exports:** stop using path fallbacks ([#171](https://github.com/optechai/node-sdk/issues/171)) ([4f82b30](https://github.com/optechai/node-sdk/commit/4f82b30de97adf204441916e7383352e7097e89a))
+
 ## 0.11.0 (2025-03-11)
 
 Full Changelog: [v0.10.0...v0.11.0](https://github.com/optechai/node-sdk/compare/v0.10.0...v0.11.0)
