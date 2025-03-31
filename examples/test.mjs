@@ -9,7 +9,9 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-const client = new lorikeet.Lorikeet();
+const client = new lorikeet.Lorikeet({
+  baseURL: 'https://api.au.lorikeetcx.ai',
+});
 
 const customer = await client.customer.create({
   firstName: 'John',
@@ -47,7 +49,8 @@ while (true) {
   const escalation = response.events.find((event) => event.type === 'ESCALATED');
 
   if (escalation) {
-    console.log(`********\nESCALATION\n********\nReason: {${escalation.escalationReason}}`);
+    console.log(escalation);
+    console.log(`********\nESCALATION\n********\nReason: {${escalation.data.escalationReason}}`);
     break;
   }
 }
