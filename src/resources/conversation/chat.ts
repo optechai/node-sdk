@@ -68,8 +68,17 @@ export class Chat extends APIResource {
       () => this._client.get('/v1/conversation/chat/message', { query, ...options }),
       {
         timeout: options?.timeout || 180_000,
-        interval: 1_000,
-        condition: (conversation) => conversation.latestMessageType === 'BOT_RESPONSE',
+        interval: 2_000,
+        condition: (conversation) => {
+          if (
+            conversation.latestMessageType === 'BOT_RESPONSE' ||
+            conversation.latestMessageType === 'PENDING_RESPONSE'
+          ) {
+            return true;
+          }
+
+          return false;
+        },
       },
     ) as Core.APIPromise<ChatGetResponse>;
   }
@@ -139,12 +148,12 @@ export namespace ChatGenerateResponse {
      * The type of the event
      */
     type:
-    | 'ASSIGNED'
-    | 'CLOSED'
-    | 'ESCALATED'
-    | 'ESCALATION_REQUEST'
-    | 'PROCESSING_CANCELLED'
-    | 'HOSTILE_MESSAGE';
+      | 'ASSIGNED'
+      | 'CLOSED'
+      | 'ESCALATED'
+      | 'ESCALATION_REQUEST'
+      | 'PROCESSING_CANCELLED'
+      | 'HOSTILE_MESSAGE';
   }
 
   export interface Message {
@@ -263,12 +272,12 @@ export namespace ChatGetResponse {
      * The type of the event
      */
     type:
-    | 'ASSIGNED'
-    | 'CLOSED'
-    | 'ESCALATED'
-    | 'ESCALATION_REQUEST'
-    | 'PROCESSING_CANCELLED'
-    | 'HOSTILE_MESSAGE';
+      | 'ASSIGNED'
+      | 'CLOSED'
+      | 'ESCALATED'
+      | 'ESCALATION_REQUEST'
+      | 'PROCESSING_CANCELLED'
+      | 'HOSTILE_MESSAGE';
   }
 
   export interface Message {
@@ -372,12 +381,12 @@ export namespace ChatStartResponse {
      * The type of the event
      */
     type:
-    | 'ASSIGNED'
-    | 'CLOSED'
-    | 'ESCALATED'
-    | 'ESCALATION_REQUEST'
-    | 'PROCESSING_CANCELLED'
-    | 'HOSTILE_MESSAGE';
+      | 'ASSIGNED'
+      | 'CLOSED'
+      | 'ESCALATED'
+      | 'ESCALATION_REQUEST'
+      | 'PROCESSING_CANCELLED'
+      | 'HOSTILE_MESSAGE';
   }
 }
 
