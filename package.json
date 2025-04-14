@@ -24,7 +24,7 @@
     "fix": "./scripts/format"
   },
   "engines": {
-    "node": ">=20.9.0 <21.0.0",
+    "node": ">=22.0.0",
     "pnpm": ">=9.4.0"
   },
   "packageManager": "pnpm@9.4.0",
