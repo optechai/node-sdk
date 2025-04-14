@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.12.0 (2025-04-14)
+
+Full Changelog: [v0.11.1...v0.12.0](https://github.com/optechai/node-sdk/compare/v0.11.1...v0.12.0)
+
+### Features
+
+* fix: update to better include escalation cases ([432c240](https://github.com/optechai/node-sdk/commit/432c2408b64530c9f2cf19b06dfb614041696fb3))
+
+
+### Bug Fixes
+
+* **api:** improve type resolution when importing as a package ([#178](https://github.com/optechai/node-sdk/issues/178)) ([18f5358](https://github.com/optechai/node-sdk/commit/18f5358bcfa82f3e5fd9c9b0e6366cbed04c5e67))
+* **client:** send `X-Stainless-Timeout` in seconds ([#176](https://github.com/optechai/node-sdk/issues/176)) ([28805d0](https://github.com/optechai/node-sdk/commit/28805d064e05209c9b6779985277bd651ede188e))
+* **mcp:** remove unused tools.ts ([#179](https://github.com/optechai/node-sdk/issues/179)) ([e677b9d](https://github.com/optechai/node-sdk/commit/e677b9d58e75ba2a028cd9170ffe8eec4207fbc5))
+
+
+### Chores
+
+* **internal:** add aliases for Record and Array ([#177](https://github.com/optechai/node-sdk/issues/177)) ([31660f2](https://github.com/optechai/node-sdk/commit/31660f2081beadacf9cf9898128690ffcb48a6ed))
+* tweak example ([12ec35d](https://github.com/optechai/node-sdk/commit/12ec35da4e904654b2bd8c71846f64d23715b909))
+
 ## 0.11.1 (2025-03-28)
 
 Full Changelog: [v0.11.0...v0.11.1](https://github.com/optechai/node-sdk/compare/v0.11.0...v0.11.1)
