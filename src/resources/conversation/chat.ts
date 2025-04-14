@@ -70,6 +70,11 @@ export class Chat extends APIResource {
         timeout: options?.timeout || 180_000,
         interval: 2_000,
         condition: (conversation) => {
+          // Don't poll if the conversation is escalated or in error
+          if (conversation.status === 'Escalated' || conversation.status === 'Error') {
+            return true;
+          }
+
           if (
             conversation.latestMessageType === 'BOT_RESPONSE' ||
             conversation.latestMessageType === 'PENDING_RESPONSE'
