@@ -86,7 +86,8 @@ export namespace ChatGenerateResponse {
       | 'ESCALATED'
       | 'ESCALATION_REQUEST'
       | 'PROCESSING_CANCELLED'
-      | 'HOSTILE_MESSAGE';
+      | 'HOSTILE_MESSAGE'
+      | 'NEW_TICKET';
   }
 
   export interface Message {
@@ -210,7 +211,8 @@ export namespace ChatGetResponse {
       | 'ESCALATED'
       | 'ESCALATION_REQUEST'
       | 'PROCESSING_CANCELLED'
-      | 'HOSTILE_MESSAGE';
+      | 'HOSTILE_MESSAGE'
+      | 'NEW_TICKET';
   }
 
   export interface Message {
@@ -319,7 +321,8 @@ export namespace ChatStartResponse {
       | 'ESCALATED'
       | 'ESCALATION_REQUEST'
       | 'PROCESSING_CANCELLED'
-      | 'HOSTILE_MESSAGE';
+      | 'HOSTILE_MESSAGE'
+      | 'NEW_TICKET';
   }
 }
 
