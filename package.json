@@ -1,6 +1,6 @@
 {
   "name": "@lorikeetai/node-sdk",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "The official TypeScript library for the Lorikeet API",
   "author": "Lorikeet <support@lorikeetcx.ai>",
   "types": "dist/index.d.ts",
