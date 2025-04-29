@@ -117,7 +117,8 @@ export namespace EmailGenerateResponse {
       | 'ESCALATED'
       | 'ESCALATION_REQUEST'
       | 'PROCESSING_CANCELLED'
-      | 'HOSTILE_MESSAGE';
+      | 'HOSTILE_MESSAGE'
+      | 'NEW_TICKET';
   }
 
   export interface Message {
@@ -241,7 +242,8 @@ export namespace EmailGetResponse {
       | 'ESCALATED'
       | 'ESCALATION_REQUEST'
       | 'PROCESSING_CANCELLED'
-      | 'HOSTILE_MESSAGE';
+      | 'HOSTILE_MESSAGE'
+      | 'NEW_TICKET';
   }
 
   export interface Message {
@@ -350,7 +352,8 @@ export namespace EmailStartResponse {
       | 'ESCALATED'
       | 'ESCALATION_REQUEST'
       | 'PROCESSING_CANCELLED'
-      | 'HOSTILE_MESSAGE';
+      | 'HOSTILE_MESSAGE'
+      | 'NEW_TICKET';
   }
 }
 

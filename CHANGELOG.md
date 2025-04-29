@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.13.0 (2025-04-24)
+
+Full Changelog: [v0.12.0...v0.13.0](https://github.com/optechai/node-sdk/compare/v0.12.0...v0.13.0)
+
+### Features
+
+* **api:** api update ([38c66cd](https://github.com/optechai/node-sdk/commit/38c66cd0d0be79736c0debc1c479ab82b78134c5))
+
+
+### Chores
+
+* **ci:** add timeout thresholds for CI jobs ([09823a2](https://github.com/optechai/node-sdk/commit/09823a27632df7501f41bad38b65664da3cf22ac))
+* **ci:** only use depot for staging repos ([0085329](https://github.com/optechai/node-sdk/commit/0085329eeabd660b56d32260f12908689f9d1520))
+* **client:** minor internal fixes ([f662080](https://github.com/optechai/node-sdk/commit/f662080d5c86aac5408d0c5541f16d9b94c6c70a))
+* **internal:** codegen related update ([01d9699](https://github.com/optechai/node-sdk/commit/01d96997a9ff61f3155be70cba2cb1bb21316356))
+* **internal:** codegen related update ([16519bd](https://github.com/optechai/node-sdk/commit/16519bd4f2e1c52f1a887bcb9e172b197cceb8b3))
+* **internal:** reduce CI branch coverage ([cc3e9c0](https://github.com/optechai/node-sdk/commit/cc3e9c0f85dcf0a5157286268325e55b5eb6ca2d))
+* **internal:** upload builds and expand CI branch coverage ([692e92e](https://github.com/optechai/node-sdk/commit/692e92e7a5a6f24f3c9bd41bd970d6a2f76dcaa0))
+
 ## 0.12.0 (2025-04-14)
 
 Full Changelog: [v0.11.1...v0.12.0](https://github.com/optechai/node-sdk/compare/v0.11.1...v0.12.0)
