@@ -4,14 +4,47 @@ import { APIResource } from '../../resource';
 import * as Core from '../../core';
 
 export class Chat extends APIResource {
+  /**
+   * @example
+   * ```ts
+   * const response = await client.conversation.chat.generate({
+   *   attachments: [
+   *     {
+   *       name: 'example.jpg',
+   *       type: 'image/jpeg',
+   *       url: 'https://example.com/example.jpg',
+   *     },
+   *   ],
+   *   conversationId: 'conversationId',
+   *   message: 'message',
+   * });
+   * ```
+   */
   generate(body: ChatGenerateParams, options?: Core.RequestOptions): Core.APIPromise<ChatGenerateResponse> {
     return this._client.post('/v1/conversation/chat/message', { body, ...options });
   }
 
+  /**
+   * @example
+   * ```ts
+   * const chat = await client.conversation.chat.get({
+   *   conversationId: 'conversationId',
+   * });
+   * ```
+   */
   get(query: ChatGetParams, options?: Core.RequestOptions): Core.APIPromise<ChatGetResponse> {
     return this._client.get('/v1/conversation/chat/message', { query, ...options });
   }
 
+  /**
+   * @example
+   * ```ts
+   * const response = await client.conversation.chat.start({
+   *   customerId: 'customerId',
+   *   publicKey: 'publicKey',
+   * });
+   * ```
+   */
   start(body: ChatStartParams, options?: Core.RequestOptions): Core.APIPromise<ChatStartResponse> {
     return this._client.post('/v1/conversation/chat/create', { body, ...options });
   }
