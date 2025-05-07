@@ -19,6 +19,23 @@ export class Chat extends APIResource {
    *
    * @see {@link Chat.message}
    */
+
+  /**
+   * @example
+   * ```ts
+   * const response = await client.conversation.chat.generate({
+   *   attachments: [
+   *     {
+   *       name: 'example.jpg',
+   *       type: 'image/jpeg',
+   *       url: 'https://example.com/example.jpg',
+   *     },
+   *   ],
+   *   conversationId: 'conversationId',
+   *   message: 'message',
+   * });
+   * ```
+   */
   generate(body: ChatGenerateParams, options?: Core.RequestOptions): Core.APIPromise<ChatGenerateResponse> {
     return this._client.post('/v1/conversation/chat/message', { body, ...options });
   }
@@ -27,6 +44,15 @@ export class Chat extends APIResource {
    * __chat.get__
    *
    * Returns a chat message for a conversation. This endpoint will return the latest state of the conversation.
+   */
+
+  /**
+   * @example
+   * ```ts
+   * const chat = await client.conversation.chat.get({
+   *   conversationId: 'conversationId',
+   * });
+   * ```
    */
   get(query: ChatGetParams, options?: Core.RequestOptions): Core.APIPromise<ChatGetResponse> {
     return this._client.get('/v1/conversation/chat/message', { query, ...options });
@@ -40,6 +66,16 @@ export class Chat extends APIResource {
    * The `conversationId` field in the response can be used to generate messages.
    *
    * ** WARNING ** This endpoint is not idempotent. If you call it multiple times, you will generate multiple conversations.
+   */
+
+  /**
+   * @example
+   * ```ts
+   * const response = await client.conversation.chat.start({
+   *   customerId: 'customerId',
+   *   publicKey: 'publicKey',
+   * });
+   * ```
    */
   start(body: ChatStartParams, options?: Core.RequestOptions): Core.APIPromise<ChatStartResponse> {
     return this._client.post('/v1/conversation/chat/create', { body, ...options });
