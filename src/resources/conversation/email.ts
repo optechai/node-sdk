@@ -5,14 +5,47 @@ import * as Core from '../../core';
 import { pollUntil } from '@lorikeetai/node-sdk/lib/poll-until';
 
 export class Email extends APIResource {
+  /**
+   * @example
+   * ```ts
+   * const response = await client.conversation.email.generate({
+   *   attachments: [
+   *     {
+   *       name: 'example.jpg',
+   *       type: 'image/jpeg',
+   *       url: 'https://example.com/example.jpg',
+   *     },
+   *   ],
+   *   conversationId: 'conversationId',
+   *   message: 'message',
+   * });
+   * ```
+   */
   generate(body: EmailGenerateParams, options?: Core.RequestOptions): Core.APIPromise<EmailGenerateResponse> {
     return this._client.post('/v1/conversation/email/message', { body, ...options });
   }
 
+  /**
+   * @example
+   * ```ts
+   * const email = await client.conversation.email.get({
+   *   conversationId: 'conversationId',
+   * });
+   * ```
+   */
   get(query: EmailGetParams, options?: Core.RequestOptions): Core.APIPromise<EmailGetResponse> {
     return this._client.get('/v1/conversation/email/message', { query, ...options });
   }
 
+  /**
+   * @example
+   * ```ts
+   * const response = await client.conversation.email.start({
+   *   customerId: 'customerId',
+   *   publicKey: 'publicKey',
+   * });
+   * ```
+   */
   start(body: EmailStartParams, options?: Core.RequestOptions): Core.APIPromise<EmailStartResponse> {
     return this._client.post('/v1/conversation/email/create', { body, ...options });
   }
