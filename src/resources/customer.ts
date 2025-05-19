@@ -4,10 +4,24 @@ import { APIResource } from '../resource';
 import * as Core from '../core';
 
 export class Customer extends APIResource {
+  /**
+   * @example
+   * ```ts
+   * const customer = await client.customer.create();
+   * ```
+   */
   create(body: CustomerCreateParams, options?: Core.RequestOptions): Core.APIPromise<CustomerCreateResponse> {
     return this._client.post('/v1/customer', { body, ...options });
   }
 
+  /**
+   * @example
+   * ```ts
+   * const customer = await client.customer.update(
+   *   '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+   * );
+   * ```
+   */
   update(
     id: string,
     body: CustomerUpdateParams,
@@ -16,10 +30,24 @@ export class Customer extends APIResource {
     return this._client.put(`/v1/customer/${id}`, { body, ...options });
   }
 
+  /**
+   * @example
+   * ```ts
+   * const customer = await client.customer.get(
+   *   '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+   * );
+   * ```
+   */
   get(id: string, options?: Core.RequestOptions): Core.APIPromise<CustomerGetResponse> {
     return this._client.get(`/v1/customer/${id}`, options);
   }
 
+  /**
+   * @example
+   * ```ts
+   * const response = await client.customer.token();
+   * ```
+   */
   token(body: CustomerTokenParams, options?: Core.RequestOptions): Core.APIPromise<string> {
     return this._client.post('/v1/customer/token', { body, ...options });
   }
