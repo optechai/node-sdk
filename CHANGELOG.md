@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.13.2 (2025-05-22)
+
+Full Changelog: [v0.13.1...v0.13.2](https://github.com/optechai/node-sdk/compare/v0.13.1...v0.13.2)
+
+### Chores
+
+* **docs:** grammar improvements ([377363e](https://github.com/optechai/node-sdk/commit/377363e64a259dbc8efb55e762ae1b6c283a05af))
+
 ## 0.13.1 (2025-05-19)
 
 Full Changelog: [v0.13.0...v0.13.1](https://github.com/optechai/node-sdk/compare/v0.13.0...v0.13.1)
