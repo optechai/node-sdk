@@ -2,7 +2,7 @@
 
 import type { Lorikeet } from './index';
 
-export class APIResource {
+export abstract class APIResource {
   protected _client: Lorikeet;
 
   constructor(client: Lorikeet) {
