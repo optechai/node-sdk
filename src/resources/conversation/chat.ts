@@ -163,6 +163,11 @@ export interface ChatGenerateResponse {
   status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
 
   /**
+   * The tags of the conversation
+   */
+  tags: Array<string>;
+
+  /**
    * The timestamp of when the ticket was last updated in our system.
    */
   updatedAt: string;
@@ -289,6 +294,11 @@ export interface ChatGetResponse {
   status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
 
   /**
+   * The tags of the conversation
+   */
+  tags: Array<string>;
+
+  /**
    * The timestamp of when the ticket was last updated in our system.
    */
   updatedAt: string;
@@ -403,6 +413,11 @@ export interface ChatStartResponse {
    * The status of the conversation
    */
   status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
+
+  /**
+   * The tags of the conversation
+   */
+  tags: Array<string>;
 }
 
 export namespace ChatStartResponse {
