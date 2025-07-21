@@ -57,6 +57,7 @@
   },
   "pnpm": {
     "overrides": {
+      "@babel/helpers": ">=7.26.10",
       "cross-spawn": ">=7.0.5"
     }
   },
