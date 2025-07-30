@@ -9,7 +9,13 @@ export {
   type ChatGetParams,
   type ChatStartParams,
 } from './chat';
-export { Conversation } from './conversation';
+export {
+  Conversation,
+  type ConversationCreateResponse,
+  type ConversationRetrieveTranscriptResponse,
+  type ConversationCreateParams,
+  type ConversationRetrieveTranscriptParams,
+} from './conversation';
 export {
   Email,
   type EmailGenerateResponse,

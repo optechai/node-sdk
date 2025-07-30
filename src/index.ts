@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { type Agent } from './_shims/index';
+import * as qs from './internal/qs';
 import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
@@ -15,10 +16,23 @@ import {
   CustomerUpdateParams,
   CustomerUpdateResponse,
 } from './resources/customer';
+import { File } from './resources/file';
 import { Ingest, IngestTestParams } from './resources/ingest';
+import { Slack } from './resources/slack';
+import { Suggestion } from './resources/suggestion';
+import { Ticket, TicketRetrieveSseParams } from './resources/ticket';
+import { Webhooks } from './resources/webhooks';
 import { Workflow } from './resources/workflow';
-import { Conversation } from './resources/conversation/conversation';
+import { Admin } from './resources/admin/admin';
+import {
+  Conversation,
+  ConversationCreateParams,
+  ConversationCreateResponse,
+  ConversationRetrieveTranscriptParams,
+  ConversationRetrieveTranscriptResponse,
+} from './resources/conversation/conversation';
 import { generateSignature } from './lib/generate-signature';
+import { OAuth, OAuthAuthorizeParams, OAuthCallbackParams } from './resources/oauth/oauth';
 
 export interface ClientOptions {
   /**
@@ -30,6 +44,11 @@ export interface ClientOptions {
    * Secret key pulled from the Lorikeet App
    */
   clientSecret?: string | undefined;
+
+  /**
+   * Secret key pulled from the Lorikeet App
+   */
+  signature?: string | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -96,6 +115,7 @@ export interface ClientOptions {
 export class Lorikeet extends Core.APIClient {
   clientId: string | null;
   clientSecret: string;
+  signature: string;
 
   private _options: ClientOptions;
 
@@ -104,6 +124,7 @@ export class Lorikeet extends Core.APIClient {
    *
    * @param {string | null | undefined} [opts.clientId=process.env['LORIKEET_CLIENT_ID'] ?? null]
    * @param {string | undefined} [opts.clientSecret=process.env['LORIKEET_CLIENT_SECRET'] ?? undefined]
+   * @param {string | undefined} [opts.signature=process.env['LORIKEET_CLIENT_SECRET'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['LORIKEET_BASE_URL'] ?? https://api.lorikeetcx.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -116,6 +137,7 @@ export class Lorikeet extends Core.APIClient {
     baseURL = Core.readEnv('LORIKEET_BASE_URL'),
     clientId = Core.readEnv('LORIKEET_CLIENT_ID') ?? null,
     clientSecret = Core.readEnv('LORIKEET_CLIENT_SECRET'),
+    signature = Core.readEnv('LORIKEET_CLIENT_SECRET'),
     ...opts
   }: ClientOptions = {}) {
     if (clientSecret === undefined) {
@@ -123,10 +145,16 @@ export class Lorikeet extends Core.APIClient {
         "The LORIKEET_CLIENT_SECRET environment variable is missing or empty; either provide it, or instantiate the Lorikeet client with an clientSecret option, like new Lorikeet({ clientSecret: 'My Client Secret' }).",
       );
     }
+    if (signature === undefined) {
+      throw new Errors.LorikeetError(
+        "The LORIKEET_CLIENT_SECRET environment variable is missing or empty; either provide it, or instantiate the Lorikeet client with an signature option, like new Lorikeet({ signature: 'My Signature' }).",
+      );
+    }
 
     const options: ClientOptions = {
       clientId,
       clientSecret,
+      signature,
       ...opts,
       baseURL: baseURL || `https://api.lorikeetcx.ai`,
     };
@@ -144,18 +172,30 @@ export class Lorikeet extends Core.APIClient {
 
     this.clientId = clientId;
     this.clientSecret = clientSecret;
+    this.signature = signature;
   }
 
   conversation: API.Conversation = new API.Conversation(this);
   customer: API.Customer = new API.Customer(this);
   workflow: API.Workflow = new API.Workflow(this);
   ingest: API.Ingest = new API.Ingest(this);
+  file: API.File = new API.File(this);
+  slack: API.Slack = new API.Slack(this);
+  suggestion: API.Suggestion = new API.Suggestion(this);
+  oauth: API.OAuth = new API.OAuth(this);
+  admin: API.Admin = new API.Admin(this);
+  webhooks: API.Webhooks = new API.Webhooks(this);
+  ticket: API.Ticket = new API.Ticket(this);
 
   /**
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
     return this.baseURL !== 'https://api.lorikeetcx.ai';
+  }
+
+  retrieve(options?: Core.RequestOptions): Core.APIPromise<void> {
+    return this.get('/', { ...options, headers: { Accept: '*/*', ...options?.headers } });
   }
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
@@ -169,21 +209,21 @@ export class Lorikeet extends Core.APIClient {
     };
   }
 
-  protected override validateHeaders(headers: Core.Headers, customHeaders: Core.Headers) {
-    if (this.clientId && headers['authorization']) {
-      return;
-    }
-    if (customHeaders['authorization'] === null) {
-      return;
-    }
-
-    throw new Error(
-      'Could not resolve authentication method. Expected the clientId to be set. Or for the "Authorization" headers to be explicitly omitted',
-    );
+  protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
+    return {
+      ...this.lorikeetClientIdAuth(opts),
+      ...this.lorikeetSignatureAuthV1Auth(opts),
+    };
   }
 
-  protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
-    // this won't work for GET requests
+  protected lorikeetClientIdAuth(opts: Core.FinalRequestOptions): Core.Headers {
+    if (this.clientId == null) {
+      return {};
+    }
+    return { Authorization: `Bearer ${this.clientId}` };
+  }
+
+  protected lorikeetSignatureAuthV1Auth(opts: Core.FinalRequestOptions): Core.Headers {
     const signature = generateSignature(
       opts.body ?
         typeof opts.body === 'string' ?
@@ -192,10 +232,11 @@ export class Lorikeet extends Core.APIClient {
       : '',
       this.clientSecret,
     );
-    return {
-      'x-lorikeet-signature': signature,
-      authorization: `Bearer ${this.clientId}`,
-    };
+    return { 'x-lorikeet-signature': signature };
+  }
+
+  protected override stringifyQuery(query: Record<string, unknown>): string {
+    return qs.stringify(query, { arrayFormat: 'comma' });
   }
 
   static Lorikeet = this;
@@ -223,10 +264,23 @@ Lorikeet.Conversation = Conversation;
 Lorikeet.Customer = Customer;
 Lorikeet.Workflow = Workflow;
 Lorikeet.Ingest = Ingest;
+Lorikeet.File = File;
+Lorikeet.Slack = Slack;
+Lorikeet.Suggestion = Suggestion;
+Lorikeet.OAuth = OAuth;
+Lorikeet.Admin = Admin;
+Lorikeet.Webhooks = Webhooks;
+Lorikeet.Ticket = Ticket;
 export declare namespace Lorikeet {
   export type RequestOptions = Core.RequestOptions;
 
-  export { Conversation as Conversation };
+  export {
+    Conversation as Conversation,
+    type ConversationCreateResponse as ConversationCreateResponse,
+    type ConversationRetrieveTranscriptResponse as ConversationRetrieveTranscriptResponse,
+    type ConversationCreateParams as ConversationCreateParams,
+    type ConversationRetrieveTranscriptParams as ConversationRetrieveTranscriptParams,
+  };
 
   export {
     Customer as Customer,
@@ -242,6 +296,24 @@ export declare namespace Lorikeet {
   export { Workflow as Workflow };
 
   export { Ingest as Ingest, type IngestTestParams as IngestTestParams };
+
+  export { File as File };
+
+  export { Slack as Slack };
+
+  export { Suggestion as Suggestion };
+
+  export {
+    OAuth as OAuth,
+    type OAuthAuthorizeParams as OAuthAuthorizeParams,
+    type OAuthCallbackParams as OAuthCallbackParams,
+  };
+
+  export { Admin as Admin };
+
+  export { Webhooks as Webhooks };
+
+  export { Ticket as Ticket, type TicketRetrieveSseParams as TicketRetrieveSseParams };
 }
 
 export { toFile, fileFromPath } from './uploads';
