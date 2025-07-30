@@ -9,9 +9,9 @@ const client = new Lorikeet({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource workflow', () => {
-  test('retrieve', async () => {
-    const responsePromise = client.workflow.retrieve();
+describe('resource admin', () => {
+  test('checkHealth', async () => {
+    const responsePromise = client.admin.checkHealth();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,15 +21,15 @@ describe('resource workflow', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('retrieve: request options instead of params are passed correctly', async () => {
+  test('checkHealth: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.workflow.retrieve({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(client.admin.checkHealth({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       Lorikeet.NotFoundError,
     );
   });
 
-  test('update', async () => {
-    const responsePromise = client.workflow.update();
+  test('listSubscribers', async () => {
+    const responsePromise = client.admin.listSubscribers();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -39,27 +39,9 @@ describe('resource workflow', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('update: request options instead of params are passed correctly', async () => {
+  test('listSubscribers: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.workflow.update({ path: '/_stainless_unknown_path' })).rejects.toThrow(
-      Lorikeet.NotFoundError,
-    );
-  });
-
-  test('get', async () => {
-    const responsePromise = client.workflow.get('id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('get: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.workflow.get('id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(client.admin.listSubscribers({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       Lorikeet.NotFoundError,
     );
   });

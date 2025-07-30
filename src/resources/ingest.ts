@@ -4,6 +4,23 @@ import { APIResource } from '../resource';
 import * as Core from '../core';
 
 export class Ingest extends APIResource {
+  retrieve(options?: Core.RequestOptions): Core.APIPromise<void> {
+    return this._client.get('/v1/ingest', { ...options, headers: { Accept: '*/*', ...options?.headers } });
+  }
+
+  submit(
+    toolId: string,
+    ticketId: string,
+    inputHash: string,
+    workflowId: string,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<void> {
+    return this._client.post(`/ingest/${toolId}/${ticketId}/${inputHash}/${workflowId}`, {
+      ...options,
+      headers: { Accept: '*/*', ...options?.headers },
+    });
+  }
+
   test(toolId: unknown, body: IngestTestParams, options?: Core.RequestOptions): Core.APIPromise<void> {
     return this._client.post(`/ingest/test/${toolId}`, {
       body,

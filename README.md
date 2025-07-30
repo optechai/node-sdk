@@ -25,6 +25,7 @@ import Lorikeet from '@lorikeetai/node-sdk';
 const client = new Lorikeet({
   clientSecret: 'My Client Secret',
   clientId: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
+  signature: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
 });
 
 const response = await client.conversation.chat.start({ customerId: 'blah', publicKey: 'publicKey' });
@@ -43,6 +44,7 @@ import Lorikeet from '@lorikeetai/node-sdk';
 const client = new Lorikeet({
   clientSecret: 'My Client Secret',
   clientId: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
+  signature: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
 });
 
 const params: Lorikeet.Conversation.ChatStartParams = { customerId: 'blah', publicKey: 'publicKey' };
