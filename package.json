@@ -70,10 +70,6 @@
     "./shims/web.js",
     "./shims/web.mjs"
   ],
-  "imports": {
-    "@lorikeetai/node-sdk": ".",
-    "@lorikeetai/node-sdk/*": "./src/*"
-  },
   "exports": {
     "./_shims/auto/*": {
       "deno": {
