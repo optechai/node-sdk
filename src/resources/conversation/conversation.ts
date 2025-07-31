@@ -96,7 +96,7 @@ export interface ConversationCreateParams {
   /**
    * Body param: The id of the customer in the ticketing system
    */
-  customerId: unknown;
+  customerId: string;
 
   /**
    * Body param: The phone number of the customer
