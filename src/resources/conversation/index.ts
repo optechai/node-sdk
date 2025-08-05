@@ -11,6 +11,9 @@ export {
 } from './chat';
 export {
   Conversation,
+  type AttachmentDto,
+  type TicketEvent,
+  type TicketMessageDto,
   type ConversationCreateResponse,
   type ConversationRetrieveTranscriptResponse,
   type ConversationCreateParams,

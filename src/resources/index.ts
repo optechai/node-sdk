@@ -3,6 +3,9 @@
 export { Admin } from './admin/admin';
 export {
   Conversation,
+  type AttachmentDto,
+  type TicketEvent,
+  type TicketMessageDto,
   type ConversationCreateResponse,
   type ConversationRetrieveTranscriptResponse,
   type ConversationCreateParams,

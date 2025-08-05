@@ -3,6 +3,7 @@
 import { APIResource } from '../../resource';
 import * as Core from '../../core';
 import { pollUntil } from '@lorikeetai/node-sdk/lib/poll-until';
+import * as ConversationAPI from './conversation';
 
 export class Chat extends APIResource {
   /**
@@ -140,7 +141,7 @@ export interface ChatGenerateResponse {
    * The events that have occurred in the conversation. Can be used for deriving more
    * information about the conversation.
    */
-  events: Array<ChatGenerateResponse.Event>;
+  events: Array<ConversationAPI.TicketEvent>;
 
   /**
    * The latest message type - useful for polling
@@ -155,7 +156,7 @@ export interface ChatGenerateResponse {
   /**
    * The full list of messages. This endpoint supports markdown.
    */
-  messages: Array<ChatGenerateResponse.Message>;
+  messages: Array<ConversationAPI.TicketMessageDto>;
 
   /**
    * The status of the conversation
@@ -171,89 +172,6 @@ export interface ChatGenerateResponse {
    * The timestamp of when the ticket was last updated in our system.
    */
   updatedAt: string;
-}
-
-export namespace ChatGenerateResponse {
-  export interface Event {
-    /**
-     * The ID of the event
-     */
-    id: string;
-
-    /**
-     * The timestamp of the event
-     */
-    createdAt: string;
-
-    /**
-     * Any specific data associated with the event
-     */
-    data: unknown;
-
-    /**
-     * The type of the event
-     */
-    type:
-      | 'ASSIGNED'
-      | 'CLOSED'
-      | 'ESCALATED'
-      | 'ESCALATION_REQUEST'
-      | 'PROCESSING_CANCELLED'
-      | 'HOSTILE_MESSAGE'
-      | 'NEW_TICKET'
-      | 'CALL_ENDED';
-  }
-
-  export interface Message {
-    /**
-     * The ID of the conversation message
-     */
-    id: string;
-
-    /**
-     * Attachments that were attached to the message
-     */
-    attachments: Array<Message.Attachment>;
-
-    /**
-     * The content of the message. Markdown on plain text.
-     */
-    content: string;
-
-    /**
-     * The timestamp of the message.
-     */
-    createdAt: string;
-
-    /**
-     * The raw content of the message. Usually HTML.
-     */
-    rawContent: string;
-
-    /**
-     * The type of the message
-     */
-    type: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE';
-  }
-
-  export namespace Message {
-    export interface Attachment {
-      /**
-       * The name of the attachment
-       */
-      name: string;
-
-      /**
-       * The type of the attachment
-       */
-      type: string;
-
-      /**
-       * The URL of the attachment
-       */
-      url: string;
-    }
-  }
 }
 
 export interface ChatGetResponse {
@@ -271,7 +189,7 @@ export interface ChatGetResponse {
    * The events that have occurred in the conversation. Can be used for deriving more
    * information about the conversation.
    */
-  events: Array<ChatGetResponse.Event>;
+  events: Array<ConversationAPI.TicketEvent>;
 
   /**
    * The latest message type - useful for polling
@@ -286,7 +204,7 @@ export interface ChatGetResponse {
   /**
    * The full list of messages. This endpoint supports markdown.
    */
-  messages: Array<ChatGetResponse.Message>;
+  messages: Array<ConversationAPI.TicketMessageDto>;
 
   /**
    * The status of the conversation
@@ -304,89 +222,6 @@ export interface ChatGetResponse {
   updatedAt: string;
 }
 
-export namespace ChatGetResponse {
-  export interface Event {
-    /**
-     * The ID of the event
-     */
-    id: string;
-
-    /**
-     * The timestamp of the event
-     */
-    createdAt: string;
-
-    /**
-     * Any specific data associated with the event
-     */
-    data: unknown;
-
-    /**
-     * The type of the event
-     */
-    type:
-      | 'ASSIGNED'
-      | 'CLOSED'
-      | 'ESCALATED'
-      | 'ESCALATION_REQUEST'
-      | 'PROCESSING_CANCELLED'
-      | 'HOSTILE_MESSAGE'
-      | 'NEW_TICKET'
-      | 'CALL_ENDED';
-  }
-
-  export interface Message {
-    /**
-     * The ID of the conversation message
-     */
-    id: string;
-
-    /**
-     * Attachments that were attached to the message
-     */
-    attachments: Array<Message.Attachment>;
-
-    /**
-     * The content of the message. Markdown on plain text.
-     */
-    content: string;
-
-    /**
-     * The timestamp of the message.
-     */
-    createdAt: string;
-
-    /**
-     * The raw content of the message. Usually HTML.
-     */
-    rawContent: string;
-
-    /**
-     * The type of the message
-     */
-    type: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE';
-  }
-
-  export namespace Message {
-    export interface Attachment {
-      /**
-       * The name of the attachment
-       */
-      name: string;
-
-      /**
-       * The type of the attachment
-       */
-      type: string;
-
-      /**
-       * The URL of the attachment
-       */
-      url: string;
-    }
-  }
-}
-
 export interface ChatStartResponse {
   /**
    * The ID of the conversation
@@ -402,7 +237,7 @@ export interface ChatStartResponse {
    * The events that have occurred in the conversation. Can be used for deriving more
    * information about the conversation.
    */
-  events: Array<ChatStartResponse.Event>;
+  events: Array<ConversationAPI.TicketEvent>;
 
   /**
    * The url of the conversation in the Lorikeet dashboard
@@ -420,43 +255,11 @@ export interface ChatStartResponse {
   tags: Array<string>;
 }
 
-export namespace ChatStartResponse {
-  export interface Event {
-    /**
-     * The ID of the event
-     */
-    id: string;
-
-    /**
-     * The timestamp of the event
-     */
-    createdAt: string;
-
-    /**
-     * Any specific data associated with the event
-     */
-    data: unknown;
-
-    /**
-     * The type of the event
-     */
-    type:
-      | 'ASSIGNED'
-      | 'CLOSED'
-      | 'ESCALATED'
-      | 'ESCALATION_REQUEST'
-      | 'PROCESSING_CANCELLED'
-      | 'HOSTILE_MESSAGE'
-      | 'NEW_TICKET'
-      | 'CALL_ENDED';
-  }
-}
-
 export interface ChatGenerateParams {
   /**
    * Attachments to be sent with the message
    */
-  attachments: Array<ChatGenerateParams.Attachment>;
+  attachments: Array<ConversationAPI.AttachmentDto>;
 
   /**
    * The ID of the conversation
@@ -476,23 +279,6 @@ export interface ChatGenerateParams {
 }
 
 export namespace ChatGenerateParams {
-  export interface Attachment {
-    /**
-     * The name of the attachment
-     */
-    name: string;
-
-    /**
-     * The type of the attachment
-     */
-    type: string;
-
-    /**
-     * The URL of the attachment
-     */
-    url: string;
-  }
-
   /**
    * Any additional customer information, that has changed in the course of the
    * conversation.

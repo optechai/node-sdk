@@ -73,6 +73,85 @@ export class Conversation extends APIResource {
   }
 }
 
+export interface AttachmentDto {
+  /**
+   * The name of the attachment
+   */
+  name: string;
+
+  /**
+   * The type of the attachment
+   */
+  type: string;
+
+  /**
+   * The URL of the attachment
+   */
+  url: string;
+}
+
+export interface TicketEvent {
+  /**
+   * The ID of the event
+   */
+  id: string;
+
+  /**
+   * The timestamp of the event
+   */
+  createdAt: string;
+
+  /**
+   * Any specific data associated with the event
+   */
+  data: unknown;
+
+  /**
+   * The type of the event
+   */
+  type:
+    | 'ASSIGNED'
+    | 'CLOSED'
+    | 'ESCALATED'
+    | 'ESCALATION_REQUEST'
+    | 'PROCESSING_CANCELLED'
+    | 'HOSTILE_MESSAGE'
+    | 'NEW_TICKET'
+    | 'CALL_ENDED';
+}
+
+export interface TicketMessageDto {
+  /**
+   * The ID of the conversation message
+   */
+  id: string;
+
+  /**
+   * Attachments that were attached to the message
+   */
+  attachments: Array<AttachmentDto>;
+
+  /**
+   * The content of the message. Markdown on plain text.
+   */
+  content: string;
+
+  /**
+   * The timestamp of the message.
+   */
+  createdAt: string;
+
+  /**
+   * The raw content of the message. Usually HTML.
+   */
+  rawContent: string;
+
+  /**
+   * The type of the message
+   */
+  type: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE';
+}
+
 export interface ConversationCreateResponse {
   /**
    * The id of the ticket created
@@ -118,6 +197,9 @@ Conversation.Chat = Chat;
 
 export declare namespace Conversation {
   export {
+    type AttachmentDto as AttachmentDto,
+    type TicketEvent as TicketEvent,
+    type TicketMessageDto as TicketMessageDto,
     type ConversationCreateResponse as ConversationCreateResponse,
     type ConversationRetrieveTranscriptResponse as ConversationRetrieveTranscriptResponse,
     type ConversationCreateParams as ConversationCreateParams,

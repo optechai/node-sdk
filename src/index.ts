@@ -25,11 +25,14 @@ import { Webhooks } from './resources/webhooks';
 import { Workflow } from './resources/workflow';
 import { Admin } from './resources/admin/admin';
 import {
+  AttachmentDto,
   Conversation,
   ConversationCreateParams,
   ConversationCreateResponse,
   ConversationRetrieveTranscriptParams,
   ConversationRetrieveTranscriptResponse,
+  TicketEvent,
+  TicketMessageDto,
 } from './resources/conversation/conversation';
 import { generateSignature } from './lib/generate-signature';
 import { OAuth, OAuthAuthorizeParams, OAuthCallbackParams } from './resources/oauth/oauth';
@@ -276,6 +279,9 @@ export declare namespace Lorikeet {
 
   export {
     Conversation as Conversation,
+    type AttachmentDto as AttachmentDto,
+    type TicketEvent as TicketEvent,
+    type TicketMessageDto as TicketMessageDto,
     type ConversationCreateResponse as ConversationCreateResponse,
     type ConversationRetrieveTranscriptResponse as ConversationRetrieveTranscriptResponse,
     type ConversationCreateParams as ConversationCreateParams,
