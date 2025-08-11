@@ -24,7 +24,7 @@ export interface ClientOptions {
   /**
    * client identifier authentication associated with the account.
    */
-  clientId?: string | undefined;
+  clientId?: string | null | undefined;
 
   /**
    * Secret key pulled from the Lorikeet App
@@ -94,7 +94,7 @@ export interface ClientOptions {
  * API Client for interfacing with the Lorikeet API.
  */
 export class Lorikeet extends Core.APIClient {
-  clientId: string;
+  clientId: string | null;
   clientSecret: string;
 
   private _options: ClientOptions;
@@ -102,7 +102,7 @@ export class Lorikeet extends Core.APIClient {
   /**
    * API Client for interfacing with the Lorikeet API.
    *
-   * @param {string | undefined} [opts.clientId=process.env['LORIKEET_CLIENT_ID'] ?? undefined]
+   * @param {string | null | undefined} [opts.clientId=process.env['LORIKEET_CLIENT_ID'] ?? null]
    * @param {string | undefined} [opts.clientSecret=process.env['LORIKEET_CLIENT_SECRET'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['LORIKEET_BASE_URL'] ?? https://api.lorikeetcx.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
@@ -114,15 +114,10 @@ export class Lorikeet extends Core.APIClient {
    */
   constructor({
     baseURL = Core.readEnv('LORIKEET_BASE_URL'),
-    clientId = Core.readEnv('LORIKEET_CLIENT_ID'),
+    clientId = Core.readEnv('LORIKEET_CLIENT_ID') ?? null,
     clientSecret = Core.readEnv('LORIKEET_CLIENT_SECRET'),
     ...opts
   }: ClientOptions = {}) {
-    if (clientId === undefined) {
-      throw new Errors.LorikeetError(
-        "The LORIKEET_CLIENT_ID environment variable is missing or empty; either provide it, or instantiate the Lorikeet client with an clientId option, like new Lorikeet({ clientId: 'My Client ID' }).",
-      );
-    }
     if (clientSecret === undefined) {
       throw new Errors.LorikeetError(
         "The LORIKEET_CLIENT_SECRET environment variable is missing or empty; either provide it, or instantiate the Lorikeet client with an clientSecret option, like new Lorikeet({ clientSecret: 'My Client Secret' }).",
@@ -174,6 +169,19 @@ export class Lorikeet extends Core.APIClient {
     };
   }
 
+  protected override validateHeaders(headers: Core.Headers, customHeaders: Core.Headers) {
+    if (this.clientId && headers['authorization']) {
+      return;
+    }
+    if (customHeaders['authorization'] === null) {
+      return;
+    }
+
+    throw new Error(
+      'Could not resolve authentication method. Expected the clientId to be set. Or for the "Authorization" headers to be explicitly omitted',
+    );
+  }
+
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
     // this won't work for GET requests
     const signature = generateSignature(
@@ -185,8 +193,6 @@ export class Lorikeet extends Core.APIClient {
       this.clientSecret,
     );
     return {
-      // backwards compatibility
-      'x-optech-webhook-signature': signature,
       'x-lorikeet-signature': signature,
       authorization: `Bearer ${this.clientId}`,
     };
