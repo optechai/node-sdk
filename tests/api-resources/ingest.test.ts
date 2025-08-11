@@ -4,7 +4,6 @@ import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
   clientSecret: 'My Client Secret',
-  signature: 'My Signature',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 

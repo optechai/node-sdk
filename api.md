@@ -51,17 +51,19 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/customer.ts">CustomerCreateResponse</a></code>
-- <code><a href="./src/resources/customer.ts">CustomerUpdateResponse</a></code>
-- <code><a href="./src/resources/customer.ts">CustomerGetResponse</a></code>
-- <code><a href="./src/resources/customer.ts">CustomerTokenResponse</a></code>
+- <code><a href="./src/resources/customer/customer.ts">CustomerCreateResponse</a></code>
+- <code><a href="./src/resources/customer/customer.ts">CustomerUpdateResponse</a></code>
+- <code><a href="./src/resources/customer/customer.ts">CustomerGetResponse</a></code>
+- <code><a href="./src/resources/customer/customer.ts">CustomerTokenResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/customer">client.customer.<a href="./src/resources/customer.ts">create</a>({ ...params }) -> CustomerCreateResponse</code>
-- <code title="put /v1/customer/{id}">client.customer.<a href="./src/resources/customer.ts">update</a>(id, { ...params }) -> CustomerUpdateResponse</code>
-- <code title="get /v1/customer/{id}">client.customer.<a href="./src/resources/customer.ts">get</a>(id) -> CustomerGetResponse</code>
-- <code title="post /v1/customer/token">client.customer.<a href="./src/resources/customer.ts">token</a>({ ...params }) -> string</code>
+- <code title="post /v1/customer">client.customer.<a href="./src/resources/customer/customer.ts">create</a>({ ...params }) -> CustomerCreateResponse</code>
+- <code title="put /v1/customer/{id}">client.customer.<a href="./src/resources/customer/customer.ts">update</a>(id, { ...params }) -> CustomerUpdateResponse</code>
+- <code title="get /v1/customer/{id}">client.customer.<a href="./src/resources/customer/customer.ts">get</a>(id) -> CustomerGetResponse</code>
+- <code title="post /v1/customer/token">client.customer.<a href="./src/resources/customer/customer.ts">token</a>({ ...params }) -> string</code>
+
+## Profile
 
 # Workflow
 
@@ -87,13 +89,6 @@ Methods:
 - <code title="get /v1/file/{fileId}">client.file.<a href="./src/resources/file.ts">retrieve</a>(fileId) -> void</code>
 - <code title="put /v1/file/upload">client.file.<a href="./src/resources/file.ts">upload</a>() -> void</code>
 
-# Slack
-
-Methods:
-
-- <code title="get /v1/slack/channels/{subscriberId}">client.slack.<a href="./src/resources/slack.ts">retrieveChannels</a>(subscriberId) -> void</code>
-- <code title="get /v1/slack/install/{subscriberId}">client.slack.<a href="./src/resources/slack.ts">retrieveInstallation</a>(subscriberId) -> void</code>
-
 # Suggestion
 
 Methods:
@@ -116,35 +111,8 @@ Methods:
 
 - <code title="get /v1/oauth/authorization/url/{providerId}">client.oauth.authorization.<a href="./src/resources/oauth/authorization.ts">getURL</a>(providerId) -> void</code>
 
-# Admin
-
-Methods:
-
-- <code title="get /v1/admin/healthz">client.admin.<a href="./src/resources/admin/admin.ts">checkHealth</a>() -> void</code>
-- <code title="get /v1/admin/subscribers">client.admin.<a href="./src/resources/admin/admin.ts">listSubscribers</a>() -> void</code>
-
-## Subscriber
-
-Methods:
-
-- <code title="post /v1/admin/subscriber/setup">client.admin.subscriber.<a href="./src/resources/admin/subscriber.ts">setup</a>({ ...params }) -> void</code>
-
-## FeatureFlags
-
-Methods:
-
-- <code title="post /v1/admin/feature-flags">client.admin.featureFlags.<a href="./src/resources/admin/feature-flags.ts">create</a>({ ...params }) -> void</code>
-- <code title="get /v1/admin/feature-flags">client.admin.featureFlags.<a href="./src/resources/admin/feature-flags.ts">list</a>() -> void</code>
-- <code title="delete /v1/admin/feature-flags">client.admin.featureFlags.<a href="./src/resources/admin/feature-flags.ts">delete</a>({ ...params }) -> void</code>
-
 # Webhooks
 
 Methods:
 
 - <code title="post /webhooks/lori">client.webhooks.<a href="./src/resources/webhooks.ts">createLori</a>() -> void</code>
-
-# Ticket
-
-Methods:
-
-- <code title="get /v1/ticket/sse/{ticketId}">client.ticket.<a href="./src/resources/ticket.ts">retrieveSse</a>(ticketId, { ...params }) -> void</code>
