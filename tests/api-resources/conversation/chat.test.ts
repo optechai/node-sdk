@@ -5,7 +5,7 @@ import { Response } from 'node-fetch';
 
 const client = new Lorikeet({
   clientSecret: 'My Client Secret',
-  signature: 'My Signature',
+  clientId: 'My Client ID',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
