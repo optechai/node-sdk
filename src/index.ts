@@ -5,6 +5,22 @@ import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
+import { File } from './resources/file';
+import { Ingest, IngestTestParams } from './resources/ingest';
+import { Suggestion } from './resources/suggestion';
+import { Webhooks } from './resources/webhooks';
+import { Workflow } from './resources/workflow';
+import {
+  AttachmentDto,
+  Conversation,
+  ConversationCreateParams,
+  ConversationCreateResponse,
+  ConversationRetrieveTranscriptParams,
+  ConversationRetrieveTranscriptResponse,
+  TicketEvent,
+  TicketMessageDto,
+} from './resources/conversation/conversation';
+import { generateSignature } from './lib/generate-signature';
 import {
   Customer,
   CustomerCreateParams,
@@ -14,11 +30,8 @@ import {
   CustomerTokenResponse,
   CustomerUpdateParams,
   CustomerUpdateResponse,
-} from './resources/customer';
-import { Ingest, IngestTestParams } from './resources/ingest';
-import { Workflow } from './resources/workflow';
-import { Conversation } from './resources/conversation/conversation';
-import { generateSignature } from './lib/generate-signature';
+} from './resources/customer/customer';
+import { OAuth, OAuthAuthorizeParams, OAuthCallbackParams } from './resources/oauth/oauth';
 
 export interface ClientOptions {
   /**
@@ -44,6 +57,8 @@ export interface ClientOptions {
    *
    * Note that request timeouts are retried by default, so in a worst-case scenario you may wait
    * much longer than this timeout before the promise succeeds or fails.
+   *
+   * @unit milliseconds
    */
   timeout?: number | undefined;
 
@@ -136,6 +151,7 @@ export class Lorikeet extends Core.APIClient {
 
     super({
       baseURL: options.baseURL!,
+      baseURLOverridden: baseURL ? baseURL !== 'https://api.lorikeetcx.ai' : false,
       timeout: options.timeout ?? 60000 /* 1 minute */,
       httpAgent: options.httpAgent,
       maxRetries: options.maxRetries,
@@ -152,6 +168,21 @@ export class Lorikeet extends Core.APIClient {
   customer: API.Customer = new API.Customer(this);
   workflow: API.Workflow = new API.Workflow(this);
   ingest: API.Ingest = new API.Ingest(this);
+  file: API.File = new API.File(this);
+  suggestion: API.Suggestion = new API.Suggestion(this);
+  oauth: API.OAuth = new API.OAuth(this);
+  webhooks: API.Webhooks = new API.Webhooks(this);
+
+  /**
+   * Check whether the base URL is set to its default.
+   */
+  #baseURLOverridden(): boolean {
+    return this.baseURL !== 'https://api.lorikeetcx.ai';
+  }
+
+  retrieve(options?: Core.RequestOptions): Core.APIPromise<void> {
+    return this.get('/', { ...options, headers: { Accept: '*/*', ...options?.headers } });
+  }
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -165,7 +196,17 @@ export class Lorikeet extends Core.APIClient {
   }
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
-    // this won't work for GET requests
+    return {
+      ...this.lorikeetClientIdAuth(opts),
+      ...this.lorikeetSignatureAuthV1Auth(opts),
+    };
+  }
+
+  protected lorikeetClientIdAuth(opts: Core.FinalRequestOptions): Core.Headers {
+    return { authorization: `Bearer ${this.clientId}` };
+  }
+
+  protected lorikeetSignatureAuthV1Auth(opts: Core.FinalRequestOptions): Core.Headers {
     const signature = generateSignature(
       opts.body ?
         typeof opts.body === 'string' ?
@@ -175,10 +216,11 @@ export class Lorikeet extends Core.APIClient {
       this.clientSecret,
     );
     return {
-      // backwards compatibility
-      'x-optech-webhook-signature': signature,
       'x-lorikeet-signature': signature,
-      authorization: `Bearer ${this.clientId}`,
+      /**
+       * @deprecated Use x-lorikeet-signature instead
+       */
+      'x-optech-webhook-signature': signature,
     };
   }
 
@@ -207,10 +249,23 @@ Lorikeet.Conversation = Conversation;
 Lorikeet.Customer = Customer;
 Lorikeet.Workflow = Workflow;
 Lorikeet.Ingest = Ingest;
+Lorikeet.File = File;
+Lorikeet.Suggestion = Suggestion;
+Lorikeet.OAuth = OAuth;
+Lorikeet.Webhooks = Webhooks;
 export declare namespace Lorikeet {
   export type RequestOptions = Core.RequestOptions;
 
-  export { Conversation as Conversation };
+  export {
+    Conversation as Conversation,
+    type AttachmentDto as AttachmentDto,
+    type TicketEvent as TicketEvent,
+    type TicketMessageDto as TicketMessageDto,
+    type ConversationCreateResponse as ConversationCreateResponse,
+    type ConversationRetrieveTranscriptResponse as ConversationRetrieveTranscriptResponse,
+    type ConversationCreateParams as ConversationCreateParams,
+    type ConversationRetrieveTranscriptParams as ConversationRetrieveTranscriptParams,
+  };
 
   export {
     Customer as Customer,
@@ -226,6 +281,18 @@ export declare namespace Lorikeet {
   export { Workflow as Workflow };
 
   export { Ingest as Ingest, type IngestTestParams as IngestTestParams };
+
+  export { File as File };
+
+  export { Suggestion as Suggestion };
+
+  export {
+    OAuth as OAuth,
+    type OAuthAuthorizeParams as OAuthAuthorizeParams,
+    type OAuthCallbackParams as OAuthCallbackParams,
+  };
+
+  export { Webhooks as Webhooks };
 }
 
 export { toFile, fileFromPath } from './uploads';

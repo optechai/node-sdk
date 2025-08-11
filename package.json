@@ -1,6 +1,6 @@
 {
   "name": "@lorikeetai/node-sdk",
-  "version": "0.13.2",
+  "version": "0.14.0",
   "description": "The official TypeScript library for the Lorikeet API",
   "author": "Lorikeet <support@lorikeetcx.ai>",
   "types": "dist/index.d.ts",
@@ -70,10 +70,6 @@
     "./shims/web.js",
     "./shims/web.mjs"
   ],
-  "imports": {
-    "@lorikeetai/node-sdk": ".",
-    "@lorikeetai/node-sdk/*": "./src/*"
-  },
   "exports": {
     "./_shims/auto/*": {
       "deno": {

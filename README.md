@@ -23,17 +23,13 @@ The full API of this library can be found in [api.md](api.md).
 import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
-  clientSecret: 'My Client Secret',
   clientId: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
+  clientSecret: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
 });
 
-async function main() {
-  const response = await client.conversation.chat.start({ customerId: 'blah', publicKey: 'publicKey' });
+const response = await client.conversation.chat.start({ customerId: 'blah', publicKey: 'publicKey' });
 
-  console.log(response.conversationId);
-}
-
-main();
+console.log(response.conversationId);
 ```
 
 ### Request & Response types
@@ -45,16 +41,12 @@ This library includes TypeScript definitions for all request params and response
 import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
-  clientSecret: 'My Client Secret',
   clientId: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
+  clientSecret: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
 });
 
-async function main() {
-  const params: Lorikeet.Conversation.ChatStartParams = { customerId: 'blah', publicKey: 'publicKey' };
-  const response: Lorikeet.Conversation.ChatStartResponse = await client.conversation.chat.start(params);
-}
-
-main();
+const params: Lorikeet.Conversation.ChatStartParams = { customerId: 'blah', publicKey: 'publicKey' };
+const response: Lorikeet.Conversation.ChatStartResponse = await client.conversation.chat.start(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -67,21 +59,17 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-async function main() {
-  const response = await client.conversation.chat
-    .start({ customerId: 'blah', publicKey: 'publicKey' })
-    .catch(async (err) => {
-      if (err instanceof Lorikeet.APIError) {
-        console.log(err.status); // 400
-        console.log(err.name); // BadRequestError
-        console.log(err.headers); // {server: 'nginx', ...}
-      } else {
-        throw err;
-      }
-    });
-}
-
-main();
+const response = await client.conversation.chat
+  .start({ customerId: 'blah', publicKey: 'publicKey' })
+  .catch(async (err) => {
+    if (err instanceof Lorikeet.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:
@@ -109,7 +97,6 @@ You can use the `maxRetries` option to configure or disable this:
 ```js
 // Configure the default for all requests:
 const client = new Lorikeet({
-  clientSecret: 'My Client Secret',
   maxRetries: 0, // default is 2
 });
 
@@ -127,7 +114,6 @@ Requests time out after 1 minute by default. You can configure this with a `time
 ```ts
 // Configure the default for all requests:
 const client = new Lorikeet({
-  clientSecret: 'My Client Secret',
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
@@ -263,7 +249,6 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 
 // Configure the default for all requests:
 const client = new Lorikeet({
-  clientSecret: 'My Client Secret',
   httpAgent: new HttpsProxyAgent(process.env.PROXY_URL),
 });
 
