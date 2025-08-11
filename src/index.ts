@@ -206,7 +206,7 @@ export class Lorikeet extends Core.APIClient {
   }
 
   protected lorikeetSignatureAuthV1Auth(opts: Core.FinalRequestOptions): Core.Headers {
-    return { 'x-optech-webhook-signature': this.clientSecret };
+    return { 'x-lorikeet-signature': this.clientSecret };
   }
 
   static Lorikeet = this;
