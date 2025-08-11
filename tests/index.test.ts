@@ -24,7 +24,6 @@ describe('instantiate client', () => {
       baseURL: 'http://localhost:5000/',
       defaultHeaders: { 'X-My-Default-Header': '2' },
       clientSecret: 'My Client Secret',
-      signature: 'My Signature',
     });
 
     test('they are used in the request', async () => {
@@ -57,7 +56,6 @@ describe('instantiate client', () => {
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo' },
         clientSecret: 'My Client Secret',
-        signature: 'My Signature',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/foo?apiVersion=foo');
     });
@@ -67,7 +65,6 @@ describe('instantiate client', () => {
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo', hello: 'world' },
         clientSecret: 'My Client Secret',
-        signature: 'My Signature',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/foo?apiVersion=foo&hello=world');
     });
@@ -77,7 +74,6 @@ describe('instantiate client', () => {
         baseURL: 'http://localhost:5000/',
         defaultQuery: { hello: 'world' },
         clientSecret: 'My Client Secret',
-        signature: 'My Signature',
       });
       expect(client.buildURL('/foo', { hello: undefined })).toEqual('http://localhost:5000/foo');
     });
@@ -87,7 +83,6 @@ describe('instantiate client', () => {
     const client = new Lorikeet({
       baseURL: 'http://localhost:5000/',
       clientSecret: 'My Client Secret',
-      signature: 'My Signature',
       fetch: (url) => {
         return Promise.resolve(
           new Response(JSON.stringify({ url, custom: true }), {
@@ -106,7 +101,6 @@ describe('instantiate client', () => {
     const client = new Lorikeet({
       baseURL: 'http://localhost:5000/',
       clientSecret: 'My Client Secret',
-      signature: 'My Signature',
       fetch: defaultFetch,
     });
   });
@@ -115,7 +109,6 @@ describe('instantiate client', () => {
     const client = new Lorikeet({
       baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
       clientSecret: 'My Client Secret',
-      signature: 'My Signature',
       fetch: (...args) => {
         return new Promise((resolve, reject) =>
           setTimeout(
@@ -148,7 +141,6 @@ describe('instantiate client', () => {
     const client = new Lorikeet({
       baseURL: 'http://localhost:5000/',
       clientSecret: 'My Client Secret',
-      signature: 'My Signature',
       fetch: testFetch,
     });
 
@@ -161,7 +153,6 @@ describe('instantiate client', () => {
       const client = new Lorikeet({
         baseURL: 'http://localhost:5000/custom/path/',
         clientSecret: 'My Client Secret',
-        signature: 'My Signature',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
     });
@@ -170,7 +161,6 @@ describe('instantiate client', () => {
       const client = new Lorikeet({
         baseURL: 'http://localhost:5000/custom/path',
         clientSecret: 'My Client Secret',
-        signature: 'My Signature',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
     });
@@ -180,34 +170,30 @@ describe('instantiate client', () => {
     });
 
     test('explicit option', () => {
-      const client = new Lorikeet({
-        baseURL: 'https://example.com',
-        clientSecret: 'My Client Secret',
-        signature: 'My Signature',
-      });
+      const client = new Lorikeet({ baseURL: 'https://example.com', clientSecret: 'My Client Secret' });
       expect(client.baseURL).toEqual('https://example.com');
     });
 
     test('env variable', () => {
       process.env['LORIKEET_BASE_URL'] = 'https://example.com/from_env';
-      const client = new Lorikeet({ clientSecret: 'My Client Secret', signature: 'My Signature' });
+      const client = new Lorikeet({ clientSecret: 'My Client Secret' });
       expect(client.baseURL).toEqual('https://example.com/from_env');
     });
 
     test('empty env variable', () => {
       process.env['LORIKEET_BASE_URL'] = ''; // empty
-      const client = new Lorikeet({ clientSecret: 'My Client Secret', signature: 'My Signature' });
+      const client = new Lorikeet({ clientSecret: 'My Client Secret' });
       expect(client.baseURL).toEqual('https://api.lorikeetcx.ai');
     });
 
     test('blank env variable', () => {
       process.env['LORIKEET_BASE_URL'] = '  '; // blank
-      const client = new Lorikeet({ clientSecret: 'My Client Secret', signature: 'My Signature' });
+      const client = new Lorikeet({ clientSecret: 'My Client Secret' });
       expect(client.baseURL).toEqual('https://api.lorikeetcx.ai');
     });
 
     test('in request options', () => {
-      const client = new Lorikeet({ clientSecret: 'My Client Secret', signature: 'My Signature' });
+      const client = new Lorikeet({ clientSecret: 'My Client Secret' });
       expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
         'http://localhost:5000/option/foo',
       );
@@ -216,7 +202,6 @@ describe('instantiate client', () => {
     test('in request options overridden by client options', () => {
       const client = new Lorikeet({
         clientSecret: 'My Client Secret',
-        signature: 'My Signature',
         baseURL: 'http://localhost:5000/client',
       });
       expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
@@ -226,7 +211,7 @@ describe('instantiate client', () => {
 
     test('in request options overridden by env variable', () => {
       process.env['LORIKEET_BASE_URL'] = 'http://localhost:5000/env';
-      const client = new Lorikeet({ clientSecret: 'My Client Secret', signature: 'My Signature' });
+      const client = new Lorikeet({ clientSecret: 'My Client Secret' });
       expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
         'http://localhost:5000/env/foo',
       );
@@ -234,39 +219,31 @@ describe('instantiate client', () => {
   });
 
   test('maxRetries option is correctly set', () => {
-    const client = new Lorikeet({
-      maxRetries: 4,
-      clientSecret: 'My Client Secret',
-      signature: 'My Signature',
-    });
+    const client = new Lorikeet({ maxRetries: 4, clientSecret: 'My Client Secret' });
     expect(client.maxRetries).toEqual(4);
 
     // default
-    const client2 = new Lorikeet({ clientSecret: 'My Client Secret', signature: 'My Signature' });
+    const client2 = new Lorikeet({ clientSecret: 'My Client Secret' });
     expect(client2.maxRetries).toEqual(2);
   });
 
   test('with environment variable arguments', () => {
     // set options via env var
     process.env['LORIKEET_CLIENT_SECRET'] = 'My Client Secret';
-    process.env['LORIKEET_CLIENT_SECRET'] = 'My Signature';
     const client = new Lorikeet();
     expect(client.clientSecret).toBe('My Client Secret');
-    expect(client.signature).toBe('My Signature');
   });
 
   test('with overridden environment variable arguments', () => {
     // set options via env var
     process.env['LORIKEET_CLIENT_SECRET'] = 'another My Client Secret';
-    process.env['LORIKEET_CLIENT_SECRET'] = 'another My Signature';
-    const client = new Lorikeet({ clientSecret: 'My Client Secret', signature: 'My Signature' });
+    const client = new Lorikeet({ clientSecret: 'My Client Secret' });
     expect(client.clientSecret).toBe('My Client Secret');
-    expect(client.signature).toBe('My Signature');
   });
 });
 
 describe('request building', () => {
-  const client = new Lorikeet({ clientSecret: 'My Client Secret', signature: 'My Signature' });
+  const client = new Lorikeet({ clientSecret: 'My Client Secret' });
 
   describe('Content-Length', () => {
     test('handles multi-byte characters', async () => {
@@ -308,12 +285,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Lorikeet({
-      clientSecret: 'My Client Secret',
-      signature: 'My Signature',
-      timeout: 10,
-      fetch: testFetch,
-    });
+    const client = new Lorikeet({ clientSecret: 'My Client Secret', timeout: 10, fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -343,12 +315,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Lorikeet({
-      clientSecret: 'My Client Secret',
-      signature: 'My Signature',
-      fetch: testFetch,
-      maxRetries: 4,
-    });
+    const client = new Lorikeet({ clientSecret: 'My Client Secret', fetch: testFetch, maxRetries: 4 });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
 
@@ -372,12 +339,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new Lorikeet({
-      clientSecret: 'My Client Secret',
-      signature: 'My Signature',
-      fetch: testFetch,
-      maxRetries: 4,
-    });
+    const client = new Lorikeet({ clientSecret: 'My Client Secret', fetch: testFetch, maxRetries: 4 });
 
     expect(
       await client.request({
@@ -408,7 +370,6 @@ describe('retries', () => {
     };
     const client = new Lorikeet({
       clientSecret: 'My Client Secret',
-      signature: 'My Signature',
       fetch: testFetch,
       maxRetries: 4,
       defaultHeaders: { 'X-Stainless-Retry-Count': null },
@@ -440,12 +401,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new Lorikeet({
-      clientSecret: 'My Client Secret',
-      signature: 'My Signature',
-      fetch: testFetch,
-      maxRetries: 4,
-    });
+    const client = new Lorikeet({ clientSecret: 'My Client Secret', fetch: testFetch, maxRetries: 4 });
 
     expect(
       await client.request({
@@ -472,11 +428,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Lorikeet({
-      clientSecret: 'My Client Secret',
-      signature: 'My Signature',
-      fetch: testFetch,
-    });
+    const client = new Lorikeet({ clientSecret: 'My Client Secret', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -503,11 +455,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Lorikeet({
-      clientSecret: 'My Client Secret',
-      signature: 'My Signature',
-      fetch: testFetch,
-    });
+    const client = new Lorikeet({ clientSecret: 'My Client Secret', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
