@@ -1,5 +1,45 @@
 # Changelog
 
+## 0.14.0 (2025-08-11)
+
+Full Changelog: [v0.13.2...v0.14.0](https://github.com/optechai/node-sdk/compare/v0.13.2...v0.14.0)
+
+### Features
+
+* **api:** api update ([0686788](https://github.com/optechai/node-sdk/commit/0686788782b8ee34e9d6192d62d332ecb9801285))
+* **api:** api update ([1bcbc2b](https://github.com/optechai/node-sdk/commit/1bcbc2b21d4e7ae68e44a2458ba797f38808a1a5))
+* **api:** api update ([55c8d72](https://github.com/optechai/node-sdk/commit/55c8d7216e51ca78ea3deddd5d34e7e768c39f13))
+* **api:** api update ([99e41d8](https://github.com/optechai/node-sdk/commit/99e41d8014a2d5f8cfdd34c6776e88d3b0bd1681))
+* **api:** manual updates ([df27064](https://github.com/optechai/node-sdk/commit/df27064f02f516388c0e095594a56fd71e965b48))
+* **api:** manual updates ([ea26119](https://github.com/optechai/node-sdk/commit/ea261192b64b5ada9e88aae8d75ef1ccbea36096))
+* **api:** manual updates ([dccd155](https://github.com/optechai/node-sdk/commit/dccd1552c9cb30b29d457c1177dbff99de04b8c8))
+* **api:** manual updates ([8b77873](https://github.com/optechai/node-sdk/commit/8b7787303f26e79ef339ff27c4321c359125e854))
+* **api:** manual updates ([0070a9b](https://github.com/optechai/node-sdk/commit/0070a9bc039d3c8f58aa2a4bca596cef9c2b5f80))
+* **api:** manual updates ([8e21404](https://github.com/optechai/node-sdk/commit/8e214048428d567412f1a88b0bf6b58a16c48a17))
+* **api:** manual updates ([947a719](https://github.com/optechai/node-sdk/commit/947a7192cfd0da368e0f1782301996117a9b9da4))
+* **api:** manual updates ([5b116a9](https://github.com/optechai/node-sdk/commit/5b116a9203e47b8dab7141ac1232ddebc1caa676))
+* **api:** manual updates ([20d8d40](https://github.com/optechai/node-sdk/commit/20d8d40e3d90318e4bce5d63ffa24728d3d6ca1a))
+* **api:** manual updates ([9c670c9](https://github.com/optechai/node-sdk/commit/9c670c9790050208369fafdeced8b3feb33188dd))
+* **client:** add support for endpoint-specific base URLs ([5821bca](https://github.com/optechai/node-sdk/commit/5821bcad776835de82caced0dc7fc50e553baa7f))
+
+
+### Bug Fixes
+
+* **ci:** release-doctor — report correct token name ([dc5e3e8](https://github.com/optechai/node-sdk/commit/dc5e3e80153923bba529ce52b5b3bf35491cc8ab))
+* **client:** don't send `Content-Type` for bodyless methods ([5790bea](https://github.com/optechai/node-sdk/commit/5790bea1b49bd4eb53defc682390907fe390b3cb))
+* publish script — handle NPM errors correctly ([0758a1e](https://github.com/optechai/node-sdk/commit/0758a1ef36cffa7956e546d8858c7e811f9cb375))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([f397f83](https://github.com/optechai/node-sdk/commit/f397f83f863b443f4ad901fcea5050a99110a9b6))
+* **ci:** only run for pushes and fork pull requests ([0d7c8d5](https://github.com/optechai/node-sdk/commit/0d7c8d5cfc7cd4c5cb2792114566700d82b75afe))
+* **docs:** use top-level-await in example snippets ([99e9a35](https://github.com/optechai/node-sdk/commit/99e9a35105db405e92253e5d28ba25a2e2a7de25))
+* improve publish-npm script --latest tag logic ([a463d3e](https://github.com/optechai/node-sdk/commit/a463d3ed516a92a30ceb93882bc715ca446c0765))
+* **internal:** make base APIResource abstract ([357ceff](https://github.com/optechai/node-sdk/commit/357ceff9573f17cdfec91b2984532569f790ced0))
+* make some internal functions async ([cc81572](https://github.com/optechai/node-sdk/commit/cc81572884870d451f7230093a44c85039becabc))
+* mention unit type in timeout docs ([1b04e8a](https://github.com/optechai/node-sdk/commit/1b04e8a6c534f45e8951c930d976b9419f2487a5))
+
 ## 0.13.2 (2025-07-24)
 
 Full Changelog: [v0.13.1...v0.13.2](https://github.com/optechai/node-sdk/compare/v0.13.1...v0.13.2)
