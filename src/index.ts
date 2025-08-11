@@ -212,6 +212,13 @@ export class Lorikeet extends Core.APIClient {
   }
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
+    return {
+      ...this.lorikeetClientIdAuth(opts),
+      ...this.lorikeetSignatureAuthV1Auth(opts),
+    };
+  }
+
+  protected lorikeetClientIdAuth(opts: Core.FinalRequestOptions): Core.Headers {
     return { Authorization: `Bearer ${this.clientId}` };
   }
 
