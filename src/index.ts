@@ -5,6 +5,16 @@ import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
+import {
+  Customer,
+  CustomerCreateParams,
+  CustomerCreateResponse,
+  CustomerGetResponse,
+  CustomerTokenParams,
+  CustomerTokenResponse,
+  CustomerUpdateParams,
+  CustomerUpdateResponse,
+} from './resources/customer';
 import { File } from './resources/file';
 import { Ingest, IngestTestParams } from './resources/ingest';
 import { Suggestion } from './resources/suggestion';
@@ -20,16 +30,6 @@ import {
   TicketEvent,
   TicketMessageDto,
 } from './resources/conversation/conversation';
-import {
-  Customer,
-  CustomerCreateParams,
-  CustomerCreateResponse,
-  CustomerGetResponse,
-  CustomerTokenParams,
-  CustomerTokenResponse,
-  CustomerUpdateParams,
-  CustomerUpdateResponse,
-} from './resources/customer/customer';
 import { OAuth, OAuthAuthorizeParams, OAuthCallbackParams } from './resources/oauth/oauth';
 
 export interface ClientOptions {
