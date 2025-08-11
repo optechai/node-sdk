@@ -46,11 +46,6 @@ export interface ClientOptions {
   clientSecret?: string | undefined;
 
   /**
-   * Secret key pulled from the Lorikeet App
-   */
-  signature?: string | undefined;
-
-  /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
    * Defaults to process.env['LORIKEET_BASE_URL'].
@@ -123,7 +118,6 @@ export class Lorikeet extends Core.APIClient {
    *
    * @param {string | undefined} [opts.clientId=process.env['LORIKEET_CLIENT_ID'] ?? undefined]
    * @param {string | undefined} [opts.clientSecret=process.env['LORIKEET_CLIENT_SECRET'] ?? undefined]
-   * @param {string | undefined} [opts.signature=process.env['LORIKEET_CLIENT_SECRET'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['LORIKEET_BASE_URL'] ?? https://api.lorikeetcx.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -136,7 +130,6 @@ export class Lorikeet extends Core.APIClient {
     baseURL = Core.readEnv('LORIKEET_BASE_URL'),
     clientId = Core.readEnv('LORIKEET_CLIENT_ID'),
     clientSecret = Core.readEnv('LORIKEET_CLIENT_SECRET'),
-    signature = Core.readEnv('LORIKEET_CLIENT_SECRET'),
     ...opts
   }: ClientOptions = {}) {
     if (clientId === undefined) {
@@ -149,16 +142,10 @@ export class Lorikeet extends Core.APIClient {
         "The LORIKEET_CLIENT_SECRET environment variable is missing or empty; either provide it, or instantiate the Lorikeet client with an clientSecret option, like new Lorikeet({ clientSecret: 'My Client Secret' }).",
       );
     }
-    if (signature === undefined) {
-      throw new Errors.LorikeetError(
-        "The LORIKEET_CLIENT_SECRET environment variable is missing or empty; either provide it, or instantiate the Lorikeet client with an signature option, like new Lorikeet({ signature: 'My Signature' }).",
-      );
-    }
 
     const options: ClientOptions = {
       clientId,
       clientSecret,
-      signature,
       ...opts,
       baseURL: baseURL || `https://api.lorikeetcx.ai`,
     };
