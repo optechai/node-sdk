@@ -24,6 +24,7 @@ describe('instantiate client', () => {
       baseURL: 'http://localhost:5000/',
       defaultHeaders: { 'X-My-Default-Header': '2' },
       clientSecret: 'My Client Secret',
+      clientId: 'My Client ID',
     });
 
     test('they are used in the request', async () => {
@@ -236,17 +237,19 @@ describe('instantiate client', () => {
     const client = new Lorikeet({
       maxRetries: 4,
       clientSecret: 'My Client Secret',
+      clientId: 'My Client ID',
     });
     expect(client.maxRetries).toEqual(4);
 
     // default
-    const client2 = new Lorikeet({ clientSecret: 'My Client Secret', clientId: 'My Signature' });
+    const client2 = new Lorikeet({ clientSecret: 'My Client Secret', clientId: 'My Client ID' });
     expect(client2.maxRetries).toEqual(2);
   });
 
   test('with environment variable arguments', () => {
     // set options via env var
     process.env['LORIKEET_CLIENT_SECRET'] = 'My Client Secret';
+    process.env['LORIKEET_CLIENT_ID'] = 'My Client ID';
     const client = new Lorikeet();
     expect(client.clientSecret).toBe('My Client Secret');
   });

@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { type Agent } from './_shims/index';
-import * as qs from './internal/qs';
 import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
@@ -204,7 +203,7 @@ export class Lorikeet extends Core.APIClient {
   }
 
   protected lorikeetClientIdAuth(opts: Core.FinalRequestOptions): Core.Headers {
-    return { Authorization: `Bearer ${this.clientId}` };
+    return { authorization: `Bearer ${this.clientId}` };
   }
 
   protected lorikeetSignatureAuthV1Auth(opts: Core.FinalRequestOptions): Core.Headers {
