@@ -234,10 +234,6 @@ export class Lorikeet extends Core.APIClient {
     return { 'x-lorikeet-signature': signature };
   }
 
-  protected override stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
-  }
-
   static Lorikeet = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
