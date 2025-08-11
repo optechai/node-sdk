@@ -3,6 +3,7 @@ import { Response } from 'node-fetch';
 import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
+  clientId: 'My Client ID',
   clientSecret: 'My Client Secret',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
