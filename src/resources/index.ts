@@ -19,7 +19,7 @@ export {
   type CustomerCreateParams,
   type CustomerUpdateParams,
   type CustomerTokenParams,
-} from './customer';
+} from './customer/customer';
 export { File } from './file';
 export { Ingest, type IngestTestParams } from './ingest';
 export { OAuth, type OAuthAuthorizeParams, type OAuthCallbackParams } from './oauth/oauth';
