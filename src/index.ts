@@ -115,7 +115,6 @@ export interface ClientOptions {
 export class Lorikeet extends Core.APIClient {
   clientId: string;
   clientSecret: string;
-  signature: string;
 
   private _options: ClientOptions;
 
@@ -177,7 +176,6 @@ export class Lorikeet extends Core.APIClient {
 
     this.clientId = clientId;
     this.clientSecret = clientSecret;
-    this.signature = signature;
   }
 
   conversation: API.Conversation = new API.Conversation(this);
