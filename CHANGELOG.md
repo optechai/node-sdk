@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.1 (2025-08-12)
+
+Full Changelog: [v1.0.0...v1.0.1](https://github.com/optechai/node-sdk/compare/v1.0.0...v1.0.1)
+
+### Features
+
+* improved example for customer-profile ([0a5a5aa](https://github.com/optechai/node-sdk/commit/0a5a5aa7b094382e2eb1c062e64fbf8f514ffe64))
+
+
+### Bug Fixes
+
+* add minimal example for customer profile testing ([fa06b99](https://github.com/optechai/node-sdk/commit/fa06b99a626d5e862003597d94120752ef1ca449))
+* remove duplicate signature in SDK ([44da2bc](https://github.com/optechai/node-sdk/commit/44da2bc5e2fc8b7a90d8311527bca37100cb0a4a))
+
 ## 1.0.0 (2025-08-11)
 
 Full Changelog: [v0.14.0...v1.0.0](https://github.com/optechai/node-sdk/compare/v0.14.0...v1.0.0)
