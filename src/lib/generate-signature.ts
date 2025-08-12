@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import { createHmac } from 'crypto';
 
 /**
  * Generate a signature for a given payload using a secret key.
@@ -7,11 +7,10 @@ import crypto from 'crypto';
  */
 export function generateSignature(payload: Buffer | string | undefined, secret: string) {
   if (!payload) {
-    return crypto.createHmac('sha256', secret).digest('base64').replace(/\+/g, '-').replace(/\//g, '_');
+    return createHmac('sha256', secret).digest('base64').replace(/\+/g, '-').replace(/\//g, '_');
   }
 
-  return crypto
-    .createHmac('sha256', secret)
+  return createHmac('sha256', secret)
     .update(payload)
     .digest('base64')
     .replace(/\+/g, '-')
