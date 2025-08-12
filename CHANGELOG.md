@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.2 (2025-08-12)
+
+Full Changelog: [v1.0.1...v1.0.2](https://github.com/optechai/node-sdk/compare/v1.0.1...v1.0.2)
+
+### Bug Fixes
+
+* crypto import via named import ([b0fe33c](https://github.com/optechai/node-sdk/commit/b0fe33cbe100f7265efbc22e278c88b431099cbb))
+
 ## 1.0.1 (2025-08-12)
 
 Full Changelog: [v1.0.0...v1.0.1](https://github.com/optechai/node-sdk/compare/v1.0.0...v1.0.1)
