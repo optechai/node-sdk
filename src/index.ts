@@ -217,10 +217,6 @@ export class Lorikeet extends Core.APIClient {
     );
     return {
       'x-lorikeet-signature': signature,
-      /**
-       * @deprecated Use x-lorikeet-signature instead
-       */
-      'x-optech-webhook-signature': signature,
     };
   }
 
