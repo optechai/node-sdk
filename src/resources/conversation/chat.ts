@@ -124,6 +124,107 @@ export class Chat extends APIResource {
       },
     ) as Core.APIPromise<ChatGetResponse>;
   }
+
+  /**
+   * __chat.stream__
+   *
+   * Stream chat events for a conversation using Server-Sent Events (SSE).
+   * This provides real-time updates as chat messages are generated, eliminating the need for polling.
+   *
+   * @example
+   * ```ts
+   * const unsubscribe = await client.conversation.chat.stream({
+   *   conversationId: 'conversationId',
+   *   onData: (data) => {
+   *     console.log('Received:', data);
+   *   },
+   *   onError: (error) => {
+   *     console.error('Stream error:', error);
+   *   }
+   * });
+   *
+   * // Later, to stop streaming:
+   * unsubscribe();
+   * ```
+   */
+  async stream(params: ChatStreamParams, options?: Core.RequestOptions): Promise<() => void> {
+    const response = await this._client.get(`/v1/ticket/sse/${params.conversationId}`, {
+      ...options,
+      headers: {
+        Accept: 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        ...options?.headers,
+      },
+    });
+
+    const rawResponse = await (response as Core.APIPromise<void>).asResponse();
+    const reader = (rawResponse.body as unknown as ReadableStream<Uint8Array>)?.getReader();
+
+    if (!reader) {
+      throw new Error('Failed to get stream reader');
+    }
+
+    const decoder = new TextDecoder();
+    let isActive = true;
+    let buffer = '';
+
+    // Start reading the stream
+    const pump = async () => {
+      try {
+        while (isActive) {
+          const { done, value } = await reader.read();
+          
+          if (done) {
+            break;
+          }
+
+          // Decode the chunk and add to buffer
+          buffer += decoder.decode(value, { stream: true });
+          
+          // Process complete lines
+          const lines = buffer.split('\n');
+          // Keep the last (potentially incomplete) line in the buffer
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            if (line.startsWith('data: ') && line.length > 6) {
+              try {
+                const jsonData = line.slice(6).trim();
+                if (jsonData) {
+                  const data = JSON.parse(jsonData);
+                  params.onData?.(data);
+                }
+              } catch (error) {
+                params.onError?.(new Error(`Failed to parse SSE data: ${error}`));
+              }
+            }
+          }
+        }
+      } catch (error) {
+        // Handle abort errors gracefully (user navigated away, etc.)
+        if (error instanceof Error && error.name === 'AbortError') {
+          // Silently ignore abort errors
+          return;
+        }
+        
+        if (isActive) {
+          params.onError?.(error as Error);
+        }
+      } finally {
+        reader.releaseLock();
+        params.onClose?.();
+      }
+    };
+
+    // Start pumping data
+    pump();
+
+    // Return unsubscribe function
+    return () => {
+      isActive = false;
+      reader.cancel();
+    };
+  }
 }
 
 export interface ChatGenerateResponse {
@@ -353,6 +454,36 @@ export interface ChatStartParams {
   subject?: string;
 }
 
+export interface SSEMessage {
+  id?: string;
+  event?: string;
+  data: string;
+  retry?: number;
+  raw: string[];
+}
+
+export interface ChatStreamParams {
+  /**
+   * The ID of the conversation you need to stream.
+   */
+  conversationId: string;
+
+  /**
+   * Callback for SSE data events.
+   */
+  onData?: (data: any) => void;
+
+  /**
+   * Callback for stream errors.
+   */
+  onError?: (error: Error) => void;
+
+  /**
+   * Callback when the stream closes.
+   */
+  onClose?: () => void;
+}
+
 export declare namespace Chat {
   export {
     type ChatGenerateResponse as ChatGenerateResponse,
@@ -361,5 +492,7 @@ export declare namespace Chat {
     type ChatGenerateParams as ChatGenerateParams,
     type ChatGetParams as ChatGetParams,
     type ChatStartParams as ChatStartParams,
+    type ChatStreamParams as ChatStreamParams,
+    type SSEMessage as SSEMessage,
   };
 }
