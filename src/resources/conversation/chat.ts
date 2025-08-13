@@ -128,30 +128,23 @@ export class Chat extends APIResource {
   /**
    * __chat.stream__
    *
-   * Async generator that yields raw text chunks from the SSE response.
-   * No parsing is performed—callers receive the raw SSE text and can parse `data:` lines themselves.
+   * Stream chat events for a conversation over Server-Sent Events (SSE).
+   * Returns an async generator that emits decoded text chunks (no parsing).
+   * Use with `for await`; don’t `await` the call itself.
    *
-   * @template T - Payload type (default: `string`); values are text chunks.
+   * @template T - Payload type (default: `string`)
    * @param params.conversationId - Conversation/ticket ID to subscribe to.
    * @param options - Optional request options; sets `Accept: text/event-stream`.
    * @returns AsyncGenerator<T>
-   *
+   */
+
+  /**
    * @example
-   * // Minimal usage (raw chunks)
-   * for await (const chunk of client.conversation.chat.stream({ conversationId: 'abc123' })) {
-   *   process.stdout.write(chunk);
+   * ```ts
+   * for await (const evt of client.conversation.chat.stream({ conversationId: 'abc123' })) {
+   *   console.log(evt);
    * }
-   *
-   * // If you want to parse events yourself:
-   * // let buf = '';
-   * // for await (const chunk of client.conversation.chat.stream({ conversationId })) {
-   * //   buf += chunk;
-   * //   let i;
-   * //   while ((i = buf.indexOf('\\n\\n')) !== -1) {
-   * //     const block = buf.slice(0, i); buf = buf.slice(i + 2);
-   * //     // block contains lines like "data: {...}"
-   * //   }
-   * // }
+   * ```
    */
   async *stream<T = string>(
     params: ChatStreamParams,
@@ -181,7 +174,6 @@ export class Chat extends APIResource {
 
     try {
       if (typeof body.getReader === 'function') {
-        // ✅ WHATWG ReadableStream (undici / Node 18+)
         const reader = body.getReader();
         try {
           while (true) {
