@@ -19,7 +19,7 @@ const customer = await client.customer.create({
 /**
  * Sync customer profile example after creating a customer
  * Ensure you use the customer id from the customer object.
- * 
+ *
  * A Lorikeet workflow can now use the `test` field to do something.
  */
 const customerProfile = await client.customer.profile.sync(customer.id, {
@@ -28,7 +28,7 @@ const customerProfile = await client.customer.profile.sync(customer.id, {
   },
 });
 
-console.log(customerProfile)
+console.log(customerProfile);
 
 /**
  * customer token creation might follow this.
@@ -39,4 +39,4 @@ const token = await client.customer.token({
   remoteId: customer.remoteId,
 });
 
-console.log(token)
+console.log(token);
