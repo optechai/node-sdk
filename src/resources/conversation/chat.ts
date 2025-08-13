@@ -150,7 +150,6 @@ export class Chat extends APIResource {
     params: ChatStreamParams,
     options?: Core.RequestOptions,
   ): AsyncGenerator<T, void, unknown> {
-    // Keep your Prism “required query” workaround if needed; undefined keys will be omitted.
     const responsePromise = this._client.get(`/v1/ticket/sse/${params.conversationId}`, {
       query: {
         sseMessageTypes: undefined,
@@ -161,11 +160,10 @@ export class Chat extends APIResource {
       headers: {
         ...(options?.headers ?? {}),
         Accept: 'text/event-stream',
-        'Cache-Control': 'no-cache, no-transform', // help avoid proxy buffering
+        'Cache-Control': 'no-cache, no-transform',
       },
     });
 
-    // Get the raw Response (no JSON parsing)
     const raw = await (responsePromise as Core.APIPromise<void>).asResponse();
     const body: any = raw.body;
     if (!raw.ok || !body) throw new Error(`SSE HTTP ${raw.status}`);
