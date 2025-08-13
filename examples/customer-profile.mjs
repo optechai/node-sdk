@@ -3,18 +3,24 @@
  */
 import lorikeet from '@lorikeetai/node-sdk';
 
-const client = new lorikeet.Lorikeet();
+const client = new lorikeet.Lorikeet(
+  {
+    clientId: 'opt-client-7dbb7bed3fbd0998',
+    clientSecret: 'icB/BhjBcB/3F5dhvTYhDiNZsp7NEZkD7m67x26f8Cs=',
+    baseURL: 'http://localhost:3000', // <-- point to your local dev server
+  }
+);
 
 /**
  * Generate a customer - if this already exists or you already have a customer id, you can skip this step
  */
-const customer = await client.customer.create({
-  firstName: 'John',
-  lastName: 'Doe',
-  displayName: 'John Doe',
-  email: 'john@test.com',
-  remoteId: '1234_definitely_legit',
-});
+// const customer = await client.customer.create({
+//   firstName: 'John',
+//   lastName: 'Doe',
+//   displayName: 'John Doe',
+//   email: 'john@test.com',
+//   remoteId: '1234_definitely_legit',
+// });
 
 /**
  * Sync customer profile example after creating a customer
@@ -22,7 +28,8 @@ const customer = await client.customer.create({
  *
  * A Lorikeet workflow can now use the `test` field to do something.
  */
-const customerProfile = await client.customer.profile.sync(customer.id, {
+const customerProfile = await client.customer.profile.sync(
+  '308abc28-5fc8-4337-9ee1-ff3b6780380b', {
   data: {
     test: 'test',
   },
@@ -36,7 +43,29 @@ console.log(customerProfile);
 const token = await client.customer.token({
   displayName: 'John Doe',
   email: 'john@test.com',
-  remoteId: customer.remoteId,
 });
 
 console.log(token);
+
+/**
+ * Example: Stream chat events for the created conversation
+ */
+const ac = new AbortController();
+
+const stream = client.conversation.chat.stream(
+  { conversationId: '5866fb77-96b4-4604-96ac-2a645b0a3f15' },
+  { signal: ac.signal }
+);
+
+console.log('Streaming chat events...');
+try {
+  for await (const evt of stream) {
+    console.log('Stream event:', evt);
+    // Optionally break after first event for demo purposes
+    // break;
+  }
+} catch (err) {
+  console.error('Stream error:', err);
+} finally {
+  ac.abort();
+}

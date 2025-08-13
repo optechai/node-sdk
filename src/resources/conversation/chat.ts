@@ -148,75 +148,92 @@ export class Chat extends APIResource {
     params: ChatStreamParams,
     options?: Core.RequestOptions,
   ): AsyncGenerator<T, void, unknown> {
-    const res = await this._client.get(`/v1/ticket/sse/${params.conversationId}`, {
+    const responsePromise = this._client.get(`/v1/ticket/sse/${params.conversationId}`, {
+      query: {
+        sseMessageTypes: undefined,
+        ticketEventTypes: undefined,
+        ticketMessageTypes: undefined,
+      },
       ...options,
       headers: {
-        ...(options?.headers ?? {}), // caller headers first
-        Accept: 'text/event-stream', // enforce SSE
-        'Cache-Control': 'no-cache',
+        ...(options?.headers ?? {}),
+        Accept: 'text/event-stream',
+        'Cache-Control': 'no-cache, no-transform',
       },
     });
 
-    const raw = await (res as Core.APIPromise<void>).asResponse();
-    const body = raw.body as unknown as ReadableStream<Uint8Array> | null;
+    const raw = await (responsePromise as Core.APIPromise<void>).asResponse();
+    const body: any = raw.body;
     if (!raw.ok || !body) throw new Error(`SSE HTTP ${raw.status}`);
 
-    const reader = body.getReader();
     const decoder = new TextDecoder();
     let buffer = '';
 
-    try {
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
+    // Parser: yields any complete SSE event blocks in `buffer`
+    const drain = function* (): Generator<T> {
+      let idx: number;
+      while ((idx = buffer.indexOf('\n\n')) !== -1) {
+        const block = buffer.slice(0, idx);
+        buffer = buffer.slice(idx + 2);
 
-        const chunk = decoder.decode(value, { stream: true });
-        buffer += chunk.replace(/\r\n/g, '\n').replace(/\r/g, '\n'); // normalize CR/LF properly
-
-        // Process complete SSE event blocks (blank-line delimited)
-        let idx: number;
-        while ((idx = buffer.indexOf('\n\n')) !== -1) {
-          const block = buffer.slice(0, idx);
-          buffer = buffer.slice(idx + 2);
-
-          const dataLines = block
-            .split('\n')
-            .filter((l) => !l.startsWith(':') && l.startsWith('data:'))
-            .map((l) => l.slice(5).trimStart());
-
-          if (!dataLines.length) continue;
-
-          const rawData = dataLines.join('\n');
-          let payload: any = rawData;
-          try {
-            payload = JSON.parse(rawData);
-          } catch {}
-          yield payload as T;
-        }
-      }
-
-      // Flush trailing partial block (just in case)
-      if (buffer.trim()) {
-        const dataLines = buffer
+        const dataLines = block
           .split('\n')
           .filter((l) => !l.startsWith(':') && l.startsWith('data:'))
           .map((l) => l.slice(5).trimStart());
-        if (dataLines.length) {
-          const rawData = dataLines.join('\n');
-          let payload: any = rawData;
-          try {
-            payload = JSON.parse(rawData);
-          } catch {}
-          yield payload as T;
+
+        if (!dataLines.length) continue;
+
+        const rawData = dataLines.join('\n');
+        try {
+          yield JSON.parse(rawData) as T;
+        } catch {
+          yield rawData as unknown as T;
         }
       }
+    };
+
+    try {
+      if (typeof body.getReader === 'function') {
+        // ✅ WHATWG ReadableStream (undici / global fetch in Node 18+)
+        const reader = body.getReader();
+        try {
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value, { stream: true });
+            buffer += chunk.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+            for (const msg of drain()) yield msg;
+          }
+        } finally {
+          try {
+            reader.releaseLock();
+          } catch {}
+          try {
+            await body.cancel?.();
+          } catch {}
+        }
+      } else if (typeof body[Symbol.asyncIterator] === 'function') {
+        // ✅ Node Readable stream (node-fetch@2, http.IncomingMessage)
+        try {
+          for await (const chunk of body as AsyncIterable<Uint8Array | Buffer | string>) {
+            const text =
+              typeof chunk === 'string' ? chunk : decoder.decode(chunk as Uint8Array, { stream: true });
+            buffer += text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+            for (const msg of drain()) yield msg;
+          }
+        } finally {
+          try {
+            body.destroy?.();
+          } catch {}
+        }
+      } else {
+        throw new Error('Unsupported response body type for SSE');
+      }
+
+      // Flush trailing partial block (if the server ended without a final blank line)
+      if (buffer.trim()) for (const msg of drain()) yield msg;
     } finally {
-      try {
-        reader.releaseLock();
-      } catch {}
-      try {
-        await (raw.body as any)?.cancel?.();
-      } catch {}
+      // nothing else to clean
     }
   }
 }
