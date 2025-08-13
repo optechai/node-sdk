@@ -128,26 +128,36 @@ export class Chat extends APIResource {
   /**
    * __chat.stream__
    *
-   * Async generator that streams SSE chat events.
-   * Yields each event's `data:` payload (parsed JSON when possible, else string).
-   * Do not `await` the call—iterate with `for await`.
+   * Async generator that yields raw text chunks from the SSE response.
+   * No parsing is performed—callers receive the raw SSE text and can parse `data:` lines themselves.
    *
-   * @template T - Payload type (default: `any`)
-   * @param params.conversationId - Conversation/ticket ID to subscribe to
-   * @param options - Optional request options; sets `Accept: text/event-stream`
+   * @template T - Payload type (default: `string`); values are text chunks.
+   * @param params.conversationId - Conversation/ticket ID to subscribe to.
+   * @param options - Optional request options; sets `Accept: text/event-stream`.
    * @returns AsyncGenerator<T>
    *
    * @example
-   * for await (const evt of client.conversation.chat.stream({ conversationId: 'abc123' })) {
-   *   if ((evt as any).type === 'new-message') {
-   *     console.log('New message:', (evt as any).message);
-   *   }
+   * // Minimal usage (raw chunks)
+   * for await (const chunk of client.conversation.chat.stream({ conversationId: 'abc123' })) {
+   *   process.stdout.write(chunk);
    * }
+   *
+   * // If you want to parse events yourself:
+   * // let buf = '';
+   * // for await (const chunk of client.conversation.chat.stream({ conversationId })) {
+   * //   buf += chunk;
+   * //   let i;
+   * //   while ((i = buf.indexOf('\\n\\n')) !== -1) {
+   * //     const block = buf.slice(0, i); buf = buf.slice(i + 2);
+   * //     // block contains lines like "data: {...}"
+   * //   }
+   * // }
    */
-  async *stream<T = any>(
+  async *stream<T = string>(
     params: ChatStreamParams,
     options?: Core.RequestOptions,
   ): AsyncGenerator<T, void, unknown> {
+    // Keep your Prism “required query” workaround if needed; undefined keys will be omitted.
     const responsePromise = this._client.get(`/v1/ticket/sse/${params.conversationId}`, {
       query: {
         sseMessageTypes: undefined,
@@ -158,52 +168,31 @@ export class Chat extends APIResource {
       headers: {
         ...(options?.headers ?? {}),
         Accept: 'text/event-stream',
-        'Cache-Control': 'no-cache, no-transform',
+        'Cache-Control': 'no-cache, no-transform', // help avoid proxy buffering
       },
     });
 
+    // Get the raw Response (no JSON parsing)
     const raw = await (responsePromise as Core.APIPromise<void>).asResponse();
     const body: any = raw.body;
     if (!raw.ok || !body) throw new Error(`SSE HTTP ${raw.status}`);
 
     const decoder = new TextDecoder();
-    let buffer = '';
-
-    // Parser: yields any complete SSE event blocks in `buffer`
-    const drain = function* (): Generator<T> {
-      let idx: number;
-      while ((idx = buffer.indexOf('\n\n')) !== -1) {
-        const block = buffer.slice(0, idx);
-        buffer = buffer.slice(idx + 2);
-
-        const dataLines = block
-          .split('\n')
-          .filter((l) => !l.startsWith(':') && l.startsWith('data:'))
-          .map((l) => l.slice(5).trimStart());
-
-        if (!dataLines.length) continue;
-
-        const rawData = dataLines.join('\n');
-        try {
-          yield JSON.parse(rawData) as T;
-        } catch {
-          yield rawData as unknown as T;
-        }
-      }
-    };
 
     try {
       if (typeof body.getReader === 'function') {
-        // ✅ WHATWG ReadableStream (undici / global fetch in Node 18+)
+        // ✅ WHATWG ReadableStream (undici / Node 18+)
         const reader = body.getReader();
         try {
           while (true) {
             const { value, done } = await reader.read();
             if (done) break;
-            const chunk = decoder.decode(value, { stream: true });
-            buffer += chunk.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-            for (const msg of drain()) yield msg;
+            const text = decoder.decode(value, { stream: true });
+            if (text) yield text as unknown as T;
           }
+          // flush any remaining decoder state
+          const tail = decoder.decode();
+          if (tail) yield tail as unknown as T;
         } finally {
           try {
             reader.releaseLock();
@@ -213,14 +202,14 @@ export class Chat extends APIResource {
           } catch {}
         }
       } else if (typeof body[Symbol.asyncIterator] === 'function') {
-        // ✅ Node Readable stream (node-fetch@2, http.IncomingMessage)
         try {
           for await (const chunk of body as AsyncIterable<Uint8Array | Buffer | string>) {
             const text =
               typeof chunk === 'string' ? chunk : decoder.decode(chunk as Uint8Array, { stream: true });
-            buffer += text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-            for (const msg of drain()) yield msg;
+            if (text) yield text as unknown as T;
           }
+          const tail = decoder.decode();
+          if (tail) yield tail as unknown as T;
         } finally {
           try {
             body.destroy?.();
@@ -229,9 +218,6 @@ export class Chat extends APIResource {
       } else {
         throw new Error('Unsupported response body type for SSE');
       }
-
-      // Flush trailing partial block (if the server ended without a final blank line)
-      if (buffer.trim()) for (const msg of drain()) yield msg;
     } finally {
       // nothing else to clean
     }
