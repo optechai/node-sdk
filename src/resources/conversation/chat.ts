@@ -147,83 +147,85 @@ export class Chat extends APIResource {
    * unsubscribe();
    * ```
    */
-  async stream(params: ChatStreamParams, options?: Core.RequestOptions): Promise<() => void> {
-    const response = await this._client.get(`/v1/ticket/sse/${params.conversationId}`, {
-      ...options,
-      headers: {
-        Accept: 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        ...options?.headers,
-      },
-    });
+  stream(params: ChatStreamParams, options?: Core.RequestOptions): Core.APIPromise<() => void> {
+    return this._client
+      .get(`/v1/ticket/sse/${params.conversationId}`, {
+        ...options,
+        headers: {
+          Accept: 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          ...options?.headers,
+        },
+      })
+      .then(async (response) => {
+        const rawResponse = await (response as Core.APIPromise<void>).asResponse();
+        const reader = (rawResponse.body as unknown as ReadableStream<Uint8Array>)?.getReader();
 
-    const rawResponse = await (response as Core.APIPromise<void>).asResponse();
-    const reader = (rawResponse.body as unknown as ReadableStream<Uint8Array>)?.getReader();
+        if (!reader) {
+          throw new Error('Failed to get stream reader');
+        }
 
-    if (!reader) {
-      throw new Error('Failed to get stream reader');
-    }
+        const decoder = new TextDecoder();
+        let isActive = true;
+        let buffer = '';
 
-    const decoder = new TextDecoder();
-    let isActive = true;
-    let buffer = '';
+        // Start reading the stream
+        const pump = async () => {
+          try {
+            while (isActive) {
+              const { done, value } = await reader.read();
 
-    // Start reading the stream
-    const pump = async () => {
-      try {
-        while (isActive) {
-          const { done, value } = await reader.read();
-          
-          if (done) {
-            break;
-          }
+              if (done) {
+                break;
+              }
 
-          // Decode the chunk and add to buffer
-          buffer += decoder.decode(value, { stream: true });
-          
-          // Process complete lines
-          const lines = buffer.split('\n');
-          // Keep the last (potentially incomplete) line in the buffer
-          buffer = lines.pop() || '';
+              // Decode the chunk and add to buffer
+              buffer += decoder.decode(value, { stream: true });
 
-          for (const line of lines) {
-            if (line.startsWith('data: ') && line.length > 6) {
-              try {
-                const jsonData = line.slice(6).trim();
-                if (jsonData) {
-                  const data = JSON.parse(jsonData);
-                  params.onData?.(data);
+              // Process complete lines
+              const lines = buffer.split('\n');
+              // Keep the last (potentially incomplete) line in the buffer
+              buffer = lines.pop() || '';
+
+              for (const line of lines) {
+                if (line.startsWith('data: ') && line.length > 6) {
+                  try {
+                    const jsonData = line.slice(6).trim();
+                    if (jsonData) {
+                      const data = JSON.parse(jsonData);
+                      params.onData?.(data);
+                    }
+                  } catch (error) {
+                    params.onError?.(new Error(`Failed to parse SSE data: ${error}`));
+                  }
                 }
-              } catch (error) {
-                params.onError?.(new Error(`Failed to parse SSE data: ${error}`));
               }
             }
+          } catch (error) {
+            // Handle abort errors gracefully (user navigated away, etc.)
+            if (error instanceof Error && error.name === 'AbortError') {
+              // Silently ignore abort errors
+              return;
+            }
+
+            if (isActive) {
+              params.onError?.(error as Error);
+            }
+          } finally {
+            reader.releaseLock();
+            params.onClose?.();
           }
-        }
-      } catch (error) {
-        // Handle abort errors gracefully (user navigated away, etc.)
-        if (error instanceof Error && error.name === 'AbortError') {
-          // Silently ignore abort errors
-          return;
-        }
-        
-        if (isActive) {
-          params.onError?.(error as Error);
-        }
-      } finally {
-        reader.releaseLock();
-        params.onClose?.();
-      }
-    };
+        };
 
-    // Start pumping data
-    pump();
+        // Start pumping data
+        pump();
 
-    // Return unsubscribe function
-    return () => {
-      isActive = false;
-      reader.cancel();
-    };
+        // Return unsubscribe function
+        return () => {
+          isActive = false;
+          reader.cancel();
+        };
+      }) as Core.APIPromise<() => void>;
   }
 }
 
@@ -454,14 +456,6 @@ export interface ChatStartParams {
   subject?: string;
 }
 
-export interface SSEMessage {
-  id?: string;
-  event?: string;
-  data: string;
-  retry?: number;
-  raw: string[];
-}
-
 export interface ChatStreamParams {
   /**
    * The ID of the conversation you need to stream.
@@ -493,6 +487,5 @@ export declare namespace Chat {
     type ChatGetParams as ChatGetParams,
     type ChatStartParams as ChatStartParams,
     type ChatStreamParams as ChatStreamParams,
-    type SSEMessage as SSEMessage,
   };
 }
