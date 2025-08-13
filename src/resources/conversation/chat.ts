@@ -146,59 +146,79 @@ export class Chat extends APIResource {
    * }
    * ```
    */
-  async *stream(params: ChatStreamParams, options?: Core.RequestOptions): AsyncGenerator<any, void, unknown> {
-    const response = await this._client.get(`/v1/ticket/sse/${params.conversationId}`, {
+  async *stream<T = any>(
+    params: ChatStreamParams,
+    options?: Core.RequestOptions,
+  ): AsyncGenerator<T, void, unknown> {
+    const res = await this._client.get(`/v1/ticket/sse/${params.conversationId}`, {
       ...options,
       headers: {
-        Accept: 'text/event-stream',
+        ...(options?.headers ?? {}), // caller headers first
+        Accept: 'text/event-stream', // enforce SSE
         'Cache-Control': 'no-cache',
-        ...options?.headers,
       },
     });
 
-    const rawResponse = await (response as Core.APIPromise<void>).asResponse();
-    const reader = (rawResponse.body as unknown as ReadableStream<Uint8Array>)?.getReader();
+    const raw = await (res as Core.APIPromise<void>).asResponse();
+    const body = raw.body as unknown as ReadableStream<Uint8Array> | null;
+    if (!raw.ok || !body) throw new Error(`SSE HTTP ${raw.status}`);
 
-    if (!reader) {
-      throw new Error('Failed to get stream reader');
-    }
-
+    const reader = body.getReader();
     const decoder = new TextDecoder();
     let buffer = '';
 
     try {
       while (true) {
-        const { done, value } = await reader.read();
+        const { value, done } = await reader.read();
+        if (done) break;
 
-        if (done) {
-          break;
+        const chunk = decoder.decode(value, { stream: true });
+        buffer += chunk.replace(/\r/g, '\n'); // normalize all CRs
+
+        // Process complete SSE event blocks (blank-line delimited)
+        let idx: number;
+        while ((idx = buffer.indexOf('\n\n')) !== -1) {
+          const block = buffer.slice(0, idx);
+          buffer = buffer.slice(idx + 2);
+
+          const dataLines = block
+            .split('\n')
+            .filter((l) => !l.startsWith(':') && l.startsWith('data:'))
+            .map((l) => l.slice(5).trimStart());
+
+          if (!dataLines.length) continue;
+
+          const rawData = dataLines.join('\n');
+          let payload: any = rawData;
+          try {
+            payload = JSON.parse(rawData);
+          } catch {}
+          yield payload as T;
         }
+      }
 
-        // Decode the chunk and add to buffer
-        buffer += decoder.decode(value, { stream: true });
-
-        // Process complete lines
-        const lines = buffer.split('\n');
-        // Keep the last (potentially incomplete) line in the buffer
-        buffer = lines.pop() || '';
-
-        for (const line of lines) {
-          if (line.startsWith('data: ') && line.length > 6) {
-            try {
-              const jsonData = line.slice(6).trim();
-              if (jsonData) {
-                const data = JSON.parse(jsonData);
-                yield data; // Return raw parsed JSON
-              }
-            } catch (error) {
-              // Skip malformed data instead of throwing
-              console.warn('Failed to parse SSE data:', error);
-            }
-          }
+      // Flush trailing partial block (just in case)
+      if (buffer.trim()) {
+        const dataLines = buffer
+          .split('\n')
+          .filter((l) => !l.startsWith(':') && l.startsWith('data:'))
+          .map((l) => l.slice(5).trimStart());
+        if (dataLines.length) {
+          const rawData = dataLines.join('\n');
+          let payload: any = rawData;
+          try {
+            payload = JSON.parse(rawData);
+          } catch {}
+          yield payload as T;
         }
       }
     } finally {
-      reader.releaseLock();
+      try {
+        reader.releaseLock();
+      } catch {}
+      try {
+        await (raw.body as any)?.cancel?.();
+      } catch {}
     }
   }
 }
