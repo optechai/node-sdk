@@ -22,8 +22,7 @@ const customer = await client.customer.create({
  *
  * A Lorikeet workflow can now use the `test` field to do something.
  */
-const customerProfile = await client.customer.profile.sync(
-  '308abc28-5fc8-4337-9ee1-ff3b6780380b', {
+const customerProfile = await client.customer.profile.sync(customer.id, {
   data: {
     test: 'test',
   },
@@ -44,22 +43,22 @@ console.log(token);
 /**
  * Example: Stream chat events for the created conversation
  */
-// const ac = new AbortController();
+const ac = new AbortController();
 
-// const stream = client.conversation.chat.stream(
-//   { conversationId: '50a5ba4e-791a-4a72-8a5a-0883f40618fe' },
-//   { signal: ac.signal }
-// );
+const stream = client.conversation.chat.stream(
+  { conversationId: 'convo-id-123' },
+  { signal: ac.signal }
+);
 
-// console.log('Streaming chat events...');
-// try {
-//   for await (const evt of stream) {
-//     console.log('Stream event:', evt);
-//     // Optionally break after first event for demo purposes
-//     // break;
-//   }
-// } catch (err) {
-//   console.error('Stream error:', err);
-// } finally {
-//   ac.abort();
-// }
+console.log('Streaming chat events...');
+try {
+  for await (const evt of stream) {
+    console.log('Stream event:', evt);
+    // Optionally break after first event for demo purposes
+    // break;
+  }
+} catch (err) {
+  console.error('Stream error:', err);
+} finally {
+  ac.abort();
+}
