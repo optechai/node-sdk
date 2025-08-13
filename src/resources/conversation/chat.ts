@@ -128,23 +128,21 @@ export class Chat extends APIResource {
   /**
    * __chat.stream__
    *
-   * Stream chat events for a conversation using Server-Sent Events (SSE).
-   * This provides real-time updates as chat messages are generated, eliminating the need for polling.
+   * Async generator that streams SSE chat events.
+   * Yields each event's `data:` payload (parsed JSON when possible, else string).
+   * Do not `await` the call—iterate with `for await`.
+   *
+   * @template T - Payload type (default: `any`)
+   * @param params.conversationId - Conversation/ticket ID to subscribe to
+   * @param options - Optional request options; sets `Accept: text/event-stream`
+   * @returns AsyncGenerator<T>
    *
    * @example
-   * ```ts
-   * const stream = await client.conversation.chat.stream({
-   *   conversationId: 'conversationId',
-   * });
-   *
-   * for await (const data of stream) {
-   *   console.log('Received:', data);
-   *
-   *   if (data.type === 'new-message') {
-   *     console.log('New message:', data.message);
+   * for await (const evt of client.conversation.chat.stream({ conversationId: 'abc123' })) {
+   *   if ((evt as any).type === 'new-message') {
+   *     console.log('New message:', (evt as any).message);
    *   }
    * }
-   * ```
    */
   async *stream<T = any>(
     params: ChatStreamParams,
@@ -173,7 +171,7 @@ export class Chat extends APIResource {
         if (done) break;
 
         const chunk = decoder.decode(value, { stream: true });
-        buffer += chunk.replace(/\r/g, '\n'); // normalize all CRs
+        buffer += chunk.replace(/\r\n/g, '\n').replace(/\r/g, '\n'); // normalize CR/LF properly
 
         // Process complete SSE event blocks (blank-line delimited)
         let idx: number;
