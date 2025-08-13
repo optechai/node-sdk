@@ -54,8 +54,6 @@ console.log('Streaming chat events...');
 try {
   for await (const evt of stream) {
     console.log('Stream event:', evt);
-    // Optionally break after first event for demo purposes
-    // break;
   }
 } catch (err) {
   console.error('Stream error:', err);
