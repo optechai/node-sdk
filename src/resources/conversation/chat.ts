@@ -96,7 +96,7 @@ export class Chat extends APIResource {
   }
 
   /**
-   * __chat.get__
+   * __chat.poll__
    *
    * Polls until it returns a BOT chat message for a conversation.
    */
@@ -123,6 +123,94 @@ export class Chat extends APIResource {
         },
       },
     ) as Core.APIPromise<ChatGetResponse>;
+  }
+
+  /**
+   * __chat.stream__
+   *
+   * Stream chat events for a conversation over Server-Sent Events (SSE).
+   * Returns an async generator that emits decoded text chunks (no parsing).
+   * Use with `for await`; don’t `await` the call itself.
+   *
+   * @template T - Payload type (default: `string`)
+   * @param params.conversationId - Conversation/ticket ID to subscribe to.
+   * @param options - Optional request options; sets `Accept: text/event-stream`.
+   * @returns AsyncGenerator<T>
+   */
+
+  /**
+   * @example
+   * ```ts
+   * for await (const evt of client.conversation.chat.stream({ conversationId: 'abc123' })) {
+   *   console.log(evt);
+   * }
+   * ```
+   */
+  async *stream<T = string>(
+    params: ChatStreamParams,
+    options?: Core.RequestOptions,
+  ): AsyncGenerator<T, void, unknown> {
+    const responsePromise = this._client.get(`/v1/ticket/sse/${params.conversationId}`, {
+      query: {
+        sseMessageTypes: undefined,
+        ticketEventTypes: undefined,
+        ticketMessageTypes: undefined,
+      },
+      ...options,
+      headers: {
+        ...(options?.headers ?? {}),
+        Accept: 'text/event-stream',
+        'Cache-Control': 'no-cache, no-transform',
+      },
+    });
+
+    const raw = await (responsePromise as Core.APIPromise<void>).asResponse();
+    const body: any = raw.body;
+    if (!raw.ok || !body) throw new Error(`SSE HTTP ${raw.status}`);
+
+    const decoder = new TextDecoder();
+
+    try {
+      if (typeof body.getReader === 'function') {
+        const reader = body.getReader();
+        try {
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            const text = decoder.decode(value, { stream: true });
+            if (text) yield text as unknown as T;
+          }
+          // flush any remaining decoder state
+          const tail = decoder.decode();
+          if (tail) yield tail as unknown as T;
+        } finally {
+          try {
+            reader.releaseLock();
+          } catch {}
+          try {
+            await body.cancel?.();
+          } catch {}
+        }
+      } else if (typeof body[Symbol.asyncIterator] === 'function') {
+        try {
+          for await (const chunk of body as AsyncIterable<Uint8Array | Buffer | string>) {
+            const text =
+              typeof chunk === 'string' ? chunk : decoder.decode(chunk as Uint8Array, { stream: true });
+            if (text) yield text as unknown as T;
+          }
+          const tail = decoder.decode();
+          if (tail) yield tail as unknown as T;
+        } finally {
+          try {
+            body.destroy?.();
+          } catch {}
+        }
+      } else {
+        throw new Error('Unsupported response body type for SSE');
+      }
+    } finally {
+      // nothing else to clean
+    }
   }
 }
 
@@ -353,6 +441,13 @@ export interface ChatStartParams {
   subject?: string;
 }
 
+export interface ChatStreamParams {
+  /**
+   * The ID of the conversation you need to stream.
+   */
+  conversationId: string;
+}
+
 export declare namespace Chat {
   export {
     type ChatGenerateResponse as ChatGenerateResponse,
@@ -361,5 +456,6 @@ export declare namespace Chat {
     type ChatGenerateParams as ChatGenerateParams,
     type ChatGetParams as ChatGetParams,
     type ChatStartParams as ChatStartParams,
+    type ChatStreamParams as ChatStreamParams,
   };
 }

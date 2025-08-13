@@ -79,4 +79,22 @@ describe('resource chat', () => {
       subject: 'Question about order tracking number',
     });
   });
+
+  test('stream: only required params', async () => {
+    const ac = new AbortController();
+    const stream = client.conversation.chat.stream(
+      { conversationId: 'conversationId' },
+      { signal: ac.signal },
+    );
+
+    expect(typeof (stream as any)[Symbol.asyncIterator]).toBe('function');
+
+    const iterator = (stream as any)[Symbol.asyncIterator]();
+    try {
+      // no consumption — just ensure we can acquire and close the iterator
+    } finally {
+      ac.abort();
+      await iterator.return?.();
+    }
+  });
 });

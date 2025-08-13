@@ -19,7 +19,7 @@ const customer = await client.customer.create({
 /**
  * Sync customer profile example after creating a customer
  * Ensure you use the customer id from the customer object.
- * 
+ *
  * A Lorikeet workflow can now use the `test` field to do something.
  */
 const customerProfile = await client.customer.profile.sync(customer.id, {
@@ -28,7 +28,7 @@ const customerProfile = await client.customer.profile.sync(customer.id, {
   },
 });
 
-console.log(customerProfile)
+console.log(customerProfile);
 
 /**
  * customer token creation might follow this.
@@ -36,7 +36,27 @@ console.log(customerProfile)
 const token = await client.customer.token({
   displayName: 'John Doe',
   email: 'john@test.com',
-  remoteId: customer.remoteId,
 });
 
-console.log(token)
+console.log(token);
+
+/**
+ * Example: Stream chat events for the created conversation
+ */
+const ac = new AbortController();
+
+const stream = client.conversation.chat.stream(
+  { conversationId: 'convo-id-123' },
+  { signal: ac.signal }
+);
+
+console.log('Streaming chat events...');
+try {
+  for await (const evt of stream) {
+    console.log('Stream event:', evt);
+  }
+} catch (err) {
+  console.error('Stream error:', err);
+} finally {
+  ac.abort();
+}
