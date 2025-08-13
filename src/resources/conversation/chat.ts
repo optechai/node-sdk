@@ -96,7 +96,7 @@ export class Chat extends APIResource {
   }
 
   /**
-   * __chat.get__
+   * __chat.poll__
    *
    * Polls until it returns a BOT chat message for a conversation.
    */
