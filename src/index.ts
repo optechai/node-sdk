@@ -238,6 +238,7 @@ Lorikeet.File = File;
 Lorikeet.Suggestion = Suggestion;
 Lorikeet.OAuth = OAuth;
 Lorikeet.Webhooks = Webhooks;
+
 export declare namespace Lorikeet {
   export type RequestOptions = Core.RequestOptions;
 
