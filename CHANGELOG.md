@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.3 (2025-08-16)
+
+Full Changelog: [v1.0.2...v1.0.3](https://github.com/optechai/node-sdk/compare/v1.0.2...v1.0.3)
+
+### Chores
+
+* **deps:** update dependency node-fetch to v2.6.13 ([440a666](https://github.com/optechai/node-sdk/commit/440a66661cff4c2f607d1f612222de80982ac83e))
+* **internal:** formatting change ([08fbd8b](https://github.com/optechai/node-sdk/commit/08fbd8bbbdd2751f54fc8f0237f59fee501780a4))
+
 ## 1.0.2 (2025-08-12)
 
 Full Changelog: [v1.0.1...v1.0.2](https://github.com/optechai/node-sdk/compare/v1.0.1...v1.0.2)
