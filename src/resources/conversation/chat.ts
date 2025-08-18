@@ -4,6 +4,7 @@ import { APIResource } from '../../resource';
 import * as Core from '../../core';
 import { pollUntil } from '@lorikeetai/node-sdk/lib/poll-until';
 import * as ConversationAPI from './conversation';
+import { EventSource } from 'eventsource';
 
 export class Chat extends APIResource {
   /**
@@ -96,7 +97,7 @@ export class Chat extends APIResource {
   }
 
   /**
-   * __chat.get__
+   * __chat.poll__
    *
    * Polls until it returns a BOT chat message for a conversation.
    */
@@ -124,7 +125,70 @@ export class Chat extends APIResource {
       },
     ) as Core.APIPromise<ChatGetResponse>;
   }
+
+  /**
+   * __chat.stream__
+   *
+   * Stream chat events for a conversation over Server-Sent Events (SSE).
+   * Responses from the bot will arrive as events. Consuming clients must aggregate multiple chunks
+   * into a single message based on the messageId field.
+   *
+   * @param params.conversationId - Conversation/ticket ID to subscribe to.
+   * @returns AsyncGenerator<ChatStreamEvent> a generator that emits response events as they arrive.
+   */
+
+  /**
+   * @example
+   * ```ts
+   * for await (const evt of client.conversation.chat.stream({ conversationId: 'abc123' })) {
+   *   console.log(evt);
+   * }
+   * ```
+   */
+  async *stream(
+    params: ChatStreamParams,
+    options?: Core.RequestOptions,
+  ): AsyncGenerator<ChatStreamEvent, void, unknown> {
+    const queries = new URLSearchParams();
+    queries.set('sseMessageTypes', 'new-message,message-chunk,message-complete');
+    queries.set('ticketMessageTypes', 'BOT_RESPONSE');
+    const url = `/v1/ticket/sse/${params.conversationId}?${queries.toString()}`;
+    const eventSource = new EventSource(url);
+  }
 }
+
+/**
+ * Signal that a new response message has been created and new chunks
+ * for this response for the messageId will follow.
+ */
+export interface ChatStreamNewMessageEvent {
+  type: 'new-message';
+  messageId: string;
+  // The initial content of the message, likely empty until the first chunk arrives
+  content: string;
+}
+
+/**
+ * A chunk of text response for the message with the given messageId.
+ */
+export interface ChatStreamMessageChunkEvent {
+  type: 'message-chunk';
+  contentDelta: string;
+  messageId: string;
+}
+
+/**
+ * All chunks for a message have been received and no more chunks will follow for this message.
+ */
+export interface ChatStreamMessageCompleteEvent {
+  type: 'message-complete';
+  messageId: string;
+}
+
+export type ChatStreamEvent =
+  | ChatStreamNewMessageEvent
+  | ChatStreamMessageChunkEvent
+  | ChatStreamMessageCompleteEvent;
 
 export interface ChatGenerateResponse {
   /**
@@ -353,6 +417,13 @@ export interface ChatStartParams {
   subject?: string;
 }
 
+export interface ChatStreamParams {
+  /**
+   * The ID of the conversation you need to stream.
+   */
+  conversationId: string;
+}
+
 export declare namespace Chat {
   export {
     type ChatGenerateResponse as ChatGenerateResponse,
@@ -361,5 +432,6 @@ export declare namespace Chat {
     type ChatGenerateParams as ChatGenerateParams,
     type ChatGetParams as ChatGetParams,
     type ChatStartParams as ChatStartParams,
+    type ChatStreamParams as ChatStreamParams,
   };
 }
