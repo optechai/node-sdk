@@ -5,6 +5,7 @@ import * as Core from '../../core';
 import { pollUntil } from '@lorikeetai/node-sdk/lib/poll-until';
 import * as ConversationAPI from './conversation';
 import { EventSource } from 'eventsource';
+import { DeferredAsyncIterable } from '@lorikeetai/node-sdk/lib/promise';
 
 export class Chat extends APIResource {
   /**
@@ -127,9 +128,9 @@ export class Chat extends APIResource {
   }
 
   /**
-   * __chat.stream__
+   * __chat.streamUpdates__
    *
-   * Stream chat events for a conversation over Server-Sent Events (SSE).
+   * Create a persistent stream of updates for a conversation.
    * Responses from the bot will arrive as events. Consuming clients must aggregate multiple chunks
    * into a single message based on the messageId field.
    *
@@ -140,20 +141,49 @@ export class Chat extends APIResource {
   /**
    * @example
    * ```ts
-   * for await (const evt of client.conversation.chat.stream({ conversationId: 'abc123' })) {
+   * for await (const evt of client.conversation.chat.streamUpdates({ conversationId: 'abc123' })) {
    *   console.log(evt);
    * }
    * ```
    */
-  async *stream(
-    params: ChatStreamParams,
-    options?: Core.RequestOptions,
-  ): AsyncGenerator<ChatStreamEvent, void, unknown> {
+  streamUpdates(params: ChatStreamParams): AsyncIterable<ChatStreamEvent> {
     const queries = new URLSearchParams();
     queries.set('sseMessageTypes', 'new-message,message-chunk,message-complete');
     queries.set('ticketMessageTypes', 'BOT_RESPONSE');
     const url = `/v1/ticket/sse/${params.conversationId}?${queries.toString()}`;
     const eventSource = new EventSource(url);
+    const output = new DeferredAsyncIterable<ChatStreamEvent>();
+
+    eventSource.addEventListener('message', (evt) => {
+      const data = JSON.parse(evt.data);
+      switch (data.type) {
+        case 'new-message':
+          output.push({
+            type: 'new-message',
+            createdAt: data.createdAt,
+            messageId: data.messageId,
+            content: data.content,
+          });
+          break;
+        case 'message-chunk':
+          output.push({
+            type: 'message-chunk',
+            contentDelta: data.contentDelta,
+            messageId: data.messageId,
+          });
+          break;
+        case 'message-complete':
+          output.push({
+            type: 'message-complete',
+            messageId: data.messageId,
+          });
+          break;
+        default:
+          break;
+      }
+    });
+
+    return output;
   }
 }
 
@@ -163,6 +193,8 @@ export class Chat extends APIResource {
  */
 export interface ChatStreamNewMessageEvent {
   type: 'new-message';
+  // ISO 8601 timestamp of when the message was created
+  createdAt: string;
   messageId: string;
   // The initial content of the message, likely empty until the first chunk arrives
   content: string;
