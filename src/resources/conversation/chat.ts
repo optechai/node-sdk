@@ -132,7 +132,9 @@ export class Chat extends APIResource {
    *
    * Create a persistent stream of updates for a conversation.
    * Responses from the bot will arrive as events. Consuming clients must aggregate multiple chunks
-   * into a single message based on the messageId field.
+   * into a single message based on the messageId field. Note that new messages may arrive without
+   * new user messages, this update stream is open indefinitely and does not automatically close - avoid
+   * blocking other operations while listening to events from this generator.
    *
    * @param params.conversationId - Conversation/ticket ID to subscribe to.
    * @returns AsyncGenerator<ChatStreamEvent> a generator that emits response events as they arrive.
