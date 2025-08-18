@@ -154,6 +154,10 @@ export class Chat extends APIResource {
     const eventSource = new EventSource(url);
     const output = new DeferredAsyncIterable<ChatStreamEvent>();
 
+    eventSource.addEventListener('error', (evt) => {
+      output.reject(evt);
+    });
+
     eventSource.addEventListener('message', (evt) => {
       const data = JSON.parse(evt.data);
       switch (data.type) {
