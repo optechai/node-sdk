@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.0 (2025-08-18)
+
+Full Changelog: [v1.0.2...v1.1.0](https://github.com/optechai/node-sdk/compare/v1.0.2...v1.1.0)
+
+### Features
+
+* add chat.streamUpdates ([#195](https://github.com/optechai/node-sdk/issues/195)) ([01f0652](https://github.com/optechai/node-sdk/commit/01f065250ade174d27895de0d09588f76a75fbcf))
+
+
+### Chores
+
+* **deps:** update dependency node-fetch to v2.6.13 ([f49c6fe](https://github.com/optechai/node-sdk/commit/f49c6feffcf84443c4662e94fe3b1345705c2f85))
+* **internal:** formatting change ([31f11ec](https://github.com/optechai/node-sdk/commit/31f11ecbc104d2c7f2e3b2c1bc3353b7bc574426))
+
 ## 1.0.2 (2025-08-12)
 
 Full Changelog: [v1.0.1...v1.0.2](https://github.com/optechai/node-sdk/compare/v1.0.1...v1.0.2)
