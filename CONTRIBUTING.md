@@ -1,8 +1,5 @@
 ## Setting up the environment
 
-This repository uses [`yarn@v1`](https://classic.yarnpkg.com/lang/en/docs/install).
-Other package managers may work but are not officially supported for development.
-
 To set up the repository, run:
 
 ```sh
