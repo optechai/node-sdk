@@ -22,10 +22,13 @@ import {
   EmailStartParams,
   EmailStartResponse,
 } from './email';
+import * as VoiceAPI from './voice';
+import { Voice, VoiceOutboundParams } from './voice';
 
 export class Conversation extends APIResource {
   email: EmailAPI.Email = new EmailAPI.Email(this._client);
   chat: ChatAPI.Chat = new ChatAPI.Chat(this._client);
+  voice: VoiceAPI.Voice = new VoiceAPI.Voice(this._client);
 
   /**
    * @example
@@ -194,6 +197,7 @@ export interface ConversationRetrieveTranscriptParams {
 
 Conversation.Email = Email;
 Conversation.Chat = Chat;
+Conversation.Voice = Voice;
 
 export declare namespace Conversation {
   export {
@@ -225,4 +229,6 @@ export declare namespace Conversation {
     type ChatGetParams as ChatGetParams,
     type ChatStartParams as ChatStartParams,
   };
+
+  export { Voice as Voice, type VoiceOutboundParams as VoiceOutboundParams };
 }
