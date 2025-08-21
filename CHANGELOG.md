@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.0 (2025-08-21)
+
+Full Changelog: [v1.1.0...v1.2.0](https://github.com/optechai/node-sdk/compare/v1.1.0...v1.2.0)
+
+### Features
+
+* **api:** add voice outbound endpoint ([0c8e9f3](https://github.com/optechai/node-sdk/commit/0c8e9f3c686dcece0f08b8725b6a503b626e7a22))
+
 ## 1.1.0 (2025-08-18)
 
 Full Changelog: [v1.0.2...v1.1.0](https://github.com/optechai/node-sdk/compare/v1.0.2...v1.1.0)
