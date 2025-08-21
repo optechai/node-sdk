@@ -47,6 +47,12 @@ Methods:
 - <code title="get /v1/conversation/chat/message">client.conversation.chat.<a href="./src/resources/conversation/chat.ts">get</a>({ ...params }) -> ChatGetResponse</code>
 - <code title="post /v1/conversation/chat/create">client.conversation.chat.<a href="./src/resources/conversation/chat.ts">start</a>({ ...params }) -> ChatStartResponse</code>
 
+## Voice
+
+Methods:
+
+- <code title="post /v1/conversation/voice/outbound">client.conversation.voice.<a href="./src/resources/conversation/voice.ts">outbound</a>({ ...params }) -> void</code>
+
 # Customer
 
 Types:
