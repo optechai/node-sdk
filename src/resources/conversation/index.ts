@@ -28,3 +28,4 @@ export {
   type EmailGetParams,
   type EmailStartParams,
 } from './email';
+export { Voice, type VoiceOutboundParams } from './voice';
