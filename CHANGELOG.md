@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.1 (2025-08-23)
+
+Full Changelog: [v1.2.0...v1.2.1](https://github.com/optechai/node-sdk/compare/v1.2.0...v1.2.1)
+
+### Chores
+
+* update CI script ([3e47567](https://github.com/optechai/node-sdk/commit/3e47567d38a31ce1e98a43f6d63df0c6a8c301d3))
+
 ## 1.2.0 (2025-08-21)
 
 Full Changelog: [v1.1.0...v1.2.0](https://github.com/optechai/node-sdk/compare/v1.1.0...v1.2.0)
