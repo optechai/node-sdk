@@ -369,13 +369,15 @@ export interface ChatGenerateParams {
   conversationId: string;
 
   /**
-   * The message to be sent to the user. This endpoint supports markdown.
+   * The message to be sent to the user (customer or agent). This endpoint supports
+   * markdown.
    */
   message: string;
 
   /**
    * Any additional customer information, that has changed in the course of the
-   * conversation.
+   * conversation. Required if the message is sent by the customer to the agent. Must
+   * be omitted if the message is sent by the agent to the customer.
    */
   customer?: ChatGenerateParams.Customer;
 }
@@ -383,7 +385,8 @@ export interface ChatGenerateParams {
 export namespace ChatGenerateParams {
   /**
    * Any additional customer information, that has changed in the course of the
-   * conversation.
+   * conversation. Required if the message is sent by the customer to the agent. Must
+   * be omitted if the message is sent by the agent to the customer.
    */
   export interface Customer {
     /**
