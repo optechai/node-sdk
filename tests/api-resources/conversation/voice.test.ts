@@ -25,6 +25,7 @@ describe('resource voice', () => {
     const response = await client.conversation.voice.outbound({
       phoneNumber: '+61400000000',
       brandId: 'brandId',
+      customerId: 'customerId',
       inputData: {},
       workflowId: 'workflowId',
     });
