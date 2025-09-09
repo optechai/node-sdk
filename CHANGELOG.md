@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.3.0 (2025-09-09)
+
+Full Changelog: [v1.2.0...v1.3.0](https://github.com/optechai/node-sdk/compare/v1.2.0...v1.3.0)
+
+### Features
+
+* **api:** api update ([5bc91e2](https://github.com/optechai/node-sdk/commit/5bc91e24f56e107b836b36728053aef401cbf95e))
+* **api:** api update ([a404530](https://github.com/optechai/node-sdk/commit/a4045304e2b2db4d5349712d73923f60fd59e0bb))
+* **api:** api update ([4dc27e2](https://github.com/optechai/node-sdk/commit/4dc27e248829cb96ec0fcb85afafb22e694e4855))
+* **api:** api update ([f55e849](https://github.com/optechai/node-sdk/commit/f55e8494e37549537b5e7f5b518c7ff18a384548))
+* **api:** manual updates ([e3fe8e8](https://github.com/optechai/node-sdk/commit/e3fe8e899e20164c28ff1502a2e4deb0dcc222d6))
+* **api:** manual updates ([9c716ef](https://github.com/optechai/node-sdk/commit/9c716ef1faa17cddce7d47870af21fcb7aee6bb2))
+
+
+### Bug Fixes
+
+* coerce nullable values to undefined ([160837c](https://github.com/optechai/node-sdk/commit/160837c580daa194a6bb7e84c27a2316fe6d06cb))
+
+
+### Chores
+
+* ci build action ([f1307b7](https://github.com/optechai/node-sdk/commit/f1307b7ae2da44702b6393b9fa78ddc1da128752))
+* update CI script ([3e47567](https://github.com/optechai/node-sdk/commit/3e47567d38a31ce1e98a43f6d63df0c6a8c301d3))
+
 ## 1.2.0 (2025-08-21)
 
 Full Changelog: [v1.1.0...v1.2.0](https://github.com/optechai/node-sdk/compare/v1.1.0...v1.2.0)
