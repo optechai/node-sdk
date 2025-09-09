@@ -11,11 +11,7 @@ const client = new Lorikeet({
 
 describe('resource voice', () => {
   test('outbound: only required params', async () => {
-    const responsePromise = client.conversation.voice.outbound({
-      brandId: 'brandId',
-      phoneNumber: '+61400000000',
-      workflowId: 'workflowId',
-    });
+    const responsePromise = client.conversation.voice.outbound({ phoneNumber: '+61400000000' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -27,10 +23,11 @@ describe('resource voice', () => {
 
   test('outbound: required and optional params', async () => {
     const response = await client.conversation.voice.outbound({
-      brandId: 'brandId',
       phoneNumber: '+61400000000',
-      workflowId: 'workflowId',
+      brandId: 'brandId',
+      customerId: 'customerId',
       inputData: {},
+      workflowId: 'workflowId',
     });
   });
 });

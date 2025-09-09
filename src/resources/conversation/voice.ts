@@ -8,9 +8,7 @@ export class Voice extends APIResource {
    * @example
    * ```ts
    * await client.conversation.voice.outbound({
-   *   brandId: 'brandId',
    *   phoneNumber: '+61400000000',
-   *   workflowId: 'workflowId',
    * });
    * ```
    */
@@ -25,24 +23,32 @@ export class Voice extends APIResource {
 
 export interface VoiceOutboundParams {
   /**
-   * The ID of the brand to make the call from
-   */
-  brandId: string;
-
-  /**
-   * The phone number to call
+   * The phone number to call in E.164 format. If a customer ID is not provided, the
+   * customer will be looked up by phone number. If no customer is found, a new
+   * customer will be created.
    */
   phoneNumber: string;
 
   /**
-   * The ID of the workflow to use for the call
+   * The ID of the brand to make the call from
    */
-  workflowId: string;
+  brandId?: string;
 
   /**
-   * The input data to pass to the workflow
+   * The ID of the customer to call. If not provided, the customer will be looked up
+   * by phone number. If no customer is found, a new customer will be created.
+   */
+  customerId?: string;
+
+  /**
+   * The input data to pass to the workflow. Only used if a workflow is specified.
    */
   inputData?: unknown;
+
+  /**
+   * The ID of the workflow to use for the call
+   */
+  workflowId?: string;
 }
 
 export declare namespace Voice {
