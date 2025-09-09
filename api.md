@@ -71,6 +71,16 @@ Methods:
 
 ## Remote
 
+Types:
+
+- <code><a href="./src/resources/customer/remote.ts">RemoteUpdateResponse</a></code>
+- <code><a href="./src/resources/customer/remote.ts">RemoteGetResponse</a></code>
+
+Methods:
+
+- <code title="patch /v1/customer/remote/{remoteId}">client.customer.remote.<a href="./src/resources/customer/remote.ts">update</a>(pathRemoteId, { ...params }) -> RemoteUpdateResponse</code>
+- <code title="get /v1/customer/remote/{remoteId}">client.customer.remote.<a href="./src/resources/customer/remote.ts">get</a>(remoteId) -> RemoteGetResponse</code>
+
 ## Profile
 
 Types:
