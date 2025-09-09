@@ -11,3 +11,4 @@ export {
   type CustomerTokenParams,
 } from './customer';
 export { Profile, type ProfileSyncResponse, type ProfileSyncParams } from './profile';
+export { Remote } from './remote';

@@ -4,8 +4,11 @@ import { APIResource } from '../../resource';
 import * as Core from '../../core';
 import * as ProfileAPI from './profile';
 import { Profile, ProfileSyncParams, ProfileSyncResponse } from './profile';
+import * as RemoteAPI from './remote';
+import { Remote } from './remote';
 
 export class Customer extends APIResource {
+  remote: RemoteAPI.Remote = new RemoteAPI.Remote(this._client);
   profile: ProfileAPI.Profile = new ProfileAPI.Profile(this._client);
 
   /**
@@ -365,6 +368,7 @@ export interface CustomerTokenParams {
   subscriberToken?: string;
 }
 
+Customer.Remote = Remote;
 Customer.Profile = Profile;
 
 export declare namespace Customer {
@@ -377,6 +381,8 @@ export declare namespace Customer {
     type CustomerUpdateParams as CustomerUpdateParams,
     type CustomerTokenParams as CustomerTokenParams,
   };
+
+  export { Remote as Remote };
 
   export {
     Profile as Profile,
