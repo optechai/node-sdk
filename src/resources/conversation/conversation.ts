@@ -34,7 +34,7 @@ export class Conversation extends APIResource {
    * @example
    * ```ts
    * const conversation = await client.conversation.create({
-   *   customerId: '1234567890',
+   *   accountId: '1234567890',
    *   phoneNumber: '0412745903',
    *   'x-lorikeet-voice-public-key':
    *     'x-lorikeet-voice-public-key',
@@ -178,7 +178,7 @@ export interface ConversationCreateParams {
   /**
    * Body param: The id of the customer in the ticketing system
    */
-  customerId: string;
+  accountId: string;
 
   /**
    * Body param: The phone number of the customer

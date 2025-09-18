@@ -12,7 +12,7 @@ const client = new Lorikeet({
 describe('resource conversation', () => {
   test('create: only required params', async () => {
     const responsePromise = client.conversation.create({
-      customerId: '1234567890',
+      accountId: '1234567890',
       phoneNumber: '0412745903',
       'x-lorikeet-voice-public-key': 'x-lorikeet-voice-public-key',
     });
@@ -27,7 +27,7 @@ describe('resource conversation', () => {
 
   test('create: required and optional params', async () => {
     const response = await client.conversation.create({
-      customerId: '1234567890',
+      accountId: '1234567890',
       phoneNumber: '0412745903',
       'x-lorikeet-voice-public-key': 'x-lorikeet-voice-public-key',
     });
