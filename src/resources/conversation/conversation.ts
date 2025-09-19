@@ -172,6 +172,22 @@ export interface ConversationRetrieveTranscriptResponse {
    * The transcript of the conversation
    */
   transcript: string;
+
+  /**
+   * The duration of the call in milliseconds
+   */
+  callDuration?: number;
+
+  /**
+   * The link to the call recording if this is a voice ticket and the recording has
+   * been processed. The returned URL is a signed URL that will expire in 1 hour
+   */
+  callRecordingLink?: string;
+
+  /**
+   * The summary of the conversation
+   */
+  summary?: string;
 }
 
 export interface ConversationCreateParams {
