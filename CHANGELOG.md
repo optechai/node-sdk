@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.5.0 (2025-09-20)
+
+Full Changelog: [v1.4.0...v1.5.0](https://github.com/optechai/node-sdk/compare/v1.4.0...v1.5.0)
+
+### Features
+
+* **api:** api update ([c8e6d7f](https://github.com/optechai/node-sdk/commit/c8e6d7f4f07ebfbc6d2da77e5d467b2ae53c9900))
+* **api:** api update ([6300101](https://github.com/optechai/node-sdk/commit/63001018f8064c354204b3422c36a2066e9ab016))
+
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([6b8c3d1](https://github.com/optechai/node-sdk/commit/6b8c3d161c8b5ff91273a013affb91b2c5de859d))
+
 ## 1.4.0 (2025-09-18)
 
 Full Changelog: [v1.3.0...v1.4.0](https://github.com/optechai/node-sdk/compare/v1.3.0...v1.4.0)

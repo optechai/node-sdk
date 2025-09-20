@@ -34,8 +34,8 @@ export class Conversation extends APIResource {
    * @example
    * ```ts
    * const conversation = await client.conversation.create({
-   *   accountId: '1234567890',
    *   phoneNumber: '0412745903',
+   *   state: { foo: 'string' },
    *   'x-lorikeet-voice-public-key':
    *     'x-lorikeet-voice-public-key',
    * });
@@ -172,23 +172,60 @@ export interface ConversationRetrieveTranscriptResponse {
    * The transcript of the conversation
    */
   transcript: string;
+
+  /**
+   * The duration of the call in milliseconds
+   */
+  callDuration?: number;
+
+  /**
+   * The link to the call recording if this is a voice ticket and the recording has
+   * been processed. The returned URL is a signed URL that will expire in 1 hour
+   */
+  callRecordingLink?: string;
+
+  /**
+   * The summary of the conversation
+   */
+  summary?: string;
 }
 
 export interface ConversationCreateParams {
-  /**
-   * Body param: The id of the customer in the ticketing system
-   */
-  accountId: string;
-
   /**
    * Body param: The phone number of the customer
    */
   phoneNumber: string;
 
   /**
+   * Body param: The custom attributes of the customer - should be provided as key
+   * value object
+   */
+  state: { [key: string]: string | boolean | number | unknown | Array<unknown> };
+
+  /**
    * Header param:
    */
   'x-lorikeet-voice-public-key': string;
+
+  /**
+   * Body param: The email of the customer
+   */
+  email?: string;
+
+  /**
+   * Body param: The first name of the customer
+   */
+  firstName?: string;
+
+  /**
+   * Body param: The last name of the customer
+   */
+  lastName?: string;
+
+  /**
+   * Body param: The remoteId of your customer
+   */
+  remoteId?: string;
 }
 
 export interface ConversationRetrieveTranscriptParams {
