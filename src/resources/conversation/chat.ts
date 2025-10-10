@@ -276,7 +276,7 @@ export interface ChatStartParams {
   publicKey: string;
 
   /**
-   * The timestamp of the when the conversation was created in our system.
+   * The subject of the conversation.
    */
   subject?: string;
 }
