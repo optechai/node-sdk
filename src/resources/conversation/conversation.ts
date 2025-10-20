@@ -31,15 +31,9 @@ export class Conversation extends APIResource {
   voice: VoiceAPI.Voice = new VoiceAPI.Voice(this._client);
 
   /**
-   * @example
-   * ```ts
-   * const conversation = await client.conversation.create({
-   *   phoneNumber: '0412745903',
-   *   state: { foo: 'string' },
-   *   'x-lorikeet-voice-public-key':
-   *     'x-lorikeet-voice-public-key',
-   * });
-   * ```
+   * DEPRECATED: Use POST /conversation/voice/create instead
+   *
+   * @deprecated
    */
   create(
     params: ConversationCreateParams,
@@ -48,28 +42,6 @@ export class Conversation extends APIResource {
     const { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey, ...body } = params;
     return this._client.post('/v1/conversation/new', {
       body,
-      ...options,
-      headers: { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey, ...options?.headers },
-    });
-  }
-
-  /**
-   * @example
-   * ```ts
-   * const response =
-   *   await client.conversation.retrieveTranscript('ticketId', {
-   *     'x-lorikeet-voice-public-key':
-   *       'x-lorikeet-voice-public-key',
-   *   });
-   * ```
-   */
-  retrieveTranscript(
-    ticketId: string,
-    params: ConversationRetrieveTranscriptParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationRetrieveTranscriptResponse> {
-    const { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey } = params;
-    return this._client.get(`/v1/conversation/transcript/${ticketId}`, {
       ...options,
       headers: { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey, ...options?.headers },
     });
@@ -157,37 +129,9 @@ export interface TicketMessageDto {
 
 export interface ConversationCreateResponse {
   /**
-   * The id of the ticket created
+   * The id of the conversation created
    */
-  ticketId: string;
-}
-
-export interface ConversationRetrieveTranscriptResponse {
-  /**
-   * The custom attributes of the conversation
-   */
-  customAttributes: unknown;
-
-  /**
-   * The transcript of the conversation
-   */
-  transcript: string;
-
-  /**
-   * The duration of the call in milliseconds
-   */
-  callDuration?: number;
-
-  /**
-   * The link to the call recording if this is a voice ticket and the recording has
-   * been processed. The returned URL is a signed URL that will expire in 1 hour
-   */
-  callRecordingLink?: string;
-
-  /**
-   * The summary of the conversation
-   */
-  summary?: string;
+  conversationId: string;
 }
 
 export interface ConversationCreateParams {
@@ -228,10 +172,6 @@ export interface ConversationCreateParams {
   remoteId?: string;
 }
 
-export interface ConversationRetrieveTranscriptParams {
-  'x-lorikeet-voice-public-key': string;
-}
-
 Conversation.Email = Email;
 Conversation.Chat = Chat;
 Conversation.Voice = Voice;
@@ -242,9 +182,7 @@ export declare namespace Conversation {
     type TicketEvent as TicketEvent,
     type TicketMessageDto as TicketMessageDto,
     type ConversationCreateResponse as ConversationCreateResponse,
-    type ConversationRetrieveTranscriptResponse as ConversationRetrieveTranscriptResponse,
     type ConversationCreateParams as ConversationCreateParams,
-    type ConversationRetrieveTranscriptParams as ConversationRetrieveTranscriptParams,
   };
 
   export {
