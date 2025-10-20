@@ -141,6 +141,11 @@ export interface ConversationCreateParams {
   phoneNumber: string;
 
   /**
+   * Body param: The public key of your Telephony integration
+   */
+  publicKey: string;
+
+  /**
    * Body param: The custom attributes of the customer - should be provided as key
    * value object
    */
