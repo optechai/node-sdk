@@ -12,12 +12,10 @@ Types:
 - <code><a href="./src/resources/conversation/conversation.ts">TicketEvent</a></code>
 - <code><a href="./src/resources/conversation/conversation.ts">TicketMessageDto</a></code>
 - <code><a href="./src/resources/conversation/conversation.ts">ConversationCreateResponse</a></code>
-- <code><a href="./src/resources/conversation/conversation.ts">ConversationRetrieveTranscriptResponse</a></code>
 
 Methods:
 
 - <code title="post /v1/conversation/new">client.conversation.<a href="./src/resources/conversation/conversation.ts">create</a>({ ...params }) -> ConversationCreateResponse</code>
-- <code title="get /v1/conversation/transcript/{ticketId}">client.conversation.<a href="./src/resources/conversation/conversation.ts">retrieveTranscript</a>(ticketId, { ...params }) -> ConversationRetrieveTranscriptResponse</code>
 
 ## Email
 

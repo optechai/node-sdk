@@ -15,8 +15,6 @@ import {
   Conversation,
   ConversationCreateParams,
   ConversationCreateResponse,
-  ConversationRetrieveTranscriptParams,
-  ConversationRetrieveTranscriptResponse,
   TicketEvent,
   TicketMessageDto,
 } from './resources/conversation/conversation';
@@ -248,9 +246,7 @@ export declare namespace Lorikeet {
     type TicketEvent as TicketEvent,
     type TicketMessageDto as TicketMessageDto,
     type ConversationCreateResponse as ConversationCreateResponse,
-    type ConversationRetrieveTranscriptResponse as ConversationRetrieveTranscriptResponse,
     type ConversationCreateParams as ConversationCreateParams,
-    type ConversationRetrieveTranscriptParams as ConversationRetrieveTranscriptParams,
   };
 
   export {
