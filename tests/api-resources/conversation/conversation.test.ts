@@ -13,6 +13,7 @@ describe('resource conversation', () => {
   test('create: only required params', async () => {
     const responsePromise = client.conversation.create({
       phoneNumber: '0412745903',
+      publicKey: 'your-telephony-public-key',
       state: { foo: 'string' },
       'x-lorikeet-voice-public-key': 'x-lorikeet-voice-public-key',
     });
@@ -28,6 +29,7 @@ describe('resource conversation', () => {
   test('create: required and optional params', async () => {
     const response = await client.conversation.create({
       phoneNumber: '0412745903',
+      publicKey: 'your-telephony-public-key',
       state: { foo: 'string' },
       'x-lorikeet-voice-public-key': 'x-lorikeet-voice-public-key',
       email: 'john.doe@example.com',
