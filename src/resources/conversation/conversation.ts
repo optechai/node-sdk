@@ -131,7 +131,7 @@ export interface ConversationCreateResponse {
   /**
    * The id of the conversation created
    */
-  conversationId: string;
+  conversationId: unknown;
 }
 
 export interface ConversationCreateParams {
