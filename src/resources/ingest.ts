@@ -47,6 +47,11 @@ export interface IngestTestParams {
    * The subscriber id to simulate a test response for.
    */
   subscriberId: string;
+
+  /**
+   * Optional execution environment ID for integration endpoint tools.
+   */
+  envId?: string;
 }
 
 export declare namespace Ingest {
