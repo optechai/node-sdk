@@ -60,7 +60,10 @@ describe('resource ingest', () => {
   });
 
   test('test: required and optional params', async () => {
-    const response = await client.ingest.test({}, { inputs: {}, subscriberId: 'subscriberId' });
+    const response = await client.ingest.test(
+      {},
+      { inputs: {}, subscriberId: 'subscriberId', envId: 'envId' },
+    );
   });
 
   test('validate', async () => {
