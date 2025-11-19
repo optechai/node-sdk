@@ -68,6 +68,11 @@ export interface RemoteUpdateResponse {
   lastName?: string;
 
   /**
+   * The phone number of the customer (in international / E.164 format)
+   */
+  phoneNumber?: string;
+
+  /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
@@ -123,6 +128,11 @@ export interface RemoteGetResponse {
   lastName?: string;
 
   /**
+   * The phone number of the customer (in international / E.164 format)
+   */
+  phoneNumber?: string;
+
+  /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
@@ -166,6 +176,11 @@ export interface RemoteUpdateParams {
    * The last name of the customer
    */
   lastName?: string;
+
+  /**
+   * The phone number of the customer (in international / E.164 format)
+   */
+  phoneNumber?: string;
 
   /**
    * The id of the customer in the ticketing system. For the SDK this needs to be

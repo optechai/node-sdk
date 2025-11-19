@@ -59,6 +59,11 @@ export interface ProfileSyncResponse {
   lastName?: string;
 
   /**
+   * The phone number of the customer (in international / E.164 format)
+   */
+  phoneNumber?: string;
+
+  /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */

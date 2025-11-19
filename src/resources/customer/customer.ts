@@ -97,6 +97,11 @@ export interface CustomerCreateResponse {
   lastName?: string;
 
   /**
+   * The phone number of the customer (in international / E.164 format)
+   */
+  phoneNumber?: string;
+
+  /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
@@ -150,6 +155,11 @@ export interface CustomerUpdateResponse {
    * The last name of the customer
    */
   lastName?: string;
+
+  /**
+   * The phone number of the customer (in international / E.164 format)
+   */
+  phoneNumber?: string;
 
   /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
@@ -207,6 +217,11 @@ export interface CustomerGetResponse {
   lastName?: string;
 
   /**
+   * The phone number of the customer (in international / E.164 format)
+   */
+  phoneNumber?: string;
+
+  /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
@@ -254,6 +269,11 @@ export interface CustomerCreateParams {
   lastName?: string;
 
   /**
+   * The phone number of the customer (in international / E.164 format)
+   */
+  phoneNumber?: string;
+
+  /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
@@ -297,6 +317,11 @@ export interface CustomerUpdateParams {
    * The last name of the customer
    */
   lastName?: string;
+
+  /**
+   * The phone number of the customer (in international / E.164 format)
+   */
+  phoneNumber?: string;
 
   /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
@@ -348,6 +373,11 @@ export interface CustomerTokenParams {
    * The last name of the customer
    */
   lastName?: string;
+
+  /**
+   * The phone number of the customer (in international / E.164 format)
+   */
+  phoneNumber?: string;
 
   /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
