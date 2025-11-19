@@ -36,6 +36,7 @@ describe('resource email', () => {
         email: 'lori@keet.com',
         firstName: 'Lori',
         lastName: 'Keet',
+        phoneNumber: '+14155552671',
         remoteId: '1234567890',
         subscriberCustomerId: '1234567890',
         subscriberToken: 'subscriberToken',
