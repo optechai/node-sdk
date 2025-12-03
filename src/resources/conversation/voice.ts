@@ -41,7 +41,9 @@ export interface VoiceOutboundParams {
   customerId?: string;
 
   /**
-   * The input data to pass to the workflow. Only used if a workflow is specified.
+   * Input data to pass to workflows. Should include values for input fields defined
+   * by both the chosen opening workflow and - if configured - the voicemail detected
+   * workflow.
    */
   inputData?: unknown;
 
