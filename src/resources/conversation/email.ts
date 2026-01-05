@@ -234,6 +234,11 @@ export interface EmailGenerateParams {
    * be omitted if the message is sent by the agent to the customer.
    */
   customer?: EmailGenerateParams.Customer;
+
+  /**
+   * The variables to be passed to the conversation - this can be used by workflows
+   */
+  variables?: { [key: string]: unknown };
 }
 
 export namespace EmailGenerateParams {
@@ -267,6 +272,11 @@ export namespace EmailGenerateParams {
      * The last name of the customer
      */
     lastName?: string;
+
+    /**
+     * The phone number of the customer (in international / E.164 format)
+     */
+    phoneNumber?: string;
 
     /**
      * The id of the customer in the ticketing system. For the SDK this needs to be
@@ -307,9 +317,14 @@ export interface EmailStartParams {
   publicKey: string;
 
   /**
-   * The timestamp of the when the conversation was created in our system.
+   * The subject of the conversation.
    */
   subject?: string;
+
+  /**
+   * The UUID of the workflow to trigger.
+   */
+  workflowId?: string;
 }
 
 export declare namespace Email {

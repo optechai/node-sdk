@@ -31,15 +31,9 @@ export class Conversation extends APIResource {
   voice: VoiceAPI.Voice = new VoiceAPI.Voice(this._client);
 
   /**
-   * @example
-   * ```ts
-   * const conversation = await client.conversation.create({
-   *   accountId: '1234567890',
-   *   phoneNumber: '0412745903',
-   *   'x-lorikeet-voice-public-key':
-   *     'x-lorikeet-voice-public-key',
-   * });
-   * ```
+   * DEPRECATED: Use POST /conversation/voice/create instead
+   *
+   * @deprecated
    */
   create(
     params: ConversationCreateParams,
@@ -48,28 +42,6 @@ export class Conversation extends APIResource {
     const { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey, ...body } = params;
     return this._client.post('/v1/conversation/new', {
       body,
-      ...options,
-      headers: { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey, ...options?.headers },
-    });
-  }
-
-  /**
-   * @example
-   * ```ts
-   * const response =
-   *   await client.conversation.retrieveTranscript('ticketId', {
-   *     'x-lorikeet-voice-public-key':
-   *       'x-lorikeet-voice-public-key',
-   *   });
-   * ```
-   */
-  retrieveTranscript(
-    ticketId: string,
-    params: ConversationRetrieveTranscriptParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationRetrieveTranscriptResponse> {
-    const { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey } = params;
-    return this._client.get(`/v1/conversation/transcript/${ticketId}`, {
       ...options,
       headers: { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey, ...options?.headers },
     });
@@ -157,42 +129,52 @@ export interface TicketMessageDto {
 
 export interface ConversationCreateResponse {
   /**
-   * The id of the ticket created
+   * The id of the conversation created
    */
-  ticketId: string;
-}
-
-export interface ConversationRetrieveTranscriptResponse {
-  /**
-   * The custom attributes of the conversation
-   */
-  customAttributes: unknown;
-
-  /**
-   * The transcript of the conversation
-   */
-  transcript: string;
+  conversationId: unknown;
 }
 
 export interface ConversationCreateParams {
-  /**
-   * Body param: The id of the customer in the ticketing system
-   */
-  accountId: string;
-
   /**
    * Body param: The phone number of the customer
    */
   phoneNumber: string;
 
   /**
+   * Body param: The public key of your Telephony integration
+   */
+  publicKey: string;
+
+  /**
+   * Body param: The custom attributes of the customer - should be provided as key
+   * value object
+   */
+  state: { [key: string]: string | boolean | number | unknown | Array<unknown> };
+
+  /**
    * Header param:
    */
   'x-lorikeet-voice-public-key': string;
-}
 
-export interface ConversationRetrieveTranscriptParams {
-  'x-lorikeet-voice-public-key': string;
+  /**
+   * Body param: The email of the customer
+   */
+  email?: string;
+
+  /**
+   * Body param: The first name of the customer
+   */
+  firstName?: string;
+
+  /**
+   * Body param: The last name of the customer
+   */
+  lastName?: string;
+
+  /**
+   * Body param: The remoteId of your customer
+   */
+  remoteId?: string;
 }
 
 Conversation.Email = Email;
@@ -205,9 +187,7 @@ export declare namespace Conversation {
     type TicketEvent as TicketEvent,
     type TicketMessageDto as TicketMessageDto,
     type ConversationCreateResponse as ConversationCreateResponse,
-    type ConversationRetrieveTranscriptResponse as ConversationRetrieveTranscriptResponse,
     type ConversationCreateParams as ConversationCreateParams,
-    type ConversationRetrieveTranscriptParams as ConversationRetrieveTranscriptParams,
   };
 
   export {

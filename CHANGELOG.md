@@ -1,5 +1,37 @@
 # Changelog
 
+## 1.5.0 (2026-01-05)
+
+Full Changelog: [v1.4.0...v1.5.0](https://github.com/optechai/node-sdk/compare/v1.4.0...v1.5.0)
+
+### Features
+
+* **api:** api update ([34ae930](https://github.com/optechai/node-sdk/commit/34ae930c551c5f115aed57dc596d618ca0481b3e))
+* **api:** api update ([5426fce](https://github.com/optechai/node-sdk/commit/5426fce971eca94c086ddee3d48b9dab40cc6edf))
+* **api:** api update ([9f00cc4](https://github.com/optechai/node-sdk/commit/9f00cc4dface803579093fd9097bf42a82216344))
+* **api:** api update ([7e63c9f](https://github.com/optechai/node-sdk/commit/7e63c9fbe5a495c8601ed10e16028f27c717818b))
+* **api:** api update ([30b1e32](https://github.com/optechai/node-sdk/commit/30b1e32c03ea5819f53540cc4817f9b5788e81be))
+* **api:** api update ([f5ee8a6](https://github.com/optechai/node-sdk/commit/f5ee8a65a45c1db69c0a0249d52a9a8ca982adc2))
+* **api:** api update ([d5e7d62](https://github.com/optechai/node-sdk/commit/d5e7d625ca938f84f6336396edc5dc524b805bb9))
+* **api:** api update ([87c38c0](https://github.com/optechai/node-sdk/commit/87c38c005217778ddef326351a88e5dbef29b677))
+* **api:** api update ([c8e6d7f](https://github.com/optechai/node-sdk/commit/c8e6d7f4f07ebfbc6d2da77e5d467b2ae53c9900))
+* **api:** api update ([6300101](https://github.com/optechai/node-sdk/commit/63001018f8064c354204b3422c36a2066e9ab016))
+
+
+### Performance Improvements
+
+* faster formatting ([58731ec](https://github.com/optechai/node-sdk/commit/58731eca80bcff46bba873a1452f11fdb26a4968))
+
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([6b8c3d1](https://github.com/optechai/node-sdk/commit/6b8c3d161c8b5ff91273a013affb91b2c5de859d))
+* **internal:** codegen related update ([a824fe9](https://github.com/optechai/node-sdk/commit/a824fe93c31ef9c7de86bf577a07a765fe657757))
+* **internal:** fix incremental formatting in some cases ([d0e5443](https://github.com/optechai/node-sdk/commit/d0e54432863ed5e2cfd234da821f32f6d066545c))
+* **internal:** ignore .eslintcache ([d2bd2a9](https://github.com/optechai/node-sdk/commit/d2bd2a97be03acd677e5e93df2cd73c0c401031f))
+* **internal:** remove deprecated `compilerOptions.baseUrl` from tsconfig.json ([a21b2f7](https://github.com/optechai/node-sdk/commit/a21b2f7ff523782d66b0e9cdc698dea4d5d49fa2))
+* **internal:** use npm pack for build uploads ([739c566](https://github.com/optechai/node-sdk/commit/739c56602dd8a50c47ca312c3302ccbf34d2961b))
+
 ## 1.4.0 (2025-09-18)
 
 Full Changelog: [v1.3.0...v1.4.0](https://github.com/optechai/node-sdk/compare/v1.3.0...v1.4.0)

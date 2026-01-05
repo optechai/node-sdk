@@ -36,10 +36,12 @@ describe('resource chat', () => {
         email: 'lori@keet.com',
         firstName: 'Lori',
         lastName: 'Keet',
+        phoneNumber: '+14155552671',
         remoteId: '1234567890',
         subscriberCustomerId: '1234567890',
         subscriberToken: 'subscriberToken',
       },
+      variables: { tags: 'bar', currentPage: 'bar' },
     });
   });
 
@@ -77,6 +79,7 @@ describe('resource chat', () => {
       customerId: 'customerId',
       publicKey: 'publicKey',
       subject: 'Question about order tracking number',
+      workflowId: 'workflowId',
     });
   });
 });

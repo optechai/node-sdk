@@ -12,8 +12,9 @@ const client = new Lorikeet({
 describe('resource conversation', () => {
   test('create: only required params', async () => {
     const responsePromise = client.conversation.create({
-      accountId: '1234567890',
       phoneNumber: '0412745903',
+      publicKey: 'your-telephony-public-key',
+      state: { foo: 'string' },
       'x-lorikeet-voice-public-key': 'x-lorikeet-voice-public-key',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -27,28 +28,14 @@ describe('resource conversation', () => {
 
   test('create: required and optional params', async () => {
     const response = await client.conversation.create({
-      accountId: '1234567890',
       phoneNumber: '0412745903',
+      publicKey: 'your-telephony-public-key',
+      state: { foo: 'string' },
       'x-lorikeet-voice-public-key': 'x-lorikeet-voice-public-key',
-    });
-  });
-
-  test('retrieveTranscript: only required params', async () => {
-    const responsePromise = client.conversation.retrieveTranscript('ticketId', {
-      'x-lorikeet-voice-public-key': 'x-lorikeet-voice-public-key',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('retrieveTranscript: required and optional params', async () => {
-    const response = await client.conversation.retrieveTranscript('ticketId', {
-      'x-lorikeet-voice-public-key': 'x-lorikeet-voice-public-key',
+      email: 'john.doe@example.com',
+      firstName: 'John',
+      lastName: 'Doe',
+      remoteId: '1234567890',
     });
   });
 });
