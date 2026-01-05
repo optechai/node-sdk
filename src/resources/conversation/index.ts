@@ -15,7 +15,9 @@ export {
   type TicketEvent,
   type TicketMessageDto,
   type ConversationCreateResponse,
+  type ConversationRetrieveTranscriptResponse,
   type ConversationCreateParams,
+  type ConversationRetrieveTranscriptParams,
 } from './conversation';
 export {
   Email,
