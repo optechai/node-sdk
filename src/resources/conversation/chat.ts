@@ -203,6 +203,11 @@ export interface ChatGenerateParams {
    * be omitted if the message is sent by the agent to the customer.
    */
   customer?: ChatGenerateParams.Customer;
+
+  /**
+   * The variables to be passed to the conversation - this can be used by workflows
+   */
+  variables?: { [key: string]: unknown };
 }
 
 export namespace ChatGenerateParams {
@@ -284,6 +289,11 @@ export interface ChatStartParams {
    * The subject of the conversation.
    */
   subject?: string;
+
+  /**
+   * The UUID of the workflow to trigger.
+   */
+  workflowId?: string;
 }
 
 export declare namespace Chat {
