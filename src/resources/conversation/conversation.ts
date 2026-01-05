@@ -46,6 +46,23 @@ export class Conversation extends APIResource {
       headers: { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey, ...options?.headers },
     });
   }
+
+  /**
+   * DEPRECATED: Use GET /conversation/:conversationId instead
+   *
+   * @deprecated
+   */
+  retrieveTranscript(
+    conversationId: string,
+    params: ConversationRetrieveTranscriptParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<ConversationRetrieveTranscriptResponse> {
+    const { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey } = params;
+    return this._client.get(`/v1/conversation/transcript/${conversationId}`, {
+      ...options,
+      headers: { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey, ...options?.headers },
+    });
+  }
 }
 
 export interface AttachmentDto {
@@ -134,6 +151,54 @@ export interface ConversationCreateResponse {
   conversationId: unknown;
 }
 
+export interface ConversationRetrieveTranscriptResponse {
+  /**
+   * The custom attributes of the conversation
+   */
+  customAttributes: unknown;
+
+  /**
+   * The transcript of the conversation
+   */
+  transcript: string;
+
+  /**
+   * The duration of the call in milliseconds
+   */
+  callDuration?: number;
+
+  /**
+   * The link to the call recording if this is a voice ticket and the recording has
+   * been processed. The returned URL is a signed URL that will expire in 1 hour
+   */
+  callRecordingLink?: string;
+
+  /**
+   * When the CSAT score was collected (ISO 8601 format)
+   */
+  csatCollectedAt?: unknown;
+
+  /**
+   * Customer satisfaction score (1-5 rating from customer feedback)
+   */
+  csatScore?: number;
+
+  /**
+   * Customer information including email, name, and phone number
+   */
+  customer?: unknown;
+
+  /**
+   * The summary of the conversation
+   */
+  summary?: string;
+
+  /**
+   * Tags applied to the conversation
+   */
+  tags?: Array<string>;
+}
+
 export interface ConversationCreateParams {
   /**
    * Body param: The phone number of the customer
@@ -177,6 +242,10 @@ export interface ConversationCreateParams {
   remoteId?: string;
 }
 
+export interface ConversationRetrieveTranscriptParams {
+  'x-lorikeet-voice-public-key': string;
+}
+
 Conversation.Email = Email;
 Conversation.Chat = Chat;
 Conversation.Voice = Voice;
@@ -187,7 +256,9 @@ export declare namespace Conversation {
     type TicketEvent as TicketEvent,
     type TicketMessageDto as TicketMessageDto,
     type ConversationCreateResponse as ConversationCreateResponse,
+    type ConversationRetrieveTranscriptResponse as ConversationRetrieveTranscriptResponse,
     type ConversationCreateParams as ConversationCreateParams,
+    type ConversationRetrieveTranscriptParams as ConversationRetrieveTranscriptParams,
   };
 
   export {
