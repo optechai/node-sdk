@@ -27,7 +27,10 @@ const client = new Lorikeet({
   clientSecret: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
 });
 
-const response = await client.conversation.chat.start({ customerId: 'blah', publicKey: 'publicKey' });
+const response = await client.conversation.chat.start({
+  customerId: 'blah',
+  publicKey: 'publicKey',
+});
 
 console.log(response.conversationId);
 ```
@@ -45,8 +48,13 @@ const client = new Lorikeet({
   clientSecret: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
 });
 
-const params: Lorikeet.Conversation.ChatStartParams = { customerId: 'blah', publicKey: 'publicKey' };
-const response: Lorikeet.Conversation.ChatStartResponse = await client.conversation.chat.start(params);
+const params: Lorikeet.Conversation.ChatStartParams = {
+  customerId: 'blah',
+  publicKey: 'publicKey',
+};
+const response: Lorikeet.Conversation.ChatStartResponse = await client.conversation.chat.start(
+  params,
+);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.

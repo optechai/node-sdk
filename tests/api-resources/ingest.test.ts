@@ -49,7 +49,13 @@ describe('resource ingest', () => {
   });
 
   test('test: only required params', async () => {
-    const responsePromise = client.ingest.test({}, { inputs: {}, subscriberId: 'subscriberId' });
+    const responsePromise = client.ingest.test(
+      {},
+      {
+        inputs: {},
+        subscriberId: 'subscriberId',
+      },
+    );
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -62,7 +68,11 @@ describe('resource ingest', () => {
   test('test: required and optional params', async () => {
     const response = await client.ingest.test(
       {},
-      { inputs: {}, subscriberId: 'subscriberId', envId: 'envId' },
+      {
+        inputs: {},
+        subscriberId: 'subscriberId',
+        envId: 'envId',
+      },
     );
   });
 
