@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.6.1 (2026-01-14)
+
+Full Changelog: [v1.6.0...v1.6.1](https://github.com/optechai/node-sdk/compare/v1.6.0...v1.6.1)
+
+### Chores
+
+* break long lines in snippets into multiline ([5fcd0e8](https://github.com/optechai/node-sdk/commit/5fcd0e801c3bdbe003d509ff1d97d7666b88be85))
+* fix typo in descriptions ([06a5435](https://github.com/optechai/node-sdk/commit/06a543577ec71ef4835fe822566587b952d03c4f))
+
 ## 1.6.0 (2026-01-05)
 
 Full Changelog: [v1.5.0...v1.6.0](https://github.com/optechai/node-sdk/compare/v1.5.0...v1.6.0)
