@@ -217,7 +217,7 @@ export interface ConversationCreateParams {
   state: { [key: string]: string | boolean | number | unknown | Array<unknown> };
 
   /**
-   * Header param:
+   * Header param
    */
   'x-lorikeet-voice-public-key': string;
 
