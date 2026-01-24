@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.6.1 (2026-01-24)
+
+Full Changelog: [v1.6.0...v1.6.1](https://github.com/optechai/node-sdk/compare/v1.6.0...v1.6.1)
+
+### Chores
+
+* break long lines in snippets into multiline ([5fcd0e8](https://github.com/optechai/node-sdk/commit/5fcd0e801c3bdbe003d509ff1d97d7666b88be85))
+* **ci:** upgrade `actions/github-script` ([03d6fad](https://github.com/optechai/node-sdk/commit/03d6fad63891042ff279190bb15e650c9858554d))
+* fix typo in descriptions ([06a5435](https://github.com/optechai/node-sdk/commit/06a543577ec71ef4835fe822566587b952d03c4f))
+* **internal:** update `actions/checkout` version ([8c51643](https://github.com/optechai/node-sdk/commit/8c51643885693683b085883234286281b71f6be0))
+* **internal:** upgrade babel, qs, js-yaml ([6f7660d](https://github.com/optechai/node-sdk/commit/6f7660d318c7fbb00609d1b8a323c0f6811a8acf))
+
 ## 1.6.0 (2026-01-05)
 
 Full Changelog: [v1.5.0...v1.6.0](https://github.com/optechai/node-sdk/compare/v1.5.0...v1.6.0)
