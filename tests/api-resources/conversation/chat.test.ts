@@ -12,7 +12,13 @@ const client = new Lorikeet({
 describe('resource chat', () => {
   test('generate: only required params', async () => {
     const responsePromise = client.conversation.chat.generate({
-      attachments: [{ name: 'example.jpg', type: 'image/jpeg', url: 'https://example.com/example.jpg' }],
+      attachments: [
+        {
+          name: 'example.jpg',
+          type: 'image/jpeg',
+          url: 'https://example.com/example.jpg',
+        },
+      ],
       conversationId: 'conversationId',
       message: 'message',
     });
@@ -27,7 +33,13 @@ describe('resource chat', () => {
 
   test('generate: required and optional params', async () => {
     const response = await client.conversation.chat.generate({
-      attachments: [{ name: 'example.jpg', type: 'image/jpeg', url: 'https://example.com/example.jpg' }],
+      attachments: [
+        {
+          name: 'example.jpg',
+          type: 'image/jpeg',
+          url: 'https://example.com/example.jpg',
+        },
+      ],
       conversationId: 'conversationId',
       message: 'message',
       customer: {
