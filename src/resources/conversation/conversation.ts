@@ -146,9 +146,9 @@ export interface TicketMessageDto {
 
 export interface ConversationCreateResponse {
   /**
-   * The id of the conversation created
+   * The id of the conversation created. Null if ticket creation was skipped.
    */
-  conversationId: unknown;
+  conversationId: unknown | null;
 }
 
 export interface ConversationRetrieveTranscriptResponse {
