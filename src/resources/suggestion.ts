@@ -10,11 +10,4 @@ export class Suggestion extends APIResource {
       headers: { Accept: '*/*', ...options?.headers },
     });
   }
-
-  retrieveTone(options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.get('/v1/suggestion/tone', {
-      ...options,
-      headers: { Accept: '*/*', ...options?.headers },
-    });
-  }
 }

@@ -114,7 +114,6 @@ Methods:
 Methods:
 
 - <code title="post /v1/suggestion/workflow">client.suggestion.<a href="./src/resources/suggestion.ts">createWorkflow</a>() -> void</code>
-- <code title="get /v1/suggestion/tone">client.suggestion.<a href="./src/resources/suggestion.ts">retrieveTone</a>() -> void</code>
 
 # OAuth
 
