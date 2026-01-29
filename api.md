@@ -93,12 +93,6 @@ Methods:
 
 # Workflow
 
-Methods:
-
-- <code title="get /v1/workflow">client.workflow.<a href="./src/resources/workflow.ts">retrieve</a>() -> void</code>
-- <code title="post /v1/workflow">client.workflow.<a href="./src/resources/workflow.ts">update</a>() -> void</code>
-- <code title="get /v1/workflow/{id}">client.workflow.<a href="./src/resources/workflow.ts">get</a>(id) -> void</code>
-
 # Ingest
 
 Methods:
