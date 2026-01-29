@@ -39,14 +39,9 @@ export class Ingest extends APIResource {
 
 export interface IngestTestParams {
   /**
-   * The data to simulate a test response for.
+   * The input data to simulate a test response for.
    */
   inputs: unknown;
-
-  /**
-   * The subscriber id to simulate a test response for.
-   */
-  subscriberId: string;
 
   /**
    * Optional execution environment ID for integration endpoint tools.

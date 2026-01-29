@@ -48,13 +48,7 @@ describe('resource ingest', () => {
   });
 
   test('test: only required params', async () => {
-    const responsePromise = client.ingest.test(
-      {},
-      {
-        inputs: {},
-        subscriberId: 'subscriberId',
-      },
-    );
+    const responsePromise = client.ingest.test({}, { inputs: {} });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -69,7 +63,6 @@ describe('resource ingest', () => {
       {},
       {
         inputs: {},
-        subscriberId: 'subscriberId',
         envId: 'envId',
       },
     );
