@@ -24,7 +24,6 @@ import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
   clientId: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
-  clientSecret: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
 });
 
 const response = await client.conversation.chat.start({
@@ -45,7 +44,6 @@ import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
   clientId: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
-  clientSecret: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
 });
 
 const params: Lorikeet.Conversation.ChatStartParams = {

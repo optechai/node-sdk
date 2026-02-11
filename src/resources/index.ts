@@ -22,7 +22,7 @@ export {
 } from './customer/customer';
 export { File } from './file';
 export { Ingest, type IngestTestParams } from './ingest';
-export { OAuth, type OAuthAuthorizeParams, type OAuthCallbackParams } from './oauth/oauth';
+export { OAuth, type OAuthCallbackParams } from './oauth/oauth';
 export { Suggestion } from './suggestion';
 export { Webhooks } from './webhooks';
 export { Workflow } from './workflow';

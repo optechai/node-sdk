@@ -119,10 +119,7 @@ Methods:
 
 Methods:
 
-- <code title="get /v1/oauth/authorize">client.oauth.<a href="./src/resources/oauth/oauth.ts">authorize</a>({ ...params }) -> void</code>
 - <code title="get /v1/oauth/callback">client.oauth.<a href="./src/resources/oauth/oauth.ts">callback</a>({ ...params }) -> void</code>
-- <code title="post /v1/oauth/token">client.oauth.<a href="./src/resources/oauth/oauth.ts">createToken</a>() -> void</code>
-- <code title="post /v1/oauth/revoke">client.oauth.<a href="./src/resources/oauth/oauth.ts">revokeToken</a>() -> void</code>
 
 ## Authorization
 

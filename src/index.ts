@@ -31,7 +31,7 @@ import {
   CustomerUpdateParams,
   CustomerUpdateResponse,
 } from './resources/customer/customer';
-import { OAuth, OAuthAuthorizeParams, OAuthCallbackParams } from './resources/oauth/oauth';
+import { OAuth, OAuthCallbackParams } from './resources/oauth/oauth';
 
 export interface ClientOptions {
   /**
@@ -283,11 +283,7 @@ export declare namespace Lorikeet {
 
   export { Suggestion as Suggestion };
 
-  export {
-    OAuth as OAuth,
-    type OAuthAuthorizeParams as OAuthAuthorizeParams,
-    type OAuthCallbackParams as OAuthCallbackParams,
-  };
+  export { OAuth as OAuth, type OAuthCallbackParams as OAuthCallbackParams };
 
   export { Webhooks as Webhooks };
 }
