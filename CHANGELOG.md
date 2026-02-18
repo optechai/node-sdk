@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.1 (2026-02-18)
+
+Full Changelog: [v1.7.0...v1.7.1](https://github.com/optechai/node-sdk/compare/v1.7.0...v1.7.1)
+
 ## 1.7.0 (2026-02-18)
 
 Full Changelog: [v1.6.1...v1.7.0](https://github.com/optechai/node-sdk/compare/v1.6.1...v1.7.0)
