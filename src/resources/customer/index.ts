@@ -4,7 +4,6 @@ export {
   Customer,
   type CustomerCreateResponse,
   type CustomerUpdateResponse,
-  type CustomerGetResponse,
   type CustomerTokenResponse,
   type CustomerCreateParams,
   type CustomerUpdateParams,

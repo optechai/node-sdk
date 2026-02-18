@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.7.0 (2026-02-18)
+
+Full Changelog: [v1.6.1...v1.7.0](https://github.com/optechai/node-sdk/compare/v1.6.1...v1.7.0)
+
+### Features
+
+* **api:** api update ([340e9f9](https://github.com/optechai/node-sdk/commit/340e9f93d9ae15221e6b2743999057aba9ae3f1d))
+* **api:** api update ([e27110f](https://github.com/optechai/node-sdk/commit/e27110ffd5829c8af150d93b5f0056623b74b69e))
+* **api:** api update ([3baa2a2](https://github.com/optechai/node-sdk/commit/3baa2a2d66d1cfcf8f39b42998e56dec8e782181))
+* **api:** api update ([ab00f2a](https://github.com/optechai/node-sdk/commit/ab00f2ac46881fe6cf90f33260ec8c3bead55867))
+* **api:** api update ([e7e32db](https://github.com/optechai/node-sdk/commit/e7e32db89f223bb856bf3079a0362e3b58378f88))
+* **api:** api update ([73b9c14](https://github.com/optechai/node-sdk/commit/73b9c14deb2722ec7625c7887b80cb6fd13e6ec2))
+
+
+### Chores
+
+* **client:** do not parse responses with empty content-length ([81bb697](https://github.com/optechai/node-sdk/commit/81bb697a22a2db389fba1879fe213aa8cae9beca))
+
 ## 1.6.1 (2026-01-24)
 
 Full Changelog: [v1.6.0...v1.6.1](https://github.com/optechai/node-sdk/compare/v1.6.0...v1.6.1)

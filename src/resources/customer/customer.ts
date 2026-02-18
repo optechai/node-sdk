@@ -40,18 +40,6 @@ export class Customer extends APIResource {
   /**
    * @example
    * ```ts
-   * const customer = await client.customer.get(
-   *   '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-   * );
-   * ```
-   */
-  get(id: string, options?: Core.RequestOptions): Core.APIPromise<CustomerGetResponse> {
-    return this._client.get(`/v1/customer/${id}`, options);
-  }
-
-  /**
-   * @example
-   * ```ts
    * const response = await client.customer.token();
    * ```
    */
@@ -121,66 +109,6 @@ export interface CustomerCreateResponse {
 }
 
 export interface CustomerUpdateResponse {
-  /**
-   * The id of the customer in the subscriber system
-   */
-  id: string;
-
-  /**
-   * The timestamp of the when the customer was created in our system
-   */
-  createdAt: string;
-
-  /**
-   * The URL of the customer avatar
-   */
-  avatarUrl?: string;
-
-  /**
-   * The display name of the customer
-   */
-  displayName?: string;
-
-  /**
-   * The email of the customer
-   */
-  email?: string;
-
-  /**
-   * The first name of the customer
-   */
-  firstName?: string;
-
-  /**
-   * The last name of the customer
-   */
-  lastName?: string;
-
-  /**
-   * The phone number of the customer (in international / E.164 format)
-   */
-  phoneNumber?: string;
-
-  /**
-   * The id of the customer in the ticketing system. For the SDK this needs to be
-   * stable and unique
-   */
-  remoteId?: string;
-
-  /**
-   * The id of the customer in your own primary database or a unique identifier, for
-   * example a cookie
-   */
-  subscriberCustomerId?: string;
-
-  /**
-   * A token that can be used to authenticate the customer in the your system, like a
-   * JWT
-   */
-  subscriberToken?: string;
-}
-
-export interface CustomerGetResponse {
   /**
    * The id of the customer in the subscriber system
    */
@@ -405,7 +333,6 @@ export declare namespace Customer {
   export {
     type CustomerCreateResponse as CustomerCreateResponse,
     type CustomerUpdateResponse as CustomerUpdateResponse,
-    type CustomerGetResponse as CustomerGetResponse,
     type CustomerTokenResponse as CustomerTokenResponse,
     type CustomerCreateParams as CustomerCreateParams,
     type CustomerUpdateParams as CustomerUpdateParams,

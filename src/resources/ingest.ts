@@ -4,10 +4,6 @@ import { APIResource } from '../resource';
 import * as Core from '../core';
 
 export class Ingest extends APIResource {
-  retrieve(options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.get('/v1/ingest', { ...options, headers: { Accept: '*/*', ...options?.headers } });
-  }
-
   submit(
     toolId: string,
     ticketId: string,
@@ -39,14 +35,9 @@ export class Ingest extends APIResource {
 
 export interface IngestTestParams {
   /**
-   * The data to simulate a test response for.
+   * The input data to simulate a test response for.
    */
   inputs: unknown;
-
-  /**
-   * The subscriber id to simulate a test response for.
-   */
-  subscriberId: string;
 
   /**
    * Optional execution environment ID for integration endpoint tools.
