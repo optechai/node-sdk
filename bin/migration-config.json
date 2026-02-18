@@ -1,0 +1,50 @@
+{
+  "pkg": "@lorikeetai/node-sdk",
+  "githubRepo": "https://github.com/stainless-sdks/lorikeet-typescript",
+  "clientClass": "Lorikeet",
+  "methods": [
+    {
+      "base": "ingest",
+      "name": "submit",
+      "params": [
+        {
+          "type": "param",
+          "key": "workflowId",
+          "location": "path"
+        },
+        {
+          "type": "params",
+          "maybeOverload": false
+        },
+        {
+          "type": "options"
+        }
+      ],
+      "oldParams": [
+        {
+          "type": "param",
+          "key": "toolId",
+          "location": "path"
+        },
+        {
+          "type": "param",
+          "key": "ticketId",
+          "location": "path"
+        },
+        {
+          "type": "param",
+          "key": "inputHash",
+          "location": "path"
+        },
+        {
+          "type": "param",
+          "key": "workflowId",
+          "location": "path"
+        },
+        {
+          "type": "options"
+        }
+      ]
+    }
+  ]
+}
