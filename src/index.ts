@@ -5,11 +5,14 @@ import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
-import { File } from './resources/file';
+import {
+  APIKeyCreateParams,
+  APIKeyCreateResponse,
+  APIKeyGetResponse,
+  APIKeyListResponse,
+  APIKeys,
+} from './resources/api-keys';
 import { Ingest, IngestTestParams } from './resources/ingest';
-import { Suggestion } from './resources/suggestion';
-import { Webhooks } from './resources/webhooks';
-import { Workflow } from './resources/workflow';
 import {
   AttachmentDto,
   Conversation,
@@ -21,12 +24,13 @@ import {
   Customer,
   CustomerCreateParams,
   CustomerCreateResponse,
+  CustomerGetParams,
+  CustomerGetResponse,
   CustomerTokenParams,
   CustomerTokenResponse,
   CustomerUpdateParams,
   CustomerUpdateResponse,
 } from './resources/customer/customer';
-import { OAuth } from './resources/oauth/oauth';
 
 export interface ClientOptions {
   /**
@@ -161,12 +165,8 @@ export class Lorikeet extends Core.APIClient {
 
   conversation: API.Conversation = new API.Conversation(this);
   customer: API.Customer = new API.Customer(this);
-  workflow: API.Workflow = new API.Workflow(this);
   ingest: API.Ingest = new API.Ingest(this);
-  file: API.File = new API.File(this);
-  suggestion: API.Suggestion = new API.Suggestion(this);
-  oauth: API.OAuth = new API.OAuth(this);
-  webhooks: API.Webhooks = new API.Webhooks(this);
+  apiKeys: API.APIKeys = new API.APIKeys(this);
 
   /**
    * Check whether the base URL is set to its default.
@@ -234,12 +234,8 @@ export class Lorikeet extends Core.APIClient {
 
 Lorikeet.Conversation = Conversation;
 Lorikeet.Customer = Customer;
-Lorikeet.Workflow = Workflow;
 Lorikeet.Ingest = Ingest;
-Lorikeet.File = File;
-Lorikeet.Suggestion = Suggestion;
-Lorikeet.OAuth = OAuth;
-Lorikeet.Webhooks = Webhooks;
+Lorikeet.APIKeys = APIKeys;
 
 export declare namespace Lorikeet {
   export type RequestOptions = Core.RequestOptions;
@@ -255,23 +251,23 @@ export declare namespace Lorikeet {
     Customer as Customer,
     type CustomerCreateResponse as CustomerCreateResponse,
     type CustomerUpdateResponse as CustomerUpdateResponse,
+    type CustomerGetResponse as CustomerGetResponse,
     type CustomerTokenResponse as CustomerTokenResponse,
     type CustomerCreateParams as CustomerCreateParams,
     type CustomerUpdateParams as CustomerUpdateParams,
+    type CustomerGetParams as CustomerGetParams,
     type CustomerTokenParams as CustomerTokenParams,
   };
 
-  export { Workflow as Workflow };
-
   export { Ingest as Ingest, type IngestTestParams as IngestTestParams };
 
-  export { File as File };
-
-  export { Suggestion as Suggestion };
-
-  export { OAuth as OAuth };
-
-  export { Webhooks as Webhooks };
+  export {
+    APIKeys as APIKeys,
+    type APIKeyCreateResponse as APIKeyCreateResponse,
+    type APIKeyListResponse as APIKeyListResponse,
+    type APIKeyGetResponse as APIKeyGetResponse,
+    type APIKeyCreateParams as APIKeyCreateParams,
+  };
 }
 
 export { toFile, fileFromPath } from './uploads';

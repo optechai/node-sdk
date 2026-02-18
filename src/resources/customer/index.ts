@@ -4,9 +4,11 @@ export {
   Customer,
   type CustomerCreateResponse,
   type CustomerUpdateResponse,
+  type CustomerGetResponse,
   type CustomerTokenResponse,
   type CustomerCreateParams,
   type CustomerUpdateParams,
+  type CustomerGetParams,
   type CustomerTokenParams,
 } from './customer';
 export { Profile, type ProfileSyncResponse, type ProfileSyncParams } from './profile';
