@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../resource';
-import * as Core from '../../core';
 import * as ChatAPI from './chat';
 import {
   Chat,
@@ -29,40 +28,6 @@ export class Conversation extends APIResource {
   email: EmailAPI.Email = new EmailAPI.Email(this._client);
   chat: ChatAPI.Chat = new ChatAPI.Chat(this._client);
   voice: VoiceAPI.Voice = new VoiceAPI.Voice(this._client);
-
-  /**
-   * DEPRECATED: Use POST /conversation/voice/create instead
-   *
-   * @deprecated
-   */
-  create(
-    params: ConversationCreateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationCreateResponse> {
-    const { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey, ...body } = params;
-    return this._client.post('/v1/conversation/new', {
-      body,
-      ...options,
-      headers: { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey, ...options?.headers },
-    });
-  }
-
-  /**
-   * DEPRECATED: Use GET /conversation/:conversationId instead
-   *
-   * @deprecated
-   */
-  retrieveTranscript(
-    conversationId: string,
-    params: ConversationRetrieveTranscriptParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ConversationRetrieveTranscriptResponse> {
-    const { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey } = params;
-    return this._client.get(`/v1/conversation/transcript/${conversationId}`, {
-      ...options,
-      headers: { 'x-lorikeet-voice-public-key': xLorikeetVoicePublicKey, ...options?.headers },
-    });
-  }
 }
 
 export interface AttachmentDto {
@@ -144,108 +109,6 @@ export interface TicketMessageDto {
   type: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE';
 }
 
-export interface ConversationCreateResponse {
-  /**
-   * The id of the conversation created. Null if ticket creation was skipped.
-   */
-  conversationId: unknown | null;
-}
-
-export interface ConversationRetrieveTranscriptResponse {
-  /**
-   * The custom attributes of the conversation
-   */
-  customAttributes: unknown;
-
-  /**
-   * The transcript of the conversation
-   */
-  transcript: string;
-
-  /**
-   * The duration of the call in milliseconds
-   */
-  callDuration?: number;
-
-  /**
-   * The link to the call recording if this is a voice ticket and the recording has
-   * been processed. The returned URL is a signed URL that will expire in 1 hour
-   */
-  callRecordingLink?: string;
-
-  /**
-   * When the CSAT score was collected (ISO 8601 format)
-   */
-  csatCollectedAt?: unknown;
-
-  /**
-   * Customer satisfaction score (1-5 rating from customer feedback)
-   */
-  csatScore?: number;
-
-  /**
-   * Customer information including email, name, and phone number
-   */
-  customer?: unknown;
-
-  /**
-   * The summary of the conversation
-   */
-  summary?: string;
-
-  /**
-   * Tags applied to the conversation
-   */
-  tags?: Array<string>;
-}
-
-export interface ConversationCreateParams {
-  /**
-   * Body param: The phone number of the customer
-   */
-  phoneNumber: string;
-
-  /**
-   * Body param: The public key of your Telephony integration
-   */
-  publicKey: string;
-
-  /**
-   * Body param: The custom attributes of the customer - should be provided as key
-   * value object
-   */
-  state: { [key: string]: string | boolean | number | unknown | Array<unknown> };
-
-  /**
-   * Header param
-   */
-  'x-lorikeet-voice-public-key': string;
-
-  /**
-   * Body param: The email of the customer
-   */
-  email?: string;
-
-  /**
-   * Body param: The first name of the customer
-   */
-  firstName?: string;
-
-  /**
-   * Body param: The last name of the customer
-   */
-  lastName?: string;
-
-  /**
-   * Body param: The remoteId of your customer
-   */
-  remoteId?: string;
-}
-
-export interface ConversationRetrieveTranscriptParams {
-  'x-lorikeet-voice-public-key': string;
-}
-
 Conversation.Email = Email;
 Conversation.Chat = Chat;
 Conversation.Voice = Voice;
@@ -255,10 +118,6 @@ export declare namespace Conversation {
     type AttachmentDto as AttachmentDto,
     type TicketEvent as TicketEvent,
     type TicketMessageDto as TicketMessageDto,
-    type ConversationCreateResponse as ConversationCreateResponse,
-    type ConversationRetrieveTranscriptResponse as ConversationRetrieveTranscriptResponse,
-    type ConversationCreateParams as ConversationCreateParams,
-    type ConversationRetrieveTranscriptParams as ConversationRetrieveTranscriptParams,
   };
 
   export {
