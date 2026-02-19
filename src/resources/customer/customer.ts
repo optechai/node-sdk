@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../resource';
+import { isRequestOptions } from '../../core';
 import * as Core from '../../core';
 import * as ProfileAPI from './profile';
 import { Profile, ProfileSyncParams, ProfileSyncResponse } from './profile';
@@ -35,6 +36,24 @@ export class Customer extends APIResource {
     options?: Core.RequestOptions,
   ): Core.APIPromise<CustomerUpdateResponse> {
     return this._client.put(`/v1/customer/${id}`, { body, ...options });
+  }
+
+  /**
+   * @example
+   * ```ts
+   * const customer = await client.customer.get();
+   * ```
+   */
+  get(query?: CustomerGetParams, options?: Core.RequestOptions): Core.APIPromise<CustomerGetResponse>;
+  get(options?: Core.RequestOptions): Core.APIPromise<CustomerGetResponse>;
+  get(
+    query: CustomerGetParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<CustomerGetResponse> {
+    if (isRequestOptions(query)) {
+      return this.get({}, query);
+    }
+    return this._client.get('/v1/customer', { query, ...options });
   }
 
   /**
@@ -109,6 +128,66 @@ export interface CustomerCreateResponse {
 }
 
 export interface CustomerUpdateResponse {
+  /**
+   * The id of the customer in the subscriber system
+   */
+  id: string;
+
+  /**
+   * The timestamp of the when the customer was created in our system
+   */
+  createdAt: string;
+
+  /**
+   * The URL of the customer avatar
+   */
+  avatarUrl?: string;
+
+  /**
+   * The display name of the customer
+   */
+  displayName?: string;
+
+  /**
+   * The email of the customer
+   */
+  email?: string;
+
+  /**
+   * The first name of the customer
+   */
+  firstName?: string;
+
+  /**
+   * The last name of the customer
+   */
+  lastName?: string;
+
+  /**
+   * The phone number of the customer (in international / E.164 format)
+   */
+  phoneNumber?: string;
+
+  /**
+   * The id of the customer in the ticketing system. For the SDK this needs to be
+   * stable and unique
+   */
+  remoteId?: string;
+
+  /**
+   * The id of the customer in your own primary database or a unique identifier, for
+   * example a cookie
+   */
+  subscriberCustomerId?: string;
+
+  /**
+   * A token that can be used to authenticate the customer in the your system, like a
+   * JWT
+   */
+  subscriberToken?: string;
+}
+
+export interface CustomerGetResponse {
   /**
    * The id of the customer in the subscriber system
    */
@@ -270,6 +349,18 @@ export interface CustomerUpdateParams {
   subscriberToken?: string;
 }
 
+export interface CustomerGetParams {
+  /**
+   * The phone number of the customer
+   */
+  phoneNumber?: string;
+
+  /**
+   * The remote id of the customer in your system
+   */
+  remoteId?: string;
+}
+
 export interface CustomerTokenParams {
   /**
    * The URL of the customer avatar
@@ -333,9 +424,11 @@ export declare namespace Customer {
   export {
     type CustomerCreateResponse as CustomerCreateResponse,
     type CustomerUpdateResponse as CustomerUpdateResponse,
+    type CustomerGetResponse as CustomerGetResponse,
     type CustomerTokenResponse as CustomerTokenResponse,
     type CustomerCreateParams as CustomerCreateParams,
     type CustomerUpdateParams as CustomerUpdateParams,
+    type CustomerGetParams as CustomerGetParams,
     type CustomerTokenParams as CustomerTokenParams,
   };
 
