@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.8.1 (2026-02-20)
+
+Full Changelog: [v1.8.0...v1.8.1](https://github.com/optechai/node-sdk/compare/v1.8.0...v1.8.1)
+
+### Chores
+
+* update mock server docs ([1086b28](https://github.com/optechai/node-sdk/commit/1086b2818b2758b2fb2d16c60a6ec9898a6013a2))
+
 ## 1.8.0 (2026-02-19)
 
 Full Changelog: [v1.7.1...v1.8.0](https://github.com/optechai/node-sdk/compare/v1.7.1...v1.8.0)
