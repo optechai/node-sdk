@@ -57,7 +57,7 @@ $ pnpm link @lorikeetai/node-sdk
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global @lorikeetai/node-sdk
+$ pnpm link --global @lorikeetai/node-sdk
 ```
 
 ## Running tests

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.8.2 (2026-02-24)
+
+Full Changelog: [v1.8.1...v1.8.2](https://github.com/optechai/node-sdk/compare/v1.8.1...v1.8.2)
+
+### Bug Fixes
+
+* **docs/contributing:** correct pnpm link command ([8ca026c](https://github.com/optechai/node-sdk/commit/8ca026c9d946200b74167a4978b6f06b1135d819))
+
 ## 1.8.1 (2026-02-20)
 
 Full Changelog: [v1.8.0...v1.8.1](https://github.com/optechai/node-sdk/compare/v1.8.0...v1.8.1)
