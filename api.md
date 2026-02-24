@@ -65,8 +65,8 @@ Types:
 
 Methods:
 
-- <code title="patch /v1/customer/remote/{remoteId}">client.customer.remote.<a href="./src/resources/customer/remote.ts">update</a>(pathRemoteId, { ...params }) -> RemoteUpdateResponse</code>
-- <code title="get /v1/customer/remote/{remoteId}">client.customer.remote.<a href="./src/resources/customer/remote.ts">get</a>(remoteId) -> RemoteGetResponse</code>
+- <code title="patch /v1/customer/remote/{remoteId}">client.customer.remote.<a href="./src/resources/customer/remote.ts">update</a>(remoteID, { ...params }) -> RemoteUpdateResponse</code>
+- <code title="get /v1/customer/remote/{remoteId}">client.customer.remote.<a href="./src/resources/customer/remote.ts">get</a>(remoteID) -> RemoteGetResponse</code>
 
 ## Profile
 
@@ -82,8 +82,8 @@ Methods:
 
 Methods:
 
-- <code title="post /ingest/{toolId}/{ticketId}/{inputHash}/{workflowId}">client.ingest.<a href="./src/resources/ingest.ts">submit</a>(toolId, ticketId, inputHash, workflowId) -> void</code>
-- <code title="post /ingest/test/{toolId}">client.ingest.<a href="./src/resources/ingest.ts">test</a>(toolId, { ...params }) -> void</code>
+- <code title="post /ingest/{toolId}/{ticketId}/{inputHash}/{workflowId}">client.ingest.<a href="./src/resources/ingest.ts">submit</a>(workflowID, { ...params }) -> void</code>
+- <code title="post /ingest/test/{toolId}">client.ingest.<a href="./src/resources/ingest.ts">test</a>(toolID, { ...params }) -> void</code>
 - <code title="post /ingest/validate">client.ingest.<a href="./src/resources/ingest.ts">validate</a>() -> void</code>
 
 # APIKeys

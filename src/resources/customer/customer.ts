@@ -1,12 +1,13 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import { isRequestOptions } from '../../core';
-import * as Core from '../../core';
+import { APIResource } from '../../core/resource';
 import * as ProfileAPI from './profile';
 import { Profile, ProfileSyncParams, ProfileSyncResponse } from './profile';
 import * as RemoteAPI from './remote';
 import { Remote, RemoteGetResponse, RemoteUpdateParams, RemoteUpdateResponse } from './remote';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Customer extends APIResource {
   remote: RemoteAPI.Remote = new RemoteAPI.Remote(this._client);
@@ -18,7 +19,7 @@ export class Customer extends APIResource {
    * const customer = await client.customer.create();
    * ```
    */
-  create(body: CustomerCreateParams, options?: Core.RequestOptions): Core.APIPromise<CustomerCreateResponse> {
+  create(body: CustomerCreateParams, options?: RequestOptions): APIPromise<CustomerCreateResponse> {
     return this._client.post('/v1/customer', { body, ...options });
   }
 
@@ -33,9 +34,9 @@ export class Customer extends APIResource {
   update(
     id: string,
     body: CustomerUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<CustomerUpdateResponse> {
-    return this._client.put(`/v1/customer/${id}`, { body, ...options });
+    options?: RequestOptions,
+  ): APIPromise<CustomerUpdateResponse> {
+    return this._client.put(path`/v1/customer/${id}`, { body, ...options });
   }
 
   /**
@@ -44,15 +45,10 @@ export class Customer extends APIResource {
    * const customer = await client.customer.get();
    * ```
    */
-  get(query?: CustomerGetParams, options?: Core.RequestOptions): Core.APIPromise<CustomerGetResponse>;
-  get(options?: Core.RequestOptions): Core.APIPromise<CustomerGetResponse>;
   get(
-    query: CustomerGetParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<CustomerGetResponse> {
-    if (isRequestOptions(query)) {
-      return this.get({}, query);
-    }
+    query: CustomerGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<CustomerGetResponse> {
     return this._client.get('/v1/customer', { query, ...options });
   }
 
@@ -62,7 +58,7 @@ export class Customer extends APIResource {
    * const response = await client.customer.token();
    * ```
    */
-  token(body: CustomerTokenParams, options?: Core.RequestOptions): Core.APIPromise<string> {
+  token(body: CustomerTokenParams, options?: RequestOptions): APIPromise<string> {
     return this._client.post('/v1/customer/token', { body, ...options });
   }
 }

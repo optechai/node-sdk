@@ -1,28 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import * as Core from '../../core';
-import { pollUntil } from '@lorikeetai/node-sdk/lib/poll-until';
+import { APIResource } from '../../core/resource';
 import * as ConversationAPI from './conversation';
-import { EventSource } from 'eventsource';
-import { DeferredAsyncIterable } from '@lorikeetai/node-sdk/lib/promise';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
 
 export class Chat extends APIResource {
-  /**
-   * __chat.generate__
-   *
-   * Generate a chat message for a conversation. This endpoint will return immediately, polling will be required to get the response.
-   *
-   * The `latestMessageType` field in the response can be used to determine if the response is ready.
-   *
-   * If the `latestMessageType` is `BOT_RESPONSE`, the response is ready.
-   * For a more ergonomic way to poll, use the `message` method.
-   *
-   * ** WARNING ** This endpoint is not idempotent. If you call it multiple times, you will generate multiple messages.
-   *
-   * @see {@link Chat.message}
-   */
-
   /**
    * @example
    * ```ts
@@ -39,15 +22,9 @@ export class Chat extends APIResource {
    * });
    * ```
    */
-  generate(body: ChatGenerateParams, options?: Core.RequestOptions): Core.APIPromise<ChatGenerateResponse> {
+  generate(body: ChatGenerateParams, options?: RequestOptions): APIPromise<ChatGenerateResponse> {
     return this._client.post('/v1/conversation/chat/message', { body, ...options });
   }
-
-  /**
-   * __chat.get__
-   *
-   * Returns a chat message for a conversation. This endpoint will return the latest state of the conversation.
-   */
 
   /**
    * @example
@@ -57,19 +34,9 @@ export class Chat extends APIResource {
    * });
    * ```
    */
-  get(query: ChatGetParams, options?: Core.RequestOptions): Core.APIPromise<ChatGetResponse> {
+  get(query: ChatGetParams, options?: RequestOptions): APIPromise<ChatGetResponse> {
     return this._client.get('/v1/conversation/chat/message', { query, ...options });
   }
-
-  /**
-   * __chat.start__
-   *
-   * Start a chat conversation. This endpoint will return immediately.
-   *
-   * The `conversationId` field in the response can be used to generate messages.
-   *
-   * ** WARNING ** This endpoint is not idempotent. If you call it multiple times, you will generate multiple conversations.
-   */
 
   /**
    * @example
@@ -80,153 +47,10 @@ export class Chat extends APIResource {
    * });
    * ```
    */
-  start(body: ChatStartParams, options?: Core.RequestOptions): Core.APIPromise<ChatStartResponse> {
+  start(body: ChatStartParams, options?: RequestOptions): APIPromise<ChatStartResponse> {
     return this._client.post('/v1/conversation/chat/create', { body, ...options });
   }
-
-  /**
-   * Returns a chat message for a conversation. This endpoint will poll until a response is ready.
-   *
-   * When it return the response is the latest message type that is of type `BOT_RESPONSE`.
-   *
-   * @see {@link Chat.poll}
-   */
-  message(body: ChatGenerateParams, options?: Core.RequestOptions): Core.APIPromise<ChatGetResponse> {
-    return this.generate(body, options).then((response) =>
-      this.poll({ conversationId: response.conversationId }, options),
-    ) as Core.APIPromise<ChatGetResponse>;
-  }
-
-  /**
-   * __chat.poll__
-   *
-   * Polls until it returns a BOT chat message for a conversation.
-   */
-  poll(query: ChatGetParams, options?: Core.RequestOptions): Core.APIPromise<ChatGetResponse> {
-    return pollUntil<ChatGetResponse>(
-      () => this._client.get('/v1/conversation/chat/message', { query, ...options }),
-      {
-        timeout: options?.timeout || 180_000,
-        interval: 2_000,
-        condition: (conversation) => {
-          // Don't poll if the conversation is escalated or in error
-          if (conversation.status === 'Escalated' || conversation.status === 'Error') {
-            return true;
-          }
-
-          if (
-            conversation.latestMessageType === 'BOT_RESPONSE' ||
-            conversation.latestMessageType === 'PENDING_RESPONSE'
-          ) {
-            return true;
-          }
-
-          return false;
-        },
-      },
-    ) as Core.APIPromise<ChatGetResponse>;
-  }
-
-  /**
-   * __chat.streamUpdates__
-   *
-   * Create a persistent stream of updates for a conversation.
-   * Responses from the bot will arrive as events. Consuming clients must aggregate multiple chunks
-   * into a single message based on the messageId field. Note that new messages may arrive without
-   * new user messages, this update stream is open indefinitely and does not automatically close - avoid
-   * blocking other operations while listening to events from this generator.
-   *
-   * @param params.conversationId - Conversation/ticket ID to subscribe to.
-   * @returns AsyncGenerator<ChatStreamEvent> a generator that emits response events as they arrive.
-   */
-
-  /**
-   * @example
-   * ```ts
-   * for await (const evt of client.conversation.chat.streamUpdates({ conversationId: 'abc123' })) {
-   *   console.log(evt);
-   * }
-   * ```
-   */
-  streamUpdates(params: ChatStreamParams): AsyncIterable<ChatStreamEvent> {
-    const queries = new URLSearchParams();
-    queries.set('sseMessageTypes', 'new-message,message-chunk,message-complete');
-    queries.set('ticketMessageTypes', 'BOT_RESPONSE');
-    const url = `/v1/ticket/sse/${params.conversationId}?${queries.toString()}`;
-    const eventSource = new EventSource(url);
-    const output = new DeferredAsyncIterable<ChatStreamEvent>();
-
-    eventSource.addEventListener('error', (evt) => {
-      output.reject(evt);
-    });
-
-    eventSource.addEventListener('message', (evt) => {
-      const data = JSON.parse(evt.data);
-      switch (data.type) {
-        case 'new-message':
-          output.push({
-            type: 'new-message',
-            createdAt: data.createdAt,
-            messageId: data.messageId,
-            content: data.content,
-          });
-          break;
-        case 'message-chunk':
-          output.push({
-            type: 'message-chunk',
-            contentDelta: data.contentDelta,
-            messageId: data.messageId,
-          });
-          break;
-        case 'message-complete':
-          output.push({
-            type: 'message-complete',
-            messageId: data.messageId,
-          });
-          break;
-        default:
-          break;
-      }
-    });
-
-    return output;
-  }
 }
-
-/**
- * Signal that a new response message has been created and new chunks
- * for this response for the messageId will follow.
- */
-export interface ChatStreamNewMessageEvent {
-  type: 'new-message';
-  // ISO 8601 timestamp of when the message was created
-  createdAt: string;
-  messageId: string;
-  // The initial content of the message, likely empty until the first chunk arrives
-  content: string;
-}
-
-/**
- * A chunk of text response for the message with the given messageId.
- */
-export interface ChatStreamMessageChunkEvent {
-  type: 'message-chunk';
-  contentDelta: string;
-  messageId: string;
-}
-
-/**
- * All chunks for a message have been received and no more chunks will follow for this message.
- */
-export interface ChatStreamMessageCompleteEvent {
-  type: 'message-complete';
-  messageId: string;
-}
-
-export type ChatStreamEvent =
-  | ChatStreamNewMessageEvent
-  | ChatStreamMessageChunkEvent
-  | ChatStreamMessageCompleteEvent;
 
 export interface ChatGenerateResponse {
   /**
@@ -473,13 +297,6 @@ export interface ChatStartParams {
   workflowId?: string;
 }
 
-export interface ChatStreamParams {
-  /**
-   * The ID of the conversation you need to stream.
-   */
-  conversationId: string;
-}
-
 export declare namespace Chat {
   export {
     type ChatGenerateResponse as ChatGenerateResponse,
@@ -488,6 +305,5 @@ export declare namespace Chat {
     type ChatGenerateParams as ChatGenerateParams,
     type ChatGetParams as ChatGetParams,
     type ChatStartParams as ChatStartParams,
-    type ChatStreamParams as ChatStreamParams,
   };
 }

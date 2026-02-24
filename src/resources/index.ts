@@ -24,4 +24,4 @@ export {
   type CustomerGetParams,
   type CustomerTokenParams,
 } from './customer/customer';
-export { Ingest, type IngestTestParams } from './ingest';
+export { Ingest, type IngestSubmitParams, type IngestTestParams } from './ingest';

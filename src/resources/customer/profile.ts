@@ -1,7 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import * as Core from '../../core';
+import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Profile extends APIResource {
   /**
@@ -13,12 +15,8 @@ export class Profile extends APIResource {
    * );
    * ```
    */
-  sync(
-    id: string,
-    body: ProfileSyncParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ProfileSyncResponse> {
-    return this._client.put(`/v1/customer/profile/${id}`, { body, ...options });
+  sync(id: string, body: ProfileSyncParams, options?: RequestOptions): APIPromise<ProfileSyncResponse> {
+    return this._client.put(path`/v1/customer/profile/${id}`, { body, ...options });
   }
 }
 

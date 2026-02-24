@@ -1,7 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import * as Core from '../../core';
+import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Remote extends APIResource {
   /**
@@ -13,11 +15,11 @@ export class Remote extends APIResource {
    * ```
    */
   update(
-    pathRemoteId: string,
+    remoteID: string,
     body: RemoteUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<RemoteUpdateResponse> {
-    return this._client.patch(`/v1/customer/remote/${pathRemoteId}`, { body, ...options });
+    options?: RequestOptions,
+  ): APIPromise<RemoteUpdateResponse> {
+    return this._client.patch(path`/v1/customer/remote/${remoteID}`, { body, ...options });
   }
 
   /**
@@ -26,8 +28,8 @@ export class Remote extends APIResource {
    * const remote = await client.customer.remote.get('remoteId');
    * ```
    */
-  get(remoteId: string, options?: Core.RequestOptions): Core.APIPromise<RemoteGetResponse> {
-    return this._client.get(`/v1/customer/remote/${remoteId}`, options);
+  get(remoteID: string, options?: RequestOptions): APIPromise<RemoteGetResponse> {
+    return this._client.get(path`/v1/customer/remote/${remoteID}`, options);
   }
 }
 
