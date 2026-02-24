@@ -1,6 +1,6 @@
 {
   "pkg": "@lorikeetai/node-sdk",
-  "githubRepo": "https://github.com/stainless-sdks/lorikeet-typescript",
+  "githubRepo": "https://github.com/optechai/node-sdk",
   "clientClass": "Lorikeet",
   "methods": [
     {
