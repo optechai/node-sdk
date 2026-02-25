@@ -110,7 +110,8 @@ export async function toFile(
   name ||= getName(value);
 
   if (!options?.type) {
-    const type = parts.find((part) => typeof part === 'object' && 'type' in part && part.type);
+    const part = parts.find((part) => typeof part === 'object' && 'type' in part && part.type);
+    const type = part && typeof part === 'object' && 'type' in part ? (part as { type: string }).type : undefined;
     if (typeof type === 'string') {
       options = { ...options, type };
     }
