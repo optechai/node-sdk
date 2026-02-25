@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import { createHmac } from 'node:crypto';
 import type { RequestInit, RequestInfo, BodyInit } from './internal/builtin-types';
 import type { HTTPMethod, PromiseOrValue, MergedRequestInit, FinalizedRequestInit } from './internal/types';
 import { uuid4 } from './internal/utils/uuid';
@@ -260,7 +261,8 @@ export class Lorikeet {
   protected async lorikeetSignatureAuthV1Auth(
     opts: FinalRequestOptions,
   ): Promise<NullableHeaders | undefined> {
-    return buildHeaders([{ 'x-lorikeet-signature': this.clientSecret }]);
+    // Signature is computed in prepareRequest where the serialized body is available
+    return undefined;
   }
 
   /**
@@ -337,7 +339,20 @@ export class Lorikeet {
   protected async prepareRequest(
     request: RequestInit,
     { url, options }: { url: string; options: FinalRequestOptions },
-  ): Promise<void> {}
+  ): Promise<void> {
+    const body = request.body;
+    const hmac = createHmac('sha256', this.clientSecret);
+    if (typeof body === 'string') {
+      hmac.update(body);
+    } else if (Buffer.isBuffer(body) || body instanceof Uint8Array) {
+      hmac.update(body);
+    }
+    const signature = hmac.digest('base64').replace(/\+/g, '-').replace(/\//g, '_');
+
+    if (request.headers instanceof Headers) {
+      request.headers.set('x-lorikeet-signature', signature);
+    }
+  }
 
   get<Rsp>(path: string, opts?: PromiseOrValue<RequestOptions>): APIPromise<Rsp> {
     return this.methodRequest('get', path, opts);
