@@ -4,6 +4,7 @@ import { APIResource } from '../../core/resource';
 import * as ConversationAPI from './conversation';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
+import { pollUntil } from '../../lib/poll-until';
 
 export class Email extends APIResource {
   /**
@@ -49,6 +50,36 @@ export class Email extends APIResource {
    */
   start(body: EmailStartParams, options?: RequestOptions): APIPromise<EmailStartResponse> {
     return this._client.post('/v1/conversation/email/create', { body, ...options });
+  }
+
+  /**
+   * Poll until the conversation has a bot response ready.
+   *
+   * Stops when `latestMessageType` is `BOT_RESPONSE` or `PENDING_RESPONSE`,
+   * or when `status` is `Escalated` or `Error`.
+   */
+  poll(query: EmailGetParams, options?: RequestOptions): APIPromise<EmailGetResponse> {
+    return pollUntil<EmailGetResponse>(
+      () => this._client.get('/v1/conversation/email/message', { query, ...options }),
+      {
+        timeout: options?.timeout || 180_000,
+        interval: 2_000,
+        condition: (conversation) => {
+          if (conversation.status === 'Escalated' || conversation.status === 'Error') {
+            return true;
+          }
+
+          if (
+            conversation.latestMessageType === 'BOT_RESPONSE' ||
+            conversation.latestMessageType === 'PENDING_RESPONSE'
+          ) {
+            return true;
+          }
+
+          return false;
+        },
+      },
+    ) as APIPromise<EmailGetResponse>;
   }
 }
 

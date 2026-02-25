@@ -8,6 +8,11 @@ export {
   type ChatGenerateParams,
   type ChatGetParams,
   type ChatStartParams,
+  type ChatStreamParams,
+  type ChatStreamEvent,
+  type ChatStreamNewMessageEvent,
+  type ChatStreamMessageChunkEvent,
+  type ChatStreamMessageCompleteEvent,
 } from './chat';
 export { Conversation, type AttachmentDto, type TicketEvent, type TicketMessageDto } from './conversation';
 export {

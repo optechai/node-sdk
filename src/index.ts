@@ -20,3 +20,4 @@ export {
   PermissionDeniedError,
   UnprocessableEntityError,
 } from './core/error';
+export { generateSignature } from './lib/generate-signature';

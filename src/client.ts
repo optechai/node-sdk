@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { createHmac } from 'node:crypto';
+import { generateSignature } from './lib/generate-signature';
 import type { RequestInit, RequestInfo, BodyInit } from './internal/builtin-types';
 import type { HTTPMethod, PromiseOrValue, MergedRequestInit, FinalizedRequestInit } from './internal/types';
 import { uuid4 } from './internal/utils/uuid';
@@ -332,13 +332,11 @@ export class Lorikeet {
     { url, options }: { url: string; options: FinalRequestOptions },
   ): Promise<void> {
     const body = request.body;
-    const hmac = createHmac('sha256', this.clientSecret);
-    if (typeof body === 'string') {
-      hmac.update(body);
-    } else if (Buffer.isBuffer(body) || body instanceof Uint8Array) {
-      hmac.update(body);
-    }
-    const signature = hmac.digest('base64').replace(/\+/g, '-').replace(/\//g, '_');
+    const payload =
+      typeof body === 'string' ? body
+      : Buffer.isBuffer(body) || body instanceof Uint8Array ? body
+      : undefined;
+    const signature = generateSignature(payload, this.clientSecret);
 
     if (request.headers instanceof Headers) {
       request.headers.set('x-lorikeet-signature', signature);
