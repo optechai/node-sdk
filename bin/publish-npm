@@ -2,10 +2,9 @@
 
 set -eux
 
-pnpm config set '//registry.npmjs.org/:_authToken' "$NPM_TOKEN"
+npm config set '//registry.npmjs.org/:_authToken' "$NPM_TOKEN"
 
-pnpm build
-
+yarn build
 cd dist
 
 # Get package name and version from package.json
@@ -59,9 +58,4 @@ else
 fi
 
 # Publish with the appropriate tag
-pnpm publish --access public --tag "$TAG" --no-git-checks
-
-# associate the current version with the next tag
-if [[ "$TAG" != "latest" ]]; then
-  pnpm dist-tag add "@lorikeetai/node-sdk@$VERSION" next
-fi
+yarn publish --tag "$TAG"

@@ -1,17 +1,15 @@
 {
   "include": ["src", "tests", "examples"],
-  "exclude": ["src/_shims/**/*-deno.ts"],
+  "exclude": [],
   "compilerOptions": {
     "target": "es2020",
-    "lib": ["es2022"],
+    "lib": ["es2020"],
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "baseUrl": "./",
     "paths": {
-      "@lorikeetai/node-sdk/_shims/auto/*": ["src/_shims/auto/*-node"],
-      "@lorikeetai/node-sdk/*": ["src/*"],
-      "@lorikeetai/node-sdk": ["src/index.ts"]
+      "@lorikeetai/node-sdk/*": ["./src/*"],
+      "@lorikeetai/node-sdk": ["./src/index.ts"]
     },
     "noEmit": true,
 

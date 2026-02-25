@@ -1,10 +1,13 @@
 ## Setting up the environment
 
+This repository uses [`yarn@v1`](https://classic.yarnpkg.com/lang/en/docs/install).
+Other package managers may work but are not officially supported for development.
+
 To set up the repository, run:
 
 ```sh
-$ pnpm i
-$ pnpm build
+$ yarn
+$ yarn build
 ```
 
 This will install all the required dependencies and build output files to `dist/`.
@@ -29,7 +32,7 @@ All files in the `examples/` directory are not modified by the generator and can
 ```sh
 $ chmod +x examples/<your-example>.ts
 # run the example against your api
-pnpm tsn -T examples/<your-example>.ts
+$ yarn tsn -T examples/<your-example>.ts
 ```
 
 ## Using the repository from source
@@ -49,10 +52,10 @@ Alternatively, to link a local copy of the repo:
 $ git clone https://www.github.com/optechai/node-sdk
 $ cd node-sdk
 
-# With pnpm
-$ pnpm link
+# With yarn
+$ yarn link
 $ cd ../my-package
-$ pnpm link @lorikeetai/node-sdk
+$ yarn link @lorikeetai/node-sdk
 
 # With pnpm
 $ pnpm link --global
@@ -69,7 +72,7 @@ $ ./scripts/mock
 ```
 
 ```sh
-$ pnpm run test
+$ yarn run test
 ```
 
 ## Linting and formatting
@@ -80,13 +83,13 @@ This repository uses [prettier](https://www.npmjs.com/package/prettier) and
 To lint:
 
 ```sh
-$ pnpm lint
+$ yarn lint
 ```
 
 To format and fix all lint issues automatically:
 
 ```sh
-$ pnpm fix
+$ yarn fix
 ```
 
 ## Publishing and releases

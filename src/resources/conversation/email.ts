@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import * as Core from '../../core';
-import { pollUntil } from '@lorikeetai/node-sdk/lib/poll-until';
+import { APIResource } from '../../core/resource';
 import * as ConversationAPI from './conversation';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { pollUntil } from '../../lib/poll-until';
 
 export class Email extends APIResource {
   /**
@@ -22,7 +23,7 @@ export class Email extends APIResource {
    * });
    * ```
    */
-  generate(body: EmailGenerateParams, options?: Core.RequestOptions): Core.APIPromise<EmailGenerateResponse> {
+  generate(body: EmailGenerateParams, options?: RequestOptions): APIPromise<EmailGenerateResponse> {
     return this._client.post('/v1/conversation/email/message', { body, ...options });
   }
 
@@ -34,7 +35,7 @@ export class Email extends APIResource {
    * });
    * ```
    */
-  get(query: EmailGetParams, options?: Core.RequestOptions): Core.APIPromise<EmailGetResponse> {
+  get(query: EmailGetParams, options?: RequestOptions): APIPromise<EmailGetResponse> {
     return this._client.get('/v1/conversation/email/message', { query, ...options });
   }
 
@@ -47,23 +48,23 @@ export class Email extends APIResource {
    * });
    * ```
    */
-  start(body: EmailStartParams, options?: Core.RequestOptions): Core.APIPromise<EmailStartResponse> {
+  start(body: EmailStartParams, options?: RequestOptions): APIPromise<EmailStartResponse> {
     return this._client.post('/v1/conversation/email/create', { body, ...options });
   }
 
   /**
-   * __chat.get__
+   * Poll until the conversation has a bot response ready.
    *
-   * Polls until it returns a BOT chat message for a conversation.
+   * Stops when `latestMessageType` is `BOT_RESPONSE` or `PENDING_RESPONSE`,
+   * or when `status` is `Escalated` or `Error`.
    */
-  poll(query: EmailGetParams, options?: Core.RequestOptions): Core.APIPromise<EmailGetResponse> {
+  poll(query: EmailGetParams, options?: RequestOptions): APIPromise<EmailGetResponse> {
     return pollUntil<EmailGetResponse>(
-      () => this._client.get('/v1/conversation/chat/message', { query, ...options }),
+      () => this._client.get('/v1/conversation/email/message', { query, ...options }),
       {
         timeout: options?.timeout || 180_000,
         interval: 2_000,
         condition: (conversation) => {
-          // Don't poll if the conversation is escalated or in error
           if (conversation.status === 'Escalated' || conversation.status === 'Error') {
             return true;
           }
@@ -78,7 +79,7 @@ export class Email extends APIResource {
           return false;
         },
       },
-    ) as Core.APIPromise<EmailGetResponse>;
+    ) as APIPromise<EmailGetResponse>;
   }
 }
 

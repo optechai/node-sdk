@@ -1,7 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class APIKeys extends APIResource {
   /**
@@ -13,7 +16,7 @@ export class APIKeys extends APIResource {
    * const apiKey = await client.apiKeys.create();
    * ```
    */
-  create(body: APIKeyCreateParams, options?: Core.RequestOptions): Core.APIPromise<APIKeyCreateResponse> {
+  create(body: APIKeyCreateParams, options?: RequestOptions): APIPromise<APIKeyCreateResponse> {
     return this._client.post('/v1/api-keys', { body, ...options });
   }
 
@@ -25,7 +28,7 @@ export class APIKeys extends APIResource {
    * const apiKeys = await client.apiKeys.list();
    * ```
    */
-  list(options?: Core.RequestOptions): Core.APIPromise<APIKeyListResponse> {
+  list(options?: RequestOptions): APIPromise<APIKeyListResponse> {
     return this._client.get('/v1/api-keys', options);
   }
 
@@ -39,10 +42,10 @@ export class APIKeys extends APIResource {
    * );
    * ```
    */
-  delete(id: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.delete(`/v1/api-keys/${id}`, {
+  delete(id: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/v1/api-keys/${id}`, {
       ...options,
-      headers: { Accept: '*/*', ...options?.headers },
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 
@@ -56,8 +59,8 @@ export class APIKeys extends APIResource {
    * );
    * ```
    */
-  get(id: string, options?: Core.RequestOptions): Core.APIPromise<APIKeyGetResponse> {
-    return this._client.get(`/v1/api-keys/${id}`, options);
+  get(id: string, options?: RequestOptions): APIPromise<APIKeyGetResponse> {
+    return this._client.get(path`/v1/api-keys/${id}`, options);
   }
 }
 
