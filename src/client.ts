@@ -248,21 +248,12 @@ export class Lorikeet {
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    return buildHeaders([
-      await this.lorikeetClientIDAuth(opts),
-      await this.lorikeetSignatureAuthV1Auth(opts),
-    ]);
+    // x-lorikeet-signature is computed in prepareRequest where the serialized body is available
+    return buildHeaders([await this.lorikeetClientIDAuth(opts)]);
   }
 
   protected async lorikeetClientIDAuth(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
     return buildHeaders([{ Authorization: `Bearer ${this.clientID}` }]);
-  }
-
-  protected async lorikeetSignatureAuthV1Auth(
-    opts: FinalRequestOptions,
-  ): Promise<NullableHeaders | undefined> {
-    // Signature is computed in prepareRequest where the serialized body is available
-    return undefined;
   }
 
   /**
