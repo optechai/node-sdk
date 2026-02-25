@@ -24,10 +24,11 @@ import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
   clientID: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
+  clientSecret: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
 });
 
 const response = await client.conversation.chat.start({
-  customerId: 'blah',
+  customerId: 'customerId',
   publicKey: 'publicKey',
 });
 
@@ -44,10 +45,11 @@ import Lorikeet from '@lorikeetai/node-sdk';
 
 const client = new Lorikeet({
   clientID: process.env['LORIKEET_CLIENT_ID'], // This is the default and can be omitted
+  clientSecret: process.env['LORIKEET_CLIENT_SECRET'], // This is the default and can be omitted
 });
 
 const params: Lorikeet.Conversation.ChatStartParams = {
-  customerId: 'blah',
+  customerId: 'customerId',
   publicKey: 'publicKey',
 };
 const response: Lorikeet.Conversation.ChatStartResponse = await client.conversation.chat.start(
@@ -66,7 +68,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const response = await client.conversation.chat
-  .start({ customerId: 'blah', publicKey: 'publicKey' })
+  .start({ customerId: 'customerId', publicKey: 'publicKey' })
   .catch(async (err) => {
     if (err instanceof Lorikeet.APIError) {
       console.log(err.status); // 400
@@ -107,7 +109,7 @@ const client = new Lorikeet({
 });
 
 // Or, configure per-request:
-await client.conversation.chat.start({ customerId: 'blah', publicKey: 'publicKey' }, {
+await client.conversation.chat.start({ customerId: 'customerId', publicKey: 'publicKey' }, {
   maxRetries: 5,
 });
 ```
@@ -124,7 +126,7 @@ const client = new Lorikeet({
 });
 
 // Override per-request:
-await client.conversation.chat.start({ customerId: 'blah', publicKey: 'publicKey' }, {
+await client.conversation.chat.start({ customerId: 'customerId', publicKey: 'publicKey' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -148,13 +150,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new Lorikeet();
 
 const response = await client.conversation.chat
-  .start({ customerId: 'blah', publicKey: 'publicKey' })
+  .start({ customerId: 'customerId', publicKey: 'publicKey' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client.conversation.chat
-  .start({ customerId: 'blah', publicKey: 'publicKey' })
+  .start({ customerId: 'customerId', publicKey: 'publicKey' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.conversationId);

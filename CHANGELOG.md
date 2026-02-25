@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.0 (2026-02-25)
+
+Full Changelog: [v2.1.0...v2.2.0](https://github.com/optechai/node-sdk/compare/v2.1.0...v2.2.0)
+
+### Features
+
+* **api:** manual updates ([fb6f86a](https://github.com/optechai/node-sdk/commit/fb6f86aeaa9ef182297c3cff0180b50c6a3a8ce7))
+
 ## 2.1.0 (2026-02-25)
 
 Full Changelog: [v0.1.0...v2.1.0](https://github.com/optechai/node-sdk/compare/v0.1.0...v2.1.0)
