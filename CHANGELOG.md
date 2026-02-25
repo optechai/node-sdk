@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.0 (2026-02-25)
+
+Full Changelog: [v0.1.0...v2.1.0](https://github.com/optechai/node-sdk/compare/v0.1.0...v2.1.0)
+
+### Chores
+
+* update SDK settings ([e207c4a](https://github.com/optechai/node-sdk/commit/e207c4a0f935d40b79fb30584b22e0303b8eeb27))
+* update SDK settings ([f359b1f](https://github.com/optechai/node-sdk/commit/f359b1f53ce498599b903a2a7e809df033165c4a))
+* update SDK settings ([64b66be](https://github.com/optechai/node-sdk/commit/64b66becba11270688b6c72a844c7a639a1eb9f9))
+
 ## 0.1.0 (2026-02-25)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/optechai/node-sdk/compare/v0.0.1...v0.1.0)
