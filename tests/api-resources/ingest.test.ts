@@ -33,7 +33,7 @@ describe('resource ingest', () => {
   });
 
   test('test: only required params', async () => {
-    const responsePromise = client.ingest.test({}, { inputs: {} });
+    const responsePromise = client.ingest.test('toolId', { inputs: {} });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -44,13 +44,10 @@ describe('resource ingest', () => {
   });
 
   test('test: required and optional params', async () => {
-    const response = await client.ingest.test(
-      {},
-      {
-        inputs: {},
-        envId: 'envId',
-      },
-    );
+    const response = await client.ingest.test('toolId', {
+      inputs: {},
+      envId: 'envId',
+    });
   });
 
   test('validate', async () => {

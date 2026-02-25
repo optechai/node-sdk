@@ -15,7 +15,7 @@ export class Ingest extends APIResource {
     });
   }
 
-  test(toolID: unknown, body: IngestTestParams, options?: RequestOptions): APIPromise<void> {
+  test(toolID: string, body: IngestTestParams, options?: RequestOptions): APIPromise<void> {
     return this._client.post(path`/ingest/test/${toolID}`, {
       body,
       ...options,
