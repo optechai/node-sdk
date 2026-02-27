@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.1 (2026-02-27)
+
+Full Changelog: [v2.2.0...v2.2.1](https://github.com/optechai/node-sdk/compare/v2.2.0...v2.2.1)
+
+### Chores
+
+* **internal:** move stringifyQuery implementation to internal function ([1100b04](https://github.com/optechai/node-sdk/commit/1100b04a0f604b92db8dd08d34367cf4fb03942a))
+
 ## 2.2.0 (2026-02-25)
 
 Full Changelog: [v2.1.0...v2.2.0](https://github.com/optechai/node-sdk/compare/v2.1.0...v2.2.0)
