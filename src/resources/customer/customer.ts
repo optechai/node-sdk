@@ -9,6 +9,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Endpoints related to customer data
+ */
 export class Customer extends APIResource {
   remote: RemoteAPI.Remote = new RemoteAPI.Remote(this._client);
   profile: ProfileAPI.Profile = new ProfileAPI.Profile(this._client);

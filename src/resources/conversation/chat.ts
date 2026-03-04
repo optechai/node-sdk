@@ -8,6 +8,9 @@ import { pollUntil } from '../../lib/poll-until';
 import { DeferredAsyncIterable } from '../../lib/promise';
 import { EventSource } from 'eventsource';
 
+/**
+ * Endpoints for managing conversations
+ */
 export class Chat extends APIResource {
   /**
    * @example

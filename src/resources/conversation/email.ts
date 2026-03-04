@@ -6,6 +6,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { pollUntil } from '../../lib/poll-until';
 
+/**
+ * Endpoints for managing conversations
+ */
 export class Email extends APIResource {
   /**
    * @example

@@ -5,6 +5,9 @@ import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 
+/**
+ * Endpoints for managing conversations
+ */
 export class Voice extends APIResource {
   /**
    * @example
