@@ -771,7 +771,13 @@ export class Lorikeet {
   static toFile = Uploads.toFile;
 
   conversation: API.Conversation = new API.Conversation(this);
+  /**
+   * Endpoints related to customer data
+   */
   customer: API.Customer = new API.Customer(this);
+  /**
+   * Endpoints for ingesting subscriber data
+   */
   ingest: API.Ingest = new API.Ingest(this);
   apiKeys: API.APIKeys = new API.APIKeys(this);
 }

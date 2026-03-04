@@ -6,6 +6,9 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Endpoints for ingesting subscriber data
+ */
 export class Ingest extends APIResource {
   submit(workflowID: string, params: IngestSubmitParams, options?: RequestOptions): APIPromise<void> {
     const { toolId, ticketId, inputHash } = params;

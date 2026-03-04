@@ -5,6 +5,9 @@ import * as ConversationAPI from './conversation';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
+/**
+ * Endpoints for managing conversations
+ */
 export class Email extends APIResource {
   /**
    * @example
