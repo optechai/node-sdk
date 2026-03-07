@@ -191,7 +191,7 @@ export interface RemoteUpdateParams {
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  body_remoteId?: string;
+  remoteId?: string;
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for
