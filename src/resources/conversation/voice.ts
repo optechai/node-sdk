@@ -40,6 +40,12 @@ export interface VoiceOutboundParams {
   brandId?: string;
 
   /**
+   * The ID of the channel config to use for the call. If not provided, the first
+   * active voice channel config will be used.
+   */
+  channelConfigId?: string;
+
+  /**
    * The ID of the customer to call. If not provided, the customer will be looked up
    * by phone number. If no customer is found, a new customer will be created.
    */
