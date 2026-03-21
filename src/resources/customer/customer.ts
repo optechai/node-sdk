@@ -350,6 +350,11 @@ export interface CustomerUpdateParams {
 
 export interface CustomerGetParams {
   /**
+   * The email address of the customer
+   */
+  email?: string;
+
+  /**
    * The phone number of the customer
    */
   phoneNumber?: string;

@@ -46,7 +46,11 @@ describe('resource customer', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.customer.get(
-        { phoneNumber: 'phoneNumber', remoteId: 'remoteId' },
+        {
+          email: 'email',
+          phoneNumber: 'phoneNumber',
+          remoteId: 'remoteId',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Lorikeet.NotFoundError);
