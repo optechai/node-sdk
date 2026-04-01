@@ -50,6 +50,7 @@ describe('resource customer', () => {
           email: 'email',
           phoneNumber: 'phoneNumber',
           remoteId: 'remoteId',
+          subscriberCustomerId: 'subscriberCustomerId',
         },
         { path: '/_stainless_unknown_path' },
       ),

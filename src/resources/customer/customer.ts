@@ -363,6 +363,11 @@ export interface CustomerGetParams {
    * The remote id of the customer in your system
    */
   remoteId?: string;
+
+  /**
+   * The id of the customer in your own primary database or a unique identifier
+   */
+  subscriberCustomerId?: string;
 }
 
 export interface CustomerTokenParams {
