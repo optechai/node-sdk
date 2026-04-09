@@ -90,7 +90,19 @@ export interface EmailGenerateResponse {
   /**
    * The status of the conversation
    */
-  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
+  status:
+    | 'Unprocessed'
+    | 'Processing'
+    | 'Unhandled'
+    | 'Triaged'
+    | 'DraftResponse'
+    | 'Responded'
+    | 'Error'
+    | 'Escalated'
+    | 'EscalatedFailed'
+    | 'Processed'
+    | 'Ignored'
+    | 'Tagged';
 
   /**
    * The tags of the conversation
@@ -138,7 +150,19 @@ export interface EmailGetResponse {
   /**
    * The status of the conversation
    */
-  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
+  status:
+    | 'Unprocessed'
+    | 'Processing'
+    | 'Unhandled'
+    | 'Triaged'
+    | 'DraftResponse'
+    | 'Responded'
+    | 'Error'
+    | 'Escalated'
+    | 'EscalatedFailed'
+    | 'Processed'
+    | 'Ignored'
+    | 'Tagged';
 
   /**
    * The tags of the conversation
@@ -176,7 +200,19 @@ export interface EmailStartResponse {
   /**
    * The status of the conversation
    */
-  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
+  status:
+    | 'Unprocessed'
+    | 'Processing'
+    | 'Unhandled'
+    | 'Triaged'
+    | 'DraftResponse'
+    | 'Responded'
+    | 'Error'
+    | 'Escalated'
+    | 'EscalatedFailed'
+    | 'Processed'
+    | 'Ignored'
+    | 'Tagged';
 
   /**
    * The tags of the conversation
