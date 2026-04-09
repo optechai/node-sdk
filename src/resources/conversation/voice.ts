@@ -35,6 +35,11 @@ export interface VoiceOutboundParams {
   phoneNumber: string;
 
   /**
+   * The ID of the agent to use for the call. Cannot be combined with workflowId.
+   */
+  agentId?: string;
+
+  /**
    * The ID of the brand to make the call from
    */
   brandId?: string;
@@ -59,7 +64,7 @@ export interface VoiceOutboundParams {
   inputData?: unknown;
 
   /**
-   * The ID of the workflow to use for the call
+   * The ID of the workflow to use for the call. Cannot be combined with agentId.
    */
   workflowId?: string;
 }
