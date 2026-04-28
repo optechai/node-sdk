@@ -1,5 +1,57 @@
 # Changelog
 
+## 2.3.0 (2026-04-28)
+
+Full Changelog: [v2.2.0...v2.3.0](https://github.com/optechai/node-sdk/compare/v2.2.0...v2.3.0)
+
+### Features
+
+* **api:** api update ([dfa7190](https://github.com/optechai/node-sdk/commit/dfa7190f839f0abac73cf4bbef4c2cc8ea936f3b))
+* **api:** api update ([e28be9c](https://github.com/optechai/node-sdk/commit/e28be9cb0d0668c2ea24da9241338760bd0354ab))
+* **api:** api update ([b5f00f0](https://github.com/optechai/node-sdk/commit/b5f00f04f51c86c01713d264436387c3cf3860f6))
+* **api:** api update ([dfa39af](https://github.com/optechai/node-sdk/commit/dfa39af95504d9951bd7cb12a3d5597f3bcd4b2c))
+* **api:** api update ([e5c3ec1](https://github.com/optechai/node-sdk/commit/e5c3ec163d8b241e1fb1ef2a91195f9666347f5f))
+* **api:** api update ([915f13a](https://github.com/optechai/node-sdk/commit/915f13ad93a4120bd247655864e13072e7552ad8))
+* support setting headers via env ([d9c6d9b](https://github.com/optechai/node-sdk/commit/d9c6d9b2955c59365463bcae47bafb69bec14435))
+
+
+### Bug Fixes
+
+* **client:** improve parameter names ([a1d28db](https://github.com/optechai/node-sdk/commit/a1d28db85ee52ebc7552771016d51fb2fccf0409))
+* **client:** preserve URL params already embedded in path ([5f67b01](https://github.com/optechai/node-sdk/commit/5f67b01397c02910ff21bff9fe96f09b3f2f9003))
+* **internal:** gitignore generated `oidc` dir ([8f3796e](https://github.com/optechai/node-sdk/commit/8f3796eeeebd06366fd760c9ac0214426db30daf))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([bb1aa54](https://github.com/optechai/node-sdk/commit/bb1aa54be6503de9c75b60c8fc092b40d2b395b5))
+* **ci:** skip uploading artifacts on stainless-internal branches ([6439a14](https://github.com/optechai/node-sdk/commit/6439a14e41de14bd0aa8a4363ecdef818189e29b))
+* **internal:** codegen related update ([8fdbf36](https://github.com/optechai/node-sdk/commit/8fdbf36ab8faef197b7f4fae2fb404e900db4451))
+* **internal:** codegen related update ([f7f2898](https://github.com/optechai/node-sdk/commit/f7f28986723bb24eb1c78175e5f6abcdb0510894))
+* **internal:** codegen related update ([4b2d4f9](https://github.com/optechai/node-sdk/commit/4b2d4f9531c42d315b296be71bc32fdfc201d2cb))
+* **internal:** codegen related update ([e231e7b](https://github.com/optechai/node-sdk/commit/e231e7b039ae5d3db070ef9655fc0bdad133b70f))
+* **internal:** codegen related update ([08b00a6](https://github.com/optechai/node-sdk/commit/08b00a63d0a9379365d39ee176c3b5c83e0bc90e))
+* **internal:** codegen related update ([198b801](https://github.com/optechai/node-sdk/commit/198b801b443d69aabf23a94b2b53846a623f9b98))
+* **internal:** more robust bootstrap script ([6848e3e](https://github.com/optechai/node-sdk/commit/6848e3ee1950202b129efee3ad6ae84bd1808607))
+* **internal:** move stringifyQuery implementation to internal function ([1100b04](https://github.com/optechai/node-sdk/commit/1100b04a0f604b92db8dd08d34367cf4fb03942a))
+* **internal:** tweak CI branches ([b57d2d7](https://github.com/optechai/node-sdk/commit/b57d2d7b3a60f571fdc389edd9df3e17be95ecd9))
+* **internal:** update dependencies to address dependabot vulnerabilities ([b58b421](https://github.com/optechai/node-sdk/commit/b58b421b221d3d607e4986f676caaeb570f2c9c6))
+* **internal:** update gitignore ([109b498](https://github.com/optechai/node-sdk/commit/109b4986f7792bb305b686f2a1cebd5eaf77596b))
+* **internal:** update multipart form array serialization ([82a7c3a](https://github.com/optechai/node-sdk/commit/82a7c3a4c83fbc55960b70367c7ac78a9c9333ce))
+* **test:** do not count install time for mock server timeout ([287d899](https://github.com/optechai/node-sdk/commit/287d899d5ee67602167a5e9c1978b7db4d89b734))
+* **tests:** bump steady to v0.19.4 ([4b429e8](https://github.com/optechai/node-sdk/commit/4b429e87a69b7724254ecec67eca2015202bea6e))
+* **tests:** bump steady to v0.19.5 ([e9d2f1d](https://github.com/optechai/node-sdk/commit/e9d2f1da9a7e311a6f84414a4ed1080782da4a90))
+* **tests:** bump steady to v0.19.6 ([6335b3c](https://github.com/optechai/node-sdk/commit/6335b3c75e55df7b1198048c37678c2fc950df13))
+* **tests:** bump steady to v0.19.7 ([7b3dc43](https://github.com/optechai/node-sdk/commit/7b3dc433f5b070af1d19a703eae2cbe9436a496a))
+* **tests:** bump steady to v0.20.1 ([b5c528a](https://github.com/optechai/node-sdk/commit/b5c528aaec446757007c47fe88b0628ca171ce83))
+* **tests:** bump steady to v0.20.2 ([aff3df9](https://github.com/optechai/node-sdk/commit/aff3df9474d7d98a47d50d36ff4bc52d7dbb1161))
+* **tests:** bump steady to v0.22.1 ([466e4b8](https://github.com/optechai/node-sdk/commit/466e4b8359ed3ee909813b22866c7ad82494ea93))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([96642b0](https://github.com/optechai/node-sdk/commit/96642b0d93c7c95a19b79e072b62e5d15c82d659))
+
 ## 2.2.0 (2026-02-25)
 
 Full Changelog: [v2.1.0...v2.2.0](https://github.com/optechai/node-sdk/compare/v2.1.0...v2.2.0)
