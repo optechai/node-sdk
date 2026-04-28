@@ -24,4 +24,4 @@ export {
   type EmailGetParams,
   type EmailStartParams,
 } from './email';
-export { Voice, type VoiceOutboundParams } from './voice';
+export { Voice, type VoiceOutboundResponse, type VoiceOutboundParams } from './voice';

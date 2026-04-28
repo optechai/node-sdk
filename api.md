@@ -36,9 +36,13 @@ Methods:
 
 ## Voice
 
+Types:
+
+- <code><a href="./src/resources/conversation/voice.ts">VoiceOutboundResponse</a></code>
+
 Methods:
 
-- <code title="post /v1/conversation/voice/outbound">client.conversation.voice.<a href="./src/resources/conversation/voice.ts">outbound</a>({ ...params }) -> void</code>
+- <code title="post /v1/conversation/voice/outbound">client.conversation.voice.<a href="./src/resources/conversation/voice.ts">outbound</a>({ ...params }) -> VoiceOutboundResponse</code>
 
 # Customer
 
