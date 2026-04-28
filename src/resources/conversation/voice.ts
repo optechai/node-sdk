@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
-import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 
 /**
@@ -12,18 +11,21 @@ export class Voice extends APIResource {
   /**
    * @example
    * ```ts
-   * await client.conversation.voice.outbound({
+   * const response = await client.conversation.voice.outbound({
    *   phoneNumber: '+61400000000',
    * });
    * ```
    */
-  outbound(body: VoiceOutboundParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.post('/v1/conversation/voice/outbound', {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  outbound(body: VoiceOutboundParams, options?: RequestOptions): APIPromise<VoiceOutboundResponse> {
+    return this._client.post('/v1/conversation/voice/outbound', { body, ...options });
   }
+}
+
+export interface VoiceOutboundResponse {
+  /**
+   * The ID of the conversation that was created
+   */
+  conversationId: string;
 }
 
 export interface VoiceOutboundParams {
@@ -70,5 +72,8 @@ export interface VoiceOutboundParams {
 }
 
 export declare namespace Voice {
-  export { type VoiceOutboundParams as VoiceOutboundParams };
+  export {
+    type VoiceOutboundResponse as VoiceOutboundResponse,
+    type VoiceOutboundParams as VoiceOutboundParams,
+  };
 }
