@@ -12,6 +12,7 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
+import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
@@ -206,6 +207,18 @@ export class Lorikeet {
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
     this.#encoder = Opts.FallbackEncoder;
 
+    const customHeadersEnv = readEnv('LORIKEET_CUSTOM_HEADERS');
+    if (customHeadersEnv) {
+      const parsed: Record<string, string> = {};
+      for (const line of customHeadersEnv.split('\n')) {
+        const colon = line.indexOf(':');
+        if (colon >= 0) {
+          parsed[line.substring(0, colon).trim()] = line.substring(colon + 1).trim();
+        }
+      }
+      options.defaultHeaders = { ...parsed, ...options.defaultHeaders };
+    }
+
     this._options = options;
 
     this.clientID = clientID;
@@ -259,21 +272,8 @@ export class Lorikeet {
   /**
    * Basic re-implementation of `qs.stringify` for primitive types.
    */
-  protected stringifyQuery(query: Record<string, unknown>): string {
-    return Object.entries(query)
-      .filter(([_, value]) => typeof value !== 'undefined')
-      .map(([key, value]) => {
-        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-        }
-        if (value === null) {
-          return `${encodeURIComponent(key)}=`;
-        }
-        throw new Errors.LorikeetError(
-          `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
-        );
-      })
-      .join('&');
+  protected stringifyQuery(query: object | Record<string, unknown>): string {
+    return stringifyQuery(query);
   }
 
   private getUserAgent(): string {
@@ -305,12 +305,13 @@ export class Lorikeet {
       : new URL(baseURL + (baseURL.endsWith('/') && path.startsWith('/') ? path.slice(1) : path));
 
     const defaultQuery = this.defaultQuery();
-    if (!isEmptyObj(defaultQuery)) {
-      query = { ...defaultQuery, ...query };
+    const pathQuery = Object.fromEntries(url.searchParams);
+    if (!isEmptyObj(defaultQuery) || !isEmptyObj(pathQuery)) {
+      query = { ...pathQuery, ...defaultQuery, ...query };
     }
 
     if (typeof query === 'object' && query && !Array.isArray(query)) {
-      url.search = this.stringifyQuery(query as Record<string, unknown>);
+      url.search = this.stringifyQuery(query);
     }
 
     return url.toString();
@@ -626,9 +627,9 @@ export class Lorikeet {
       }
     }
 
-    // If the API asks us to wait a certain amount of time (and it's a reasonable amount),
-    // just do what it says, but otherwise calculate a default
-    if (!(timeoutMillis && 0 <= timeoutMillis && timeoutMillis < 60 * 1000)) {
+    // If the API asks us to wait a certain amount of time, just do what it
+    // says, but otherwise calculate a default
+    if (timeoutMillis === undefined) {
       const maxRetries = options.maxRetries ?? this.maxRetries;
       timeoutMillis = this.calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries);
     }
@@ -760,7 +761,7 @@ export class Lorikeet {
     ) {
       return {
         bodyHeaders: { 'content-type': 'application/x-www-form-urlencoded' },
-        body: this.stringifyQuery(body as Record<string, unknown>),
+        body: this.stringifyQuery(body),
       };
     } else {
       return this.#encoder({ body, headers });
@@ -787,7 +788,13 @@ export class Lorikeet {
   static toFile = Uploads.toFile;
 
   conversation: API.Conversation = new API.Conversation(this);
+  /**
+   * Endpoints related to customer data
+   */
   customer: API.Customer = new API.Customer(this);
+  /**
+   * Endpoints for ingesting subscriber data
+   */
   ingest: API.Ingest = new API.Ingest(this);
   apiKeys: API.APIKeys = new API.APIKeys(this);
 }

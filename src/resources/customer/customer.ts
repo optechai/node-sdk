@@ -9,6 +9,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Endpoints related to customer data
+ */
 export class Customer extends APIResource {
   remote: RemoteAPI.Remote = new RemoteAPI.Remote(this._client);
   profile: ProfileAPI.Profile = new ProfileAPI.Profile(this._client);
@@ -347,6 +350,11 @@ export interface CustomerUpdateParams {
 
 export interface CustomerGetParams {
   /**
+   * The email address of the customer
+   */
+  email?: string;
+
+  /**
    * The phone number of the customer
    */
   phoneNumber?: string;
@@ -355,6 +363,11 @@ export interface CustomerGetParams {
    * The remote id of the customer in your system
    */
   remoteId?: string;
+
+  /**
+   * The id of the customer in your own primary database or a unique identifier
+   */
+  subscriberCustomerId?: string;
 }
 
 export interface CustomerTokenParams {

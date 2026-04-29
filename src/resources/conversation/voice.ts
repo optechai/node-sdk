@@ -2,25 +2,30 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
-import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 
+/**
+ * Endpoints for managing conversations
+ */
 export class Voice extends APIResource {
   /**
    * @example
    * ```ts
-   * await client.conversation.voice.outbound({
+   * const response = await client.conversation.voice.outbound({
    *   phoneNumber: '+61400000000',
    * });
    * ```
    */
-  outbound(body: VoiceOutboundParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.post('/v1/conversation/voice/outbound', {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  outbound(body: VoiceOutboundParams, options?: RequestOptions): APIPromise<VoiceOutboundResponse> {
+    return this._client.post('/v1/conversation/voice/outbound', { body, ...options });
   }
+}
+
+export interface VoiceOutboundResponse {
+  /**
+   * The ID of the conversation that was created
+   */
+  conversationId: string;
 }
 
 export interface VoiceOutboundParams {
@@ -32,9 +37,20 @@ export interface VoiceOutboundParams {
   phoneNumber: string;
 
   /**
+   * The ID of the agent to use for the call. Cannot be combined with workflowId.
+   */
+  agentId?: string;
+
+  /**
    * The ID of the brand to make the call from
    */
   brandId?: string;
+
+  /**
+   * The ID of the channel config to use for the call. If not provided, the first
+   * active voice channel config will be used.
+   */
+  channelConfigId?: string;
 
   /**
    * The ID of the customer to call. If not provided, the customer will be looked up
@@ -50,11 +66,14 @@ export interface VoiceOutboundParams {
   inputData?: unknown;
 
   /**
-   * The ID of the workflow to use for the call
+   * The ID of the workflow to use for the call. Cannot be combined with agentId.
    */
   workflowId?: string;
 }
 
 export declare namespace Voice {
-  export { type VoiceOutboundParams as VoiceOutboundParams };
+  export {
+    type VoiceOutboundResponse as VoiceOutboundResponse,
+    type VoiceOutboundParams as VoiceOutboundParams,
+  };
 }

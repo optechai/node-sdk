@@ -23,7 +23,9 @@ describe('resource voice', () => {
   test('outbound: required and optional params', async () => {
     const response = await client.conversation.voice.outbound({
       phoneNumber: '+61400000000',
+      agentId: 'agentId',
       brandId: 'brandId',
+      channelConfigId: 'channelConfigId',
       customerId: 'customerId',
       inputData: {},
       workflowId: 'workflowId',

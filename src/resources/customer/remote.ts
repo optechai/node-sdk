@@ -5,6 +5,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Endpoints related to customer data
+ */
 export class Remote extends APIResource {
   /**
    * @example
@@ -188,7 +191,7 @@ export interface RemoteUpdateParams {
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  body_remoteId?: string;
+  remoteId?: string;
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for

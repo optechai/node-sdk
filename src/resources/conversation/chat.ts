@@ -8,6 +8,9 @@ import { pollUntil } from '../../lib/poll-until';
 import { DeferredAsyncIterable } from '../../lib/promise';
 import { EventSource } from 'eventsource';
 
+/**
+ * Endpoints for managing conversations
+ */
 export class Chat extends APIResource {
   /**
    * @example
@@ -191,7 +194,19 @@ export interface ChatGenerateResponse {
   /**
    * The status of the conversation
    */
-  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
+  status:
+    | 'Unprocessed'
+    | 'Processing'
+    | 'Unhandled'
+    | 'Triaged'
+    | 'DraftResponse'
+    | 'Responded'
+    | 'Error'
+    | 'Escalated'
+    | 'EscalatedFailed'
+    | 'Processed'
+    | 'Ignored'
+    | 'Tagged';
 
   /**
    * The tags of the conversation
@@ -239,7 +254,19 @@ export interface ChatGetResponse {
   /**
    * The status of the conversation
    */
-  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
+  status:
+    | 'Unprocessed'
+    | 'Processing'
+    | 'Unhandled'
+    | 'Triaged'
+    | 'DraftResponse'
+    | 'Responded'
+    | 'Error'
+    | 'Escalated'
+    | 'EscalatedFailed'
+    | 'Processed'
+    | 'Ignored'
+    | 'Tagged';
 
   /**
    * The tags of the conversation
@@ -277,7 +304,19 @@ export interface ChatStartResponse {
   /**
    * The status of the conversation
    */
-  status: 'Unprocessed' | 'Processing' | 'Unhandled' | 'Responded' | 'Error' | 'Escalated' | 'Processed';
+  status:
+    | 'Unprocessed'
+    | 'Processing'
+    | 'Unhandled'
+    | 'Triaged'
+    | 'DraftResponse'
+    | 'Responded'
+    | 'Error'
+    | 'Escalated'
+    | 'EscalatedFailed'
+    | 'Processed'
+    | 'Ignored'
+    | 'Tagged';
 
   /**
    * The tags of the conversation
