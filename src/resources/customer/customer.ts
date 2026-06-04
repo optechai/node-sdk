@@ -93,6 +93,12 @@ export interface CustomerCreateResponse {
   email?: string;
 
   /**
+   * The messaging-platform user id of the customer (e.g. the WhatsApp BSUID). Not a
+   * phone number.
+   */
+  externalUserId?: string;
+
+  /**
    * The first name of the customer
    */
   firstName?: string;
@@ -153,6 +159,12 @@ export interface CustomerUpdateResponse {
   email?: string;
 
   /**
+   * The messaging-platform user id of the customer (e.g. the WhatsApp BSUID). Not a
+   * phone number.
+   */
+  externalUserId?: string;
+
+  /**
    * The first name of the customer
    */
   firstName?: string;
@@ -211,6 +223,12 @@ export interface CustomerGetResponse {
    * The email of the customer
    */
   email?: string;
+
+  /**
+   * The messaging-platform user id of the customer (e.g. the WhatsApp BSUID). Not a
+   * phone number.
+   */
+  externalUserId?: string;
 
   /**
    * The first name of the customer
@@ -353,6 +371,12 @@ export interface CustomerGetParams {
    * The email address of the customer
    */
   email?: string;
+
+  /**
+   * The messaging-platform user id of the customer (e.g. the WhatsApp BSUID). Not a
+   * phone number.
+   */
+  externalUserId?: string;
 
   /**
    * The phone number of the customer
