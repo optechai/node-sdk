@@ -6,6 +6,7 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { pollUntil } from '../../lib/poll-until';
 import { DeferredAsyncIterable } from '../../lib/promise';
+import { generateSignature } from '../../lib/generate-signature';
 import { EventSource } from 'eventsource';
 
 /**
@@ -119,7 +120,18 @@ export class Chat extends APIResource {
     queries.set('sseMessageTypes', 'new-message,message-chunk,message-complete');
     queries.set('ticketMessageTypes', 'BOT_RESPONSE');
     const url = `${this._client.baseURL}/v1/ticket/sse/${params.conversationId}?${queries.toString()}`;
-    const eventSource = new EventSource(url);
+    const signature = generateSignature(undefined, this._client.clientSecret);
+    const eventSource = new EventSource(url, {
+      fetch: (input, init) =>
+        fetch(input, {
+          ...init,
+          headers: {
+            ...init.headers,
+            Authorization: `Bearer ${this._client.clientID}`,
+            'x-lorikeet-signature': signature,
+          },
+        }),
+    });
     const output = new DeferredAsyncIterable<ChatStreamEvent>();
 
     eventSource.addEventListener('error', (evt) => {
