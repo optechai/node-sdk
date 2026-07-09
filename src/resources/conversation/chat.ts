@@ -331,6 +331,11 @@ export interface ChatStartParams {
   subject?: string;
 
   /**
+   * Value of variables on the conversation.
+   */
+  variables?: { [key: string]: unknown };
+
+  /**
    * The UUID of the workflow to trigger.
    */
   workflowId?: string;

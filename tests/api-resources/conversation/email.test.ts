@@ -90,6 +90,7 @@ describe('resource email', () => {
       customerId: 'customerId',
       publicKey: 'publicKey',
       subject: 'Question about order tracking number',
+      variables: { orderId: 'bar', priorityTier: 'bar' },
       workflowId: 'workflowId',
     });
   });
