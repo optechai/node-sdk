@@ -428,6 +428,12 @@ export interface ChatGetParams {
    * The ID of the conversation you need to poll.
    */
   conversationId: string;
+
+  /**
+   * Include the agent's internal notes in the transcript. Honoured only for
+   * server-to-server API credentials, and never changes `latestMessageType`.
+   */
+  includeInternalNotes?: boolean;
 }
 
 export interface ChatStartParams {
