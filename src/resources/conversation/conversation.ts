@@ -106,7 +106,7 @@ export interface TicketMessageDto {
   /**
    * The type of the message
    */
-  type: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE';
+  type: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | 'INTERNAL_MODEL_NOTE';
 }
 
 Conversation.Email = Email;

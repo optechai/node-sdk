@@ -68,7 +68,10 @@ describe('resource chat', () => {
   });
 
   test('get: required and optional params', async () => {
-    const response = await client.conversation.chat.get({ conversationId: 'conversationId' });
+    const response = await client.conversation.chat.get({
+      conversationId: 'conversationId',
+      includeInternalNotes: true,
+    });
   });
 
   test('start: only required params', async () => {

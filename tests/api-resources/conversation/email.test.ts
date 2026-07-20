@@ -68,7 +68,10 @@ describe('resource email', () => {
   });
 
   test('get: required and optional params', async () => {
-    const response = await client.conversation.email.get({ conversationId: 'conversationId' });
+    const response = await client.conversation.email.get({
+      conversationId: 'conversationId',
+      includeInternalNotes: true,
+    });
   });
 
   test('start: only required params', async () => {
