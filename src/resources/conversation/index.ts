@@ -14,7 +14,14 @@ export {
   type ChatStreamMessageChunkEvent,
   type ChatStreamMessageCompleteEvent,
 } from './chat';
-export { Conversation, type AttachmentDto, type TicketEvent, type TicketMessageDto } from './conversation';
+export {
+  Conversation,
+  type AttachmentDto,
+  type TicketEvent,
+  type TicketMessageDto,
+  type ConversationUpdateParams,
+  type ConversationUpdateResponse,
+} from './conversation';
 export {
   Email,
   type EmailGenerateResponse,

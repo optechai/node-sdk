@@ -29,6 +29,8 @@ import { Ingest, IngestSubmitParams, IngestTestParams } from './resources/ingest
 import {
   AttachmentDto,
   Conversation,
+  ConversationUpdateParams,
+  ConversationUpdateResponse,
   TicketEvent,
   TicketMessageDto,
 } from './resources/conversation/conversation';
@@ -812,6 +814,8 @@ export declare namespace Lorikeet {
     type AttachmentDto as AttachmentDto,
     type TicketEvent as TicketEvent,
     type TicketMessageDto as TicketMessageDto,
+    type ConversationUpdateParams as ConversationUpdateParams,
+    type ConversationUpdateResponse as ConversationUpdateResponse,
   };
 
   export {

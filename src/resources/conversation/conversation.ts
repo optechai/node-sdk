@@ -1,6 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 import * as ChatAPI from './chat';
 import {
   Chat,
@@ -28,6 +31,87 @@ export class Conversation extends APIResource {
   email: EmailAPI.Email = new EmailAPI.Email(this._client);
   chat: ChatAPI.Chat = new ChatAPI.Chat(this._client);
   voice: VoiceAPI.Voice = new VoiceAPI.Voice(this._client);
+
+  /**
+   * Update fields on a conversation, such as a CSAT score collected in your own UI.
+   * Requires server-to-server API credentials.
+   *
+   * @example
+   * ```ts
+   * const conversation = await client.conversation.update(
+   *   'conversationId',
+   *   { csatScore: 5 },
+   * );
+   * ```
+   */
+  update(
+    conversationID: string,
+    body: ConversationUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<ConversationUpdateResponse> {
+    return this._client.patch(path`/v1/conversation/${conversationID}`, { body, ...options });
+  }
+}
+
+export interface ConversationUpdateParams {
+  /**
+   * Customer satisfaction score for the conversation, from 1 (very dissatisfied) to
+   * 5 (very satisfied). Use this to record a CSAT response collected in your own UI.
+   */
+  csatScore?: number;
+
+  /**
+   * When the CSAT response was collected (ISO 8601 format). Defaults to the time of
+   * the request. Requires csatScore.
+   */
+  csatCollectedAt?: string;
+
+  /**
+   * The customer's answer to a "did that help?" style prompt.
+   */
+  csatDidThatHelp?: boolean;
+
+  /**
+   * The title of the conversation.
+   */
+  title?: string;
+}
+
+export interface ConversationUpdateResponse {
+  /**
+   * The ID of the conversation
+   */
+  conversationId: string;
+
+  /**
+   * Customer satisfaction score for the conversation
+   */
+  csatScore: number | null;
+
+  /**
+   * When the CSAT response was collected (ISO 8601 format)
+   */
+  csatCollectedAt: string | null;
+
+  /**
+   * How the CSAT was collected
+   */
+  csatCollectionMethod: 'workflow' | 'widget_inactivity' | 'widget_close' | 'api' | null;
+
+  /**
+   * The customer's answer to a "did that help?" style prompt
+   */
+  csatDidThatHelp: boolean | null;
+
+  /**
+   * The title of the conversation
+   */
+  title: string | null;
+
+  /**
+   * The timestamp of when the conversation was last updated in our system.
+   */
+  updatedAt: string;
 }
 
 export interface AttachmentDto {
@@ -118,6 +202,8 @@ export declare namespace Conversation {
     type AttachmentDto as AttachmentDto,
     type TicketEvent as TicketEvent,
     type TicketMessageDto as TicketMessageDto,
+    type ConversationUpdateParams as ConversationUpdateParams,
+    type ConversationUpdateResponse as ConversationUpdateResponse,
   };
 
   export {
