@@ -48,6 +48,7 @@ describe('resource customer', () => {
       client.customer.get(
         {
           email: 'email',
+          externalUserId: 'externalUserId',
           phoneNumber: 'phoneNumber',
           remoteId: 'remoteId',
           subscriberCustomerId: 'subscriberCustomerId',

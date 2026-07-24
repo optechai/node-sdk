@@ -343,6 +343,12 @@ export interface EmailGetParams {
    * The ID of the conversation you need to poll.
    */
   conversationId: string;
+
+  /**
+   * Include the agent's internal notes in the transcript. Honoured only for
+   * server-to-server API credentials, and never changes `latestMessageType`.
+   */
+  includeInternalNotes?: boolean;
 }
 
 export interface EmailStartParams {
@@ -360,6 +366,11 @@ export interface EmailStartParams {
    * The subject of the conversation.
    */
   subject?: string;
+
+  /**
+   * Value of variables on the conversation.
+   */
+  variables?: { [key: string]: unknown };
 
   /**
    * The UUID of the workflow to trigger.

@@ -1,5 +1,34 @@
 # Changelog
 
+## 2.4.0 (2026-07-24)
+
+Full Changelog: [v2.3.0...v2.4.0](https://github.com/optechai/node-sdk/compare/v2.3.0...v2.4.0)
+
+### Features
+
+* **api:** api update ([db24e88](https://github.com/optechai/node-sdk/commit/db24e88653bdd90f914d8b52e5eddbfc9240e38f))
+* **api:** api update ([9a3f7ec](https://github.com/optechai/node-sdk/commit/9a3f7ec296fa929a467983cf56e4362a4691b0cb))
+* **api:** api update ([04aaaa1](https://github.com/optechai/node-sdk/commit/04aaaa1ac374f1e8e28c154174310466cebdf533))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([9e0258e](https://github.com/optechai/node-sdk/commit/9e0258e95bff96d6b4d8967fe1ea6de131b829a6))
+
+
+### Bug Fixes
+
+* **chat:** send auth headers on streamUpdates() SSE connection ([30488a7](https://github.com/optechai/node-sdk/commit/30488a71646c49401500ac56fbeedfb36048e40a))
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([62ffe93](https://github.com/optechai/node-sdk/commit/62ffe93532530891d07b7aec21c193e4f6220b96))
+* **client:** send content-type header for requests with an omitted optional body ([625109f](https://github.com/optechai/node-sdk/commit/625109f11900de23fd999bfafd8772e354ed20cb))
+* **deps:** bump flatted to 3.4.2 (GHSA-rf6f-7fwh-wjgh) ([#212](https://github.com/optechai/node-sdk/issues/212)) ([77ed056](https://github.com/optechai/node-sdk/commit/77ed056c7bd1ac25ac8bc67db2e00f4836f7344f))
+* **deps:** patch picomatch, js-yaml, @babel/core dev-transitive vulns ([#213](https://github.com/optechai/node-sdk/issues/213)) ([89943a1](https://github.com/optechai/node-sdk/commit/89943a1a896902a4542c154fae8dcb75321507ff))
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([44ff898](https://github.com/optechai/node-sdk/commit/44ff8987485023f532891d248ccdf2bad9d81a8f))
+
+
+### Chores
+
+* **format:** run eslint and prettier separately ([0b7c963](https://github.com/optechai/node-sdk/commit/0b7c963854359dc1e1daf6eb9c743fdb620cc4c1))
+* **internal:** codegen related update ([d41ff29](https://github.com/optechai/node-sdk/commit/d41ff2952a7ad0f84c40fa09f2c4504be20c82d3))
+* redact api-key headers in debug logs ([6ab209a](https://github.com/optechai/node-sdk/commit/6ab209adbb2246757659bfc345278f75c029aaf8))
+* **tests:** remove redundant File import ([3114619](https://github.com/optechai/node-sdk/commit/3114619d7b7b68e796f2eb9b1cd94655b8061327))
+
 ## 2.3.0 (2026-04-28)
 
 Full Changelog: [v2.2.0...v2.3.0](https://github.com/optechai/node-sdk/compare/v2.2.0...v2.3.0)
