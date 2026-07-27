@@ -24,14 +24,14 @@ export class Profile extends APIResource {
 }
 
 export type ProfileSyncResponse = {
-  [key: string]: string | boolean | number | unknown | Array<unknown> | null;
+  [key: string]: string | boolean | number | { [key: string]: unknown } | Array<unknown> | null;
 };
 
 export interface ProfileSyncParams {
   /**
    * The profile data to update - should be provided as key value object
    */
-  data: { [key: string]: string | boolean | number | unknown | Array<unknown> };
+  data: { [key: string]: string | boolean | number | { [key: string]: unknown } | Array<unknown> };
 }
 
 export declare namespace Profile {

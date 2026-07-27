@@ -9,7 +9,14 @@ export {
   type ChatGetParams,
   type ChatStartParams,
 } from './chat';
-export { Conversation, type AttachmentDto, type TicketEvent, type TicketMessageDto } from './conversation';
+export {
+  Conversation,
+  type AttachmentDto,
+  type TicketEvent,
+  type TicketMessageDto,
+  type ConversationUpdateResponse,
+  type ConversationUpdateParams,
+} from './conversation';
 export {
   Email,
   type EmailGenerateResponse,

@@ -46,7 +46,7 @@ export interface IngestTestParams {
   /**
    * The input data to simulate a test response for.
    */
-  inputs: unknown;
+  inputs: { [key: string]: unknown };
 
   /**
    * Optional execution environment ID for integration endpoint tools.
