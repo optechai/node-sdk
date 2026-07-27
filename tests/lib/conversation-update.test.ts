@@ -1,4 +1,5 @@
 import Lorikeet from '@lorikeetai/node-sdk';
+import type { ConversationUpdateParams, ConversationUpdateResponse } from '@lorikeetai/node-sdk/resources';
 
 const clientID = 'My Client ID';
 const clientSecret = 'My Client Secret';
@@ -27,7 +28,7 @@ describe('conversation.update', () => {
       fetch: fetchMock,
     });
 
-    const response = await client.conversation.update('abc123', {
+    const response: ConversationUpdateResponse = await client.conversation.update('abc123', {
       csatScore: 5,
       csatCollectedAt: '2024-01-15T10:35:00.000Z',
       csatDidThatHelp: true,
@@ -48,7 +49,7 @@ describe('conversation.update', () => {
   });
 
   test('requires csatScore when csatCollectedAt is present', () => {
-    const acceptsParams = (params: Lorikeet.Conversation.ConversationUpdateParams) => params;
+    const acceptsParams = (params: ConversationUpdateParams) => params;
 
     expect(acceptsParams({ csatScore: 1 })).toEqual({ csatScore: 1 });
     expect(acceptsParams({ csatScore: 5, csatCollectedAt: '2024-01-15T10:35:00.000Z' })).toEqual({
