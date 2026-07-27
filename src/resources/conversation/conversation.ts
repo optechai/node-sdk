@@ -23,11 +23,34 @@ import {
 } from './email';
 import * as VoiceAPI from './voice';
 import { Voice, VoiceOutboundParams, VoiceOutboundResponse } from './voice';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Conversation extends APIResource {
   email: EmailAPI.Email = new EmailAPI.Email(this._client);
   chat: ChatAPI.Chat = new ChatAPI.Chat(this._client);
   voice: VoiceAPI.Voice = new VoiceAPI.Voice(this._client);
+
+  /**
+   * Update fields on a conversation, such as a CSAT score collected in your own UI.
+   * Requires server-to-server API credentials.
+   *
+   * @example
+   * ```ts
+   * const conversation = await client.conversation.update(
+   *   '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+   *   { csatScore: 1 },
+   * );
+   * ```
+   */
+  update(
+    conversationID: string,
+    body: ConversationUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<ConversationUpdateResponse> {
+    return this._client.patch(path`/v1/conversation/${conversationID}`, { body, ...options });
+  }
 }
 
 export interface AttachmentDto {
@@ -109,6 +132,85 @@ export interface TicketMessageDto {
   type: 'CUSTOMER' | 'BOT_RESPONSE' | 'PENDING_RESPONSE' | 'DRAFT_RESPONSE' | 'INTERNAL_MODEL_NOTE';
 }
 
+export interface ConversationUpdateResponse {
+  /**
+   * The ID of the conversation
+   */
+  conversationId: string;
+
+  /**
+   * When the CSAT response was collected (ISO 8601 format)
+   */
+  csatCollectedAt: string | null;
+
+  /**
+   * How the CSAT was collected
+   */
+  csatCollectionMethod: 'workflow' | 'widget_inactivity' | 'widget_close' | 'api' | null;
+
+  /**
+   * The customer's answer to a "did that help?" style prompt
+   */
+  csatDidThatHelp: boolean | null;
+
+  /**
+   * Customer satisfaction score for the conversation
+   */
+  csatScore: number | null;
+
+  /**
+   * The title of the conversation
+   */
+  title: string | null;
+
+  /**
+   * The timestamp of when the conversation was last updated in our system.
+   */
+  updatedAt: string;
+}
+
+export type ConversationUpdateParams =
+  | ConversationUpdateParams.ScoreUpdate
+  | ConversationUpdateParams.DidThatHelpUpdate
+  | ConversationUpdateParams.TitleUpdate;
+
+export declare namespace ConversationUpdateParams {
+  interface ScoreUpdate {
+    csatScore: 1 | 2 | 3 | 4 | 5;
+
+    /**
+     * When the CSAT response was collected (ISO 8601 format). Defaults to the time of
+     * the request. Only honoured together with csatScore.
+     */
+    csatCollectedAt?: string;
+
+    /**
+     * The customer's answer to a "did that help?" style prompt.
+     */
+    csatDidThatHelp?: boolean;
+
+    /**
+     * The title of the conversation.
+     */
+    title?: string;
+  }
+
+  // Explicit exclusions keep TypeScript's structural union aligned with the API dependency.
+  interface DidThatHelpUpdate {
+    csatDidThatHelp: boolean;
+    csatCollectedAt?: never;
+    csatScore?: never;
+    title?: string;
+  }
+
+  interface TitleUpdate {
+    title: string;
+    csatCollectedAt?: never;
+    csatDidThatHelp?: boolean;
+    csatScore?: never;
+  }
+}
+
 Conversation.Email = Email;
 Conversation.Chat = Chat;
 Conversation.Voice = Voice;
@@ -118,6 +220,8 @@ export declare namespace Conversation {
     type AttachmentDto as AttachmentDto,
     type TicketEvent as TicketEvent,
     type TicketMessageDto as TicketMessageDto,
+    type ConversationUpdateResponse as ConversationUpdateResponse,
+    type ConversationUpdateParams as ConversationUpdateParams,
   };
 
   export {
