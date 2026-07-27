@@ -63,7 +63,7 @@ export interface VoiceOutboundParams {
    * by both the chosen opening workflow and - if configured - the voicemail detected
    * workflow.
    */
-  inputData?: unknown;
+  inputData?: { [key: string]: unknown };
 
   /**
    * The ID of the workflow to use for the call. Cannot be combined with agentId.

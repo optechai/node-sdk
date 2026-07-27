@@ -8,9 +8,11 @@ const client = new Lorikeet({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource voice', () => {
-  test('outbound: only required params', async () => {
-    const responsePromise = client.conversation.voice.outbound({ phoneNumber: '+61400000000' });
+describe('resource conversation', () => {
+  test('update: only required params', async () => {
+    const responsePromise = client.conversation.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      csatScore: 5,
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -20,15 +22,12 @@ describe('resource voice', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('outbound: required and optional params', async () => {
-    const response = await client.conversation.voice.outbound({
-      phoneNumber: '+61400000000',
-      agentId: 'agentId',
-      brandId: 'brandId',
-      channelConfigId: 'channelConfigId',
-      customerId: 'customerId',
-      inputData: { foo: 'bar' },
-      workflowId: 'workflowId',
+  test('update: required and optional params', async () => {
+    const response = await client.conversation.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      csatScore: 5,
+      csatCollectedAt: '2024-01-15T10:35:00Z',
+      csatDidThatHelp: true,
+      title: 'Question about order tracking',
     });
   });
 });
