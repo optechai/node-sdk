@@ -63,6 +63,12 @@ export interface RemoteUpdateResponse {
   email?: string;
 
   /**
+   * The messaging-platform user id of the customer (e.g. the WhatsApp BSUID). Not a
+   * phone number.
+   */
+  externalUserId?: string;
+
+  /**
    * The first name of the customer
    */
   firstName?: string;
@@ -121,6 +127,12 @@ export interface RemoteGetResponse {
    * The email of the customer
    */
   email?: string;
+
+  /**
+   * The messaging-platform user id of the customer (e.g. the WhatsApp BSUID). Not a
+   * phone number.
+   */
+  externalUserId?: string;
 
   /**
    * The first name of the customer

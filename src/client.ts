@@ -29,6 +29,8 @@ import { Ingest, IngestSubmitParams, IngestTestParams } from './resources/ingest
 import {
   AttachmentDto,
   Conversation,
+  ConversationUpdateParams,
+  ConversationUpdateResponse,
   TicketEvent,
   TicketMessageDto,
 } from './resources/conversation/conversation';
@@ -723,11 +725,19 @@ export class Lorikeet {
     return () => controller.abort();
   }
 
-  private buildBody({ options: { body, headers: rawHeaders } }: { options: FinalRequestOptions }): {
+  private buildBody({ options }: { options: FinalRequestOptions }): {
     bodyHeaders: HeadersLike;
     body: BodyInit | undefined;
   } {
+    const { body, headers: rawHeaders } = options;
     if (!body) {
+      // A resource method always passes a `body` key when its operation defines a
+      // request body, even if the caller omitted an optional body param. Keep the
+      // content-type for those, and only elide it for operations with no body at
+      // all (e.g. GET/DELETE).
+      if (body == null && 'body' in options) {
+        return this.#encoder({ body, headers: buildHeaders([rawHeaders]) });
+      }
       return { bodyHeaders: undefined, body: undefined };
     }
     const headers = buildHeaders([rawHeaders]);
@@ -787,6 +797,9 @@ export class Lorikeet {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Endpoints for managing conversations
+   */
   conversation: API.Conversation = new API.Conversation(this);
   /**
    * Endpoints related to customer data
@@ -812,6 +825,8 @@ export declare namespace Lorikeet {
     type AttachmentDto as AttachmentDto,
     type TicketEvent as TicketEvent,
     type TicketMessageDto as TicketMessageDto,
+    type ConversationUpdateResponse as ConversationUpdateResponse,
+    type ConversationUpdateParams as ConversationUpdateParams,
   };
 
   export {

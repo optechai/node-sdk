@@ -5,6 +5,11 @@ Types:
 - <code><a href="./src/resources/conversation/conversation.ts">AttachmentDto</a></code>
 - <code><a href="./src/resources/conversation/conversation.ts">TicketEvent</a></code>
 - <code><a href="./src/resources/conversation/conversation.ts">TicketMessageDto</a></code>
+- <code><a href="./src/resources/conversation/conversation.ts">ConversationUpdateResponse</a></code>
+
+Methods:
+
+- <code title="patch /v1/conversation/{conversationId}">client.conversation.<a href="./src/resources/conversation/conversation.ts">update</a>(conversationID, { ...params }) -> ConversationUpdateResponse</code>
 
 ## Email
 

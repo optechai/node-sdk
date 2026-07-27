@@ -12,6 +12,8 @@ export {
   type AttachmentDto,
   type TicketEvent,
   type TicketMessageDto,
+  type ConversationUpdateResponse,
+  type ConversationUpdateParams,
 } from './conversation/conversation';
 export {
   Customer,

@@ -68,7 +68,10 @@ describe('resource chat', () => {
   });
 
   test('get: required and optional params', async () => {
-    const response = await client.conversation.chat.get({ conversationId: 'conversationId' });
+    const response = await client.conversation.chat.get({
+      conversationId: 'conversationId',
+      includeInternalNotes: true,
+    });
   });
 
   test('start: only required params', async () => {
@@ -90,6 +93,7 @@ describe('resource chat', () => {
       customerId: 'customerId',
       publicKey: 'publicKey',
       subject: 'Question about order tracking number',
+      variables: { orderId: 'bar', priorityTier: 'bar' },
       workflowId: 'workflowId',
     });
   });
