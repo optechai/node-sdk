@@ -1,4 +1,4 @@
 configured_endpoints: 22
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/lorikeet/lorikeet-ea92ef888983e32b93cb0a8c7369d0e3c77f06aa9c0a3faaa4392eecdd88cafe.yml
-openapi_spec_hash: b8e5e2183ff8e66b98127c97d11290c3
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/lorikeet/lorikeet-4353f1ac186d98c35473eff9264b58f8248fed0a950dd88ee78b2c1d9e89c6ac.yml
+openapi_spec_hash: 9d758d1cd8299b6d12a5caed533579ef
 config_hash: 411cd96962c8625f770ca1fb3a5f8bc5

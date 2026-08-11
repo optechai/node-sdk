@@ -66,6 +66,11 @@ export interface VoiceOutboundParams {
   inputData?: { [key: string]: unknown };
 
   /**
+   * Value of variables on the conversation.
+   */
+  variables?: { [key: string]: unknown };
+
+  /**
    * The ID of the workflow to use for the call. Cannot be combined with agentId.
    */
   workflowId?: string;
