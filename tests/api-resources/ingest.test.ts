@@ -14,6 +14,7 @@ describe('resource ingest', () => {
       toolId: 'toolId',
       ticketId: 'ticketId',
       inputHash: 'inputHash',
+      data: { foo: 'bar' },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -29,6 +30,7 @@ describe('resource ingest', () => {
       toolId: 'toolId',
       ticketId: 'ticketId',
       inputHash: 'inputHash',
+      data: { foo: 'bar' },
     });
   });
 
@@ -46,7 +48,7 @@ describe('resource ingest', () => {
   test('test: required and optional params', async () => {
     const response = await client.ingest.test('toolId', {
       inputs: { foo: 'bar' },
-      envId: 'envId',
+      envId: { foo: 'bar' },
     });
   });
 

@@ -42,6 +42,10 @@
           "location": "path"
         },
         {
+          "type": "params",
+          "maybeOverload": false
+        },
+        {
           "type": "options"
         }
       ]

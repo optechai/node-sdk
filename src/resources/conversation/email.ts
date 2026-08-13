@@ -14,14 +14,7 @@ export class Email extends APIResource {
    * @example
    * ```ts
    * const response = await client.conversation.email.generate({
-   *   attachments: [
-   *     {
-   *       name: 'example.jpg',
-   *       type: 'image/jpeg',
-   *       url: 'https://example.com/example.jpg',
-   *     },
-   *   ],
-   *   conversationId: 'conversationId',
+   *   conversationId: { foo: 'bar' },
    *   message: 'message',
    * });
    * ```
@@ -46,7 +39,7 @@ export class Email extends APIResource {
    * @example
    * ```ts
    * const response = await client.conversation.email.start({
-   *   customerId: 'customerId',
+   *   customerId: { foo: 'bar' },
    *   publicKey: 'publicKey',
    * });
    * ```
@@ -253,20 +246,20 @@ export interface EmailStartResponse {
 
 export interface EmailGenerateParams {
   /**
-   * Attachments to be sent with the message
-   */
-  attachments: Array<ConversationAPI.AttachmentDto>;
-
-  /**
    * The ID of the conversation
    */
-  conversationId: string;
+  conversationId: { [key: string]: unknown };
 
   /**
    * The message to be sent to the user (customer or agent). This endpoint supports
    * markdown.
    */
   message: string;
+
+  /**
+   * Attachments to be sent with the message
+   */
+  attachments?: Array<ConversationAPI.AttachmentDto>;
 
   /**
    * Any additional customer information, that has changed in the course of the
@@ -322,7 +315,7 @@ export namespace EmailGenerateParams {
      * The id of the customer in the ticketing system. For the SDK this needs to be
      * stable and unique
      */
-    remoteId?: string;
+    remoteId?: { [key: string]: unknown };
 
     /**
      * The id of the customer in your own primary database or a unique identifier, for
@@ -355,7 +348,7 @@ export interface EmailStartParams {
   /**
    * The ID of the customer. If omitted, a new customer will be created.
    */
-  customerId: string;
+  customerId: { [key: string]: unknown };
 
   /**
    * The public key associated with this agent
@@ -375,7 +368,7 @@ export interface EmailStartParams {
   /**
    * The UUID of the workflow to trigger.
    */
-  workflowId?: string;
+  workflowId?: { [key: string]: unknown };
 }
 
 export declare namespace Email {

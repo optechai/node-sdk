@@ -11,8 +11,9 @@ import { path } from '../internal/utils/path';
  */
 export class Ingest extends APIResource {
   submit(workflowID: string, params: IngestSubmitParams, options?: RequestOptions): APIPromise<void> {
-    const { toolId, ticketId, inputHash } = params;
+    const { toolId, ticketId, inputHash, ...body } = params;
     return this._client.post(path`/ingest/${toolId}/${ticketId}/${inputHash}/${workflowID}`, {
+      body,
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -35,11 +36,25 @@ export class Ingest extends APIResource {
 }
 
 export interface IngestSubmitParams {
+  /**
+   * Path param
+   */
   toolId: string;
 
+  /**
+   * Path param
+   */
   ticketId: string;
 
+  /**
+   * Path param
+   */
   inputHash: string;
+
+  /**
+   * Body param: The completed asynchronous tool response data.
+   */
+  data: { [key: string]: unknown };
 }
 
 export interface IngestTestParams {
@@ -51,7 +66,7 @@ export interface IngestTestParams {
   /**
    * Optional execution environment ID for integration endpoint tools.
    */
-  envId?: string;
+  envId?: { [key: string]: unknown };
 }
 
 export declare namespace Ingest {
