@@ -27,6 +27,13 @@ import {
 } from './resources/api-keys';
 import { Ingest, IngestSubmitParams, IngestTestParams } from './resources/ingest';
 import {
+  CustomerEvents,
+  CustomerEventIngestResponse,
+  CustomerEventCustomer,
+  CustomerEventPaymentFailedData,
+  CustomerEventIngestParams,
+} from './resources/customer-events';
+import {
   AttachmentDto,
   Conversation,
   ConversationUpdateParams,
@@ -809,12 +816,17 @@ export class Lorikeet {
    * Endpoints for ingesting subscriber data
    */
   ingest: API.Ingest = new API.Ingest(this);
+  /**
+   * Endpoints for ingesting Customer Events
+   */
+  customerEvents: API.CustomerEvents = new API.CustomerEvents(this);
   apiKeys: API.APIKeys = new API.APIKeys(this);
 }
 
 Lorikeet.Conversation = Conversation;
 Lorikeet.Customer = Customer;
 Lorikeet.Ingest = Ingest;
+Lorikeet.CustomerEvents = CustomerEvents;
 Lorikeet.APIKeys = APIKeys;
 
 export declare namespace Lorikeet {
@@ -845,6 +857,14 @@ export declare namespace Lorikeet {
     Ingest as Ingest,
     type IngestSubmitParams as IngestSubmitParams,
     type IngestTestParams as IngestTestParams,
+  };
+
+  export {
+    CustomerEvents as CustomerEvents,
+    type CustomerEventIngestResponse as CustomerEventIngestResponse,
+    type CustomerEventCustomer as CustomerEventCustomer,
+    type CustomerEventPaymentFailedData as CustomerEventPaymentFailedData,
+    type CustomerEventIngestParams as CustomerEventIngestParams,
   };
 
   export {

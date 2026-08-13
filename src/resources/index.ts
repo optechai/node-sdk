@@ -27,3 +27,10 @@ export {
   type CustomerTokenParams,
 } from './customer/customer';
 export { Ingest, type IngestSubmitParams, type IngestTestParams } from './ingest';
+export {
+  CustomerEvents,
+  type CustomerEventIngestResponse,
+  type CustomerEventCustomer,
+  type CustomerEventPaymentFailedData,
+  type CustomerEventIngestParams,
+} from './customer-events';
