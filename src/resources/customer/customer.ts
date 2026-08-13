@@ -117,7 +117,7 @@ export interface CustomerCreateResponse {
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId?: string;
+  remoteId?: { [key: string]: unknown };
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for
@@ -183,7 +183,7 @@ export interface CustomerUpdateResponse {
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId?: string;
+  remoteId?: { [key: string]: unknown };
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for
@@ -249,7 +249,7 @@ export interface CustomerGetResponse {
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId?: string;
+  remoteId?: { [key: string]: unknown };
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for
@@ -301,7 +301,7 @@ export interface CustomerCreateParams {
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId?: string;
+  remoteId?: { [key: string]: unknown };
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for
@@ -351,7 +351,7 @@ export interface CustomerUpdateParams {
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId?: string;
+  remoteId?: { [key: string]: unknown };
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for
@@ -435,7 +435,7 @@ export interface CustomerTokenParams {
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId?: string;
+  remoteId?: { [key: string]: unknown };
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for

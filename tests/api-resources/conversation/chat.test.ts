@@ -11,14 +11,7 @@ const client = new Lorikeet({
 describe('resource chat', () => {
   test('generate: only required params', async () => {
     const responsePromise = client.conversation.chat.generate({
-      attachments: [
-        {
-          name: 'example.jpg',
-          type: 'image/jpeg',
-          url: 'https://example.com/example.jpg',
-        },
-      ],
-      conversationId: 'conversationId',
+      conversationId: { foo: 'bar' },
       message: 'message',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -32,6 +25,8 @@ describe('resource chat', () => {
 
   test('generate: required and optional params', async () => {
     const response = await client.conversation.chat.generate({
+      conversationId: { foo: 'bar' },
+      message: 'message',
       attachments: [
         {
           name: 'example.jpg',
@@ -39,8 +34,6 @@ describe('resource chat', () => {
           url: 'https://example.com/example.jpg',
         },
       ],
-      conversationId: 'conversationId',
-      message: 'message',
       customer: {
         avatarUrl: 'https://example.com/image.jpg',
         displayName: 'Lori Keet',
@@ -48,7 +41,18 @@ describe('resource chat', () => {
         firstName: 'Lori',
         lastName: 'Keet',
         phoneNumber: '+14155552671',
-        remoteId: '1234567890',
+        remoteId: {
+          '0': 'bar',
+          '1': 'bar',
+          '2': 'bar',
+          '3': 'bar',
+          '4': 'bar',
+          '5': 'bar',
+          '6': 'bar',
+          '7': 'bar',
+          '8': 'bar',
+          '9': 'bar',
+        },
         subscriberCustomerId: '1234567890',
         subscriberToken: 'subscriberToken',
       },
@@ -76,7 +80,7 @@ describe('resource chat', () => {
 
   test('start: only required params', async () => {
     const responsePromise = client.conversation.chat.start({
-      customerId: 'customerId',
+      customerId: { foo: 'bar' },
       publicKey: 'publicKey',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -90,12 +94,12 @@ describe('resource chat', () => {
 
   test('start: required and optional params', async () => {
     const response = await client.conversation.chat.start({
-      customerId: 'customerId',
+      customerId: { foo: 'bar' },
       publicKey: 'publicKey',
-      agentId: 'agentId',
+      agentId: { foo: 'bar' },
       subject: 'Question about order tracking number',
       variables: { orderId: 'bar', priorityTier: 'bar' },
-      workflowId: 'workflowId',
+      workflowId: { foo: 'bar' },
     });
   });
 });

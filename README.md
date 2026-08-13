@@ -28,7 +28,18 @@ const client = new Lorikeet({
 });
 
 const response = await client.conversation.chat.start({
-  customerId: 'customerId',
+  customerId: {
+    '0': 'bar',
+    '1': 'bar',
+    '2': 'bar',
+    '3': 'bar',
+    '4': 'bar',
+    '5': 'bar',
+    '6': 'bar',
+    '7': 'bar',
+    '8': 'bar',
+    '9': 'bar',
+  },
   publicKey: 'publicKey',
 });
 
@@ -49,7 +60,18 @@ const client = new Lorikeet({
 });
 
 const params: Lorikeet.Conversation.ChatStartParams = {
-  customerId: 'customerId',
+  customerId: {
+    '0': 'bar',
+    '1': 'bar',
+    '2': 'bar',
+    '3': 'bar',
+    '4': 'bar',
+    '5': 'bar',
+    '6': 'bar',
+    '7': 'bar',
+    '8': 'bar',
+    '9': 'bar',
+  },
   publicKey: 'publicKey',
 };
 const response: Lorikeet.Conversation.ChatStartResponse = await client.conversation.chat.start(
@@ -68,7 +90,21 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const response = await client.conversation.chat
-  .start({ customerId: 'customerId', publicKey: 'publicKey' })
+  .start({
+    customerId: {
+      '0': 'bar',
+      '1': 'bar',
+      '2': 'bar',
+      '3': 'bar',
+      '4': 'bar',
+      '5': 'bar',
+      '6': 'bar',
+      '7': 'bar',
+      '8': 'bar',
+      '9': 'bar',
+    },
+    publicKey: 'publicKey',
+  })
   .catch(async (err) => {
     if (err instanceof Lorikeet.APIError) {
       console.log(err.status); // 400
@@ -109,7 +145,21 @@ const client = new Lorikeet({
 });
 
 // Or, configure per-request:
-await client.conversation.chat.start({ customerId: 'customerId', publicKey: 'publicKey' }, {
+await client.conversation.chat.start({
+  customerId: {
+  '0': 'bar',
+  '1': 'bar',
+  '2': 'bar',
+  '3': 'bar',
+  '4': 'bar',
+  '5': 'bar',
+  '6': 'bar',
+  '7': 'bar',
+  '8': 'bar',
+  '9': 'bar',
+},
+  publicKey: 'publicKey',
+}, {
   maxRetries: 5,
 });
 ```
@@ -126,7 +176,21 @@ const client = new Lorikeet({
 });
 
 // Override per-request:
-await client.conversation.chat.start({ customerId: 'customerId', publicKey: 'publicKey' }, {
+await client.conversation.chat.start({
+  customerId: {
+  '0': 'bar',
+  '1': 'bar',
+  '2': 'bar',
+  '3': 'bar',
+  '4': 'bar',
+  '5': 'bar',
+  '6': 'bar',
+  '7': 'bar',
+  '8': 'bar',
+  '9': 'bar',
+},
+  publicKey: 'publicKey',
+}, {
   timeout: 5 * 1000,
 });
 ```
@@ -150,13 +214,41 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new Lorikeet();
 
 const response = await client.conversation.chat
-  .start({ customerId: 'customerId', publicKey: 'publicKey' })
+  .start({
+    customerId: {
+      '0': 'bar',
+      '1': 'bar',
+      '2': 'bar',
+      '3': 'bar',
+      '4': 'bar',
+      '5': 'bar',
+      '6': 'bar',
+      '7': 'bar',
+      '8': 'bar',
+      '9': 'bar',
+    },
+    publicKey: 'publicKey',
+  })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client.conversation.chat
-  .start({ customerId: 'customerId', publicKey: 'publicKey' })
+  .start({
+    customerId: {
+      '0': 'bar',
+      '1': 'bar',
+      '2': 'bar',
+      '3': 'bar',
+      '4': 'bar',
+      '5': 'bar',
+      '6': 'bar',
+      '7': 'bar',
+      '8': 'bar',
+      '9': 'bar',
+    },
+    publicKey: 'publicKey',
+  })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.conversationId);

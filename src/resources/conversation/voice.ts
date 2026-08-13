@@ -30,33 +30,34 @@ export interface VoiceOutboundResponse {
 
 export interface VoiceOutboundParams {
   /**
-   * The phone number to call in E.164 format. If a customer ID is not provided, the
-   * customer will be looked up by phone number. If no customer is found, a new
+   * The phone number to contact in E.164 format. If a customer ID is not provided,
+   * the customer will be looked up by phone number. If no customer is found, a new
    * customer will be created.
    */
   phoneNumber: string;
 
   /**
-   * The ID of the agent to use for the call. Cannot be combined with workflowId.
+   * The ID of the agent to use for the conversation. Cannot be combined with
+   * workflowId.
    */
-  agentId?: string;
+  agentId?: { [key: string]: unknown };
 
   /**
-   * The ID of the brand to make the call from
+   * The ID of the brand to contact from
    */
-  brandId?: string;
+  brandId?: { [key: string]: unknown };
 
   /**
-   * The ID of the channel config to use for the call. If not provided, the first
-   * active voice channel config will be used.
+   * The ID of the channel config to use. If not provided, the first active config
+   * for the channel will be used.
    */
-  channelConfigId?: string;
+  channelConfigId?: { [key: string]: unknown };
 
   /**
-   * The ID of the customer to call. If not provided, the customer will be looked up
-   * by phone number. If no customer is found, a new customer will be created.
+   * The ID of the customer to contact. If not provided, the customer will be looked
+   * up by phone number. If no customer is found, a new customer will be created.
    */
-  customerId?: string;
+  customerId?: { [key: string]: unknown };
 
   /**
    * Input data to pass to workflows. Should include values for input fields defined
@@ -71,9 +72,10 @@ export interface VoiceOutboundParams {
   variables?: { [key: string]: unknown };
 
   /**
-   * The ID of the workflow to use for the call. Cannot be combined with agentId.
+   * The ID of the workflow to use for the conversation. Cannot be combined with
+   * agentId.
    */
-  workflowId?: string;
+  workflowId?: { [key: string]: unknown };
 }
 
 export declare namespace Voice {
