@@ -95,6 +95,18 @@ Methods:
 - <code title="post /ingest/test/{toolId}">client.ingest.<a href="./src/resources/ingest.ts">test</a>(toolID, { ...params }) -> void</code>
 - <code title="post /ingest/validate">client.ingest.<a href="./src/resources/ingest.ts">validate</a>() -> void</code>
 
+# CustomerEvents
+
+Types:
+
+- <code><a href="./src/resources/customer-events.ts">CustomerEventIngestResponse</a></code>
+- <code><a href="./src/resources/customer-events.ts">CustomerEventCustomer</a></code>
+- <code><a href="./src/resources/customer-events.ts">CustomerEventPaymentFailedData</a></code>
+
+Methods:
+
+- <code title="post /v1/customer-events">client.customerEvents.<a href="./src/resources/customer-events.ts">ingest</a>({ ...params }) -> CustomerEventIngestResponse</code>
+
 # APIKeys
 
 Types:
