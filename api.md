@@ -55,6 +55,7 @@ Types:
 
 - <code><a href="./src/resources/customer/customer.ts">CustomerCreateResponse</a></code>
 - <code><a href="./src/resources/customer/customer.ts">CustomerUpdateResponse</a></code>
+- <code><a href="./src/resources/customer/customer.ts">CustomerUpdateConsentResponse</a></code>
 - <code><a href="./src/resources/customer/customer.ts">CustomerGetResponse</a></code>
 - <code><a href="./src/resources/customer/customer.ts">CustomerTokenResponse</a></code>
 
@@ -62,6 +63,7 @@ Methods:
 
 - <code title="post /v1/customer">client.customer.<a href="./src/resources/customer/customer.ts">create</a>({ ...params }) -> CustomerCreateResponse</code>
 - <code title="put /v1/customer/{id}">client.customer.<a href="./src/resources/customer/customer.ts">update</a>(id, { ...params }) -> CustomerUpdateResponse</code>
+- <code title="put /v1/customer/consent">client.customer.<a href="./src/resources/customer/customer.ts">updateConsent</a>({ ...params }) -> CustomerUpdateConsentResponse</code>
 - <code title="get /v1/customer">client.customer.<a href="./src/resources/customer/customer.ts">get</a>({ ...params }) -> CustomerGetResponse</code>
 - <code title="post /v1/customer/token">client.customer.<a href="./src/resources/customer/customer.ts">token</a>({ ...params }) -> string</code>
 

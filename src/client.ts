@@ -51,6 +51,8 @@ import {
   CustomerTokenResponse,
   CustomerUpdateParams,
   CustomerUpdateResponse,
+  CustomerUpdateConsentParams,
+  CustomerUpdateConsentResponse,
 } from './resources/customer/customer';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -845,10 +847,12 @@ export declare namespace Lorikeet {
     Customer as Customer,
     type CustomerCreateResponse as CustomerCreateResponse,
     type CustomerUpdateResponse as CustomerUpdateResponse,
+    type CustomerUpdateConsentResponse as CustomerUpdateConsentResponse,
     type CustomerGetResponse as CustomerGetResponse,
     type CustomerTokenResponse as CustomerTokenResponse,
     type CustomerCreateParams as CustomerCreateParams,
     type CustomerUpdateParams as CustomerUpdateParams,
+    type CustomerUpdateConsentParams as CustomerUpdateConsentParams,
     type CustomerGetParams as CustomerGetParams,
     type CustomerTokenParams as CustomerTokenParams,
   };

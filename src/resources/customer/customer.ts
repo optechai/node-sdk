@@ -45,6 +45,25 @@ export class Customer extends APIResource {
   /**
    * @example
    * ```ts
+   * const consent = await client.customer.updateConsent({
+   *   customerId: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+   *   channelType: 'VOICE',
+   *   consentStatus: 'OPTED_OUT',
+   *   source: 'crm_sync',
+   *   effectiveAt: '2026-08-17T10:00:00.000Z',
+   * });
+   * ```
+   */
+  updateConsent(
+    body: CustomerUpdateConsentParams,
+    options?: RequestOptions,
+  ): APIPromise<CustomerUpdateConsentResponse> {
+    return this._client.put('/v1/customer/consent', { body, ...options });
+  }
+
+  /**
+   * @example
+   * ```ts
    * const customer = await client.customer.get();
    * ```
    */
@@ -196,6 +215,49 @@ export interface CustomerUpdateResponse {
    * JWT
    */
   subscriberToken?: string;
+}
+
+export interface CustomerUpdateConsentResponse {
+  /**
+   * The consent record ID.
+   */
+  id: string;
+
+  /**
+   * The Lorikeet Customer ID.
+   */
+  customerId: string;
+
+  /**
+   * The outbound channel whose consent state was updated.
+   */
+  channelType: 'VOICE' | 'SMS' | 'WHATSAPP' | 'EMAIL';
+
+  /**
+   * The resulting consent state.
+   */
+  consentStatus: 'OPTED_IN' | 'OPTED_OUT' | 'UNKNOWN';
+
+  /**
+   * The external system or process that supplied the decision.
+   */
+  source: string;
+
+  /**
+   * When the consent decision took effect. This is an audit timestamp; the update
+   * is applied immediately.
+   */
+  effectiveAt: string;
+
+  /**
+   * When this consent record expires. An unexpired OPTED_OUT record suppresses
+   * outbound contact.
+   */
+  expiresAt: string | null;
+
+  createdAt: string;
+
+  updatedAt: string;
 }
 
 export interface CustomerGetResponse {
@@ -366,6 +428,40 @@ export interface CustomerUpdateParams {
   subscriberToken?: string;
 }
 
+export interface CustomerUpdateConsentParams {
+  /**
+   * The Lorikeet Customer ID.
+   */
+  customerId: string;
+
+  /**
+   * The outbound channel whose consent state is being updated.
+   */
+  channelType: 'VOICE' | 'SMS' | 'WHATSAPP' | 'EMAIL';
+
+  /**
+   * The resulting consent state.
+   */
+  consentStatus: 'OPTED_IN' | 'OPTED_OUT' | 'UNKNOWN';
+
+  /**
+   * The external system or process that supplied the decision.
+   */
+  source: string;
+
+  /**
+   * When the consent decision took effect. This is an audit timestamp; the update
+   * is applied immediately.
+   */
+  effectiveAt: string;
+
+  /**
+   * When this consent record expires. An unexpired OPTED_OUT record suppresses
+   * outbound contact.
+   */
+  expiresAt?: string | null;
+}
+
 export interface CustomerGetParams {
   /**
    * The email address of the customer
@@ -457,10 +553,12 @@ export declare namespace Customer {
   export {
     type CustomerCreateResponse as CustomerCreateResponse,
     type CustomerUpdateResponse as CustomerUpdateResponse,
+    type CustomerUpdateConsentResponse as CustomerUpdateConsentResponse,
     type CustomerGetResponse as CustomerGetResponse,
     type CustomerTokenResponse as CustomerTokenResponse,
     type CustomerCreateParams as CustomerCreateParams,
     type CustomerUpdateParams as CustomerUpdateParams,
+    type CustomerUpdateConsentParams as CustomerUpdateConsentParams,
     type CustomerGetParams as CustomerGetParams,
     type CustomerTokenParams as CustomerTokenParams,
   };

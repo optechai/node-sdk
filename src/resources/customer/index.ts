@@ -4,10 +4,12 @@ export {
   Customer,
   type CustomerCreateResponse,
   type CustomerUpdateResponse,
+  type CustomerUpdateConsentResponse,
   type CustomerGetResponse,
   type CustomerTokenResponse,
   type CustomerCreateParams,
   type CustomerUpdateParams,
+  type CustomerUpdateConsentParams,
   type CustomerGetParams,
   type CustomerTokenParams,
 } from './customer';

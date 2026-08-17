@@ -35,6 +35,22 @@ const response = await client.conversation.chat.start({
 console.log(response.conversationId);
 ```
 
+### Update customer consent
+
+The client signs the request with its configured client ID and secret.
+
+```ts
+const consent = await client.customer.updateConsent({
+  customerId: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+  channelType: 'VOICE',
+  consentStatus: 'OPTED_OUT',
+  source: 'crm_sync',
+  effectiveAt: '2026-08-17T10:00:00.000Z',
+});
+
+console.log(consent.consentStatus);
+```
+
 ### Request & Response types
 
 This library includes TypeScript definitions for all request params and response fields. You may import and use them like so:
