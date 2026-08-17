@@ -21,9 +21,11 @@ export {
   type CustomerUpdateResponse,
   type CustomerGetResponse,
   type CustomerTokenResponse,
+  type CustomerUpdateConsentResponse,
   type CustomerCreateParams,
   type CustomerUpdateParams,
   type CustomerGetParams,
   type CustomerTokenParams,
+  type CustomerUpdateConsentParams,
 } from './customer/customer';
 export { Ingest, type IngestSubmitParams, type IngestTestParams } from './ingest';

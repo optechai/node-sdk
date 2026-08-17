@@ -41,6 +41,8 @@ import {
   CustomerGetResponse,
   CustomerTokenParams,
   CustomerTokenResponse,
+  CustomerUpdateConsentParams,
+  CustomerUpdateConsentResponse,
   CustomerUpdateParams,
   CustomerUpdateResponse,
 } from './resources/customer/customer';
@@ -831,10 +833,12 @@ export declare namespace Lorikeet {
     type CustomerUpdateResponse as CustomerUpdateResponse,
     type CustomerGetResponse as CustomerGetResponse,
     type CustomerTokenResponse as CustomerTokenResponse,
+    type CustomerUpdateConsentResponse as CustomerUpdateConsentResponse,
     type CustomerCreateParams as CustomerCreateParams,
     type CustomerUpdateParams as CustomerUpdateParams,
     type CustomerGetParams as CustomerGetParams,
     type CustomerTokenParams as CustomerTokenParams,
+    type CustomerUpdateConsentParams as CustomerUpdateConsentParams,
   };
 
   export {
