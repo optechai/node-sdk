@@ -253,7 +253,7 @@ export interface CustomerUpdateConsentResponse {
    * When this consent record expires. An unexpired OPTED_OUT record suppresses
    * outbound contact.
    */
-  expiresAt: string | null;
+  expiresAt?: string | null;
 
   createdAt: string;
 
