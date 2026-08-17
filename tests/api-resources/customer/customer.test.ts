@@ -68,4 +68,32 @@ describe('resource customer', () => {
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
   });
+
+  test('updateConsent: only required params', async () => {
+    const responsePromise = client.customer.updateConsent({
+      channelType: 'VOICE',
+      consentStatus: 'OPTED_OUT',
+      customerId: '11111111-1111-4111-8111-111111111111',
+      effectiveAt: '2026-08-17T10:00:00.000Z',
+      source: 'crm_sync',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('updateConsent: required and optional params', async () => {
+    const response = await client.customer.updateConsent({
+      channelType: 'VOICE',
+      consentStatus: 'OPTED_OUT',
+      customerId: '11111111-1111-4111-8111-111111111111',
+      effectiveAt: '2026-08-17T10:00:00.000Z',
+      source: 'crm_sync',
+      expiresAt: '2027-08-17T10:00:00.000Z',
+    });
+  });
 });
