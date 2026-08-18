@@ -40,24 +40,24 @@ export interface VoiceOutboundParams {
    * The ID of the agent to use for the conversation. Cannot be combined with
    * workflowId.
    */
-  agentId?: { [key: string]: unknown };
+  agentId?: string;
 
   /**
    * The ID of the brand to contact from
    */
-  brandId?: { [key: string]: unknown };
+  brandId?: string;
 
   /**
    * The ID of the channel config to use. If not provided, the first active config
    * for the channel will be used.
    */
-  channelConfigId?: { [key: string]: unknown };
+  channelConfigId?: string;
 
   /**
    * The ID of the customer to contact. If not provided, the customer will be looked
    * up by phone number. If no customer is found, a new customer will be created.
    */
-  customerId?: { [key: string]: unknown };
+  customerId?: string;
 
   /**
    * Input data to pass to workflows. Should include values for input fields defined
@@ -75,7 +75,7 @@ export interface VoiceOutboundParams {
    * The ID of the workflow to use for the conversation. Cannot be combined with
    * agentId.
    */
-  workflowId?: { [key: string]: unknown };
+  workflowId?: string;
 }
 
 export declare namespace Voice {

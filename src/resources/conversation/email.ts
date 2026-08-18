@@ -14,7 +14,7 @@ export class Email extends APIResource {
    * @example
    * ```ts
    * const response = await client.conversation.email.generate({
-   *   conversationId: { foo: 'bar' },
+   *   conversationId: 'conversationId',
    *   message: 'message',
    * });
    * ```
@@ -39,7 +39,7 @@ export class Email extends APIResource {
    * @example
    * ```ts
    * const response = await client.conversation.email.start({
-   *   customerId: { foo: 'bar' },
+   *   customerId: 'customerId',
    *   publicKey: 'publicKey',
    * });
    * ```
@@ -248,7 +248,7 @@ export interface EmailGenerateParams {
   /**
    * The ID of the conversation
    */
-  conversationId: { [key: string]: unknown };
+  conversationId: string;
 
   /**
    * The message to be sent to the user (customer or agent). This endpoint supports
@@ -315,7 +315,7 @@ export namespace EmailGenerateParams {
      * The id of the customer in the ticketing system. For the SDK this needs to be
      * stable and unique
      */
-    remoteId?: { [key: string]: unknown };
+    remoteId?: string;
 
     /**
      * The id of the customer in your own primary database or a unique identifier, for
@@ -348,7 +348,7 @@ export interface EmailStartParams {
   /**
    * The ID of the customer. If omitted, a new customer will be created.
    */
-  customerId: { [key: string]: unknown };
+  customerId: string;
 
   /**
    * The public key associated with this agent
@@ -368,7 +368,7 @@ export interface EmailStartParams {
   /**
    * The UUID of the workflow to trigger.
    */
-  workflowId?: { [key: string]: unknown };
+  workflowId?: string;
 }
 
 export declare namespace Email {

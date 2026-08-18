@@ -66,7 +66,7 @@ export interface IngestTestParams {
   /**
    * Optional execution environment ID for integration endpoint tools.
    */
-  envId?: { [key: string]: unknown };
+  envId?: string;
 }
 
 export declare namespace Ingest {

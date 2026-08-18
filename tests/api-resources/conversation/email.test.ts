@@ -11,7 +11,7 @@ const client = new Lorikeet({
 describe('resource email', () => {
   test('generate: only required params', async () => {
     const responsePromise = client.conversation.email.generate({
-      conversationId: { foo: 'bar' },
+      conversationId: 'conversationId',
       message: 'message',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -25,7 +25,7 @@ describe('resource email', () => {
 
   test('generate: required and optional params', async () => {
     const response = await client.conversation.email.generate({
-      conversationId: { foo: 'bar' },
+      conversationId: 'conversationId',
       message: 'message',
       attachments: [
         {
@@ -41,18 +41,7 @@ describe('resource email', () => {
         firstName: 'Lori',
         lastName: 'Keet',
         phoneNumber: '+14155552671',
-        remoteId: {
-          '0': 'bar',
-          '1': 'bar',
-          '2': 'bar',
-          '3': 'bar',
-          '4': 'bar',
-          '5': 'bar',
-          '6': 'bar',
-          '7': 'bar',
-          '8': 'bar',
-          '9': 'bar',
-        },
+        remoteId: '1234567890',
         subscriberCustomerId: '1234567890',
         subscriberToken: 'subscriberToken',
       },
@@ -80,7 +69,7 @@ describe('resource email', () => {
 
   test('start: only required params', async () => {
     const responsePromise = client.conversation.email.start({
-      customerId: { foo: 'bar' },
+      customerId: 'customerId',
       publicKey: 'publicKey',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -94,11 +83,11 @@ describe('resource email', () => {
 
   test('start: required and optional params', async () => {
     const response = await client.conversation.email.start({
-      customerId: { foo: 'bar' },
+      customerId: 'customerId',
       publicKey: 'publicKey',
       subject: 'Question about order tracking number',
       variables: { orderId: 'bar', priorityTier: 'bar' },
-      workflowId: { foo: 'bar' },
+      workflowId: 'workflowId',
     });
   });
 });

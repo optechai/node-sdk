@@ -48,7 +48,7 @@ describe('resource ingest', () => {
   test('test: required and optional params', async () => {
     const response = await client.ingest.test('toolId', {
       inputs: { foo: 'bar' },
-      envId: { foo: 'bar' },
+      envId: 'envId',
     });
   });
 

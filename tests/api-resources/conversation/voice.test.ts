@@ -23,13 +23,13 @@ describe('resource voice', () => {
   test('outbound: required and optional params', async () => {
     const response = await client.conversation.voice.outbound({
       phoneNumber: '+61400000000',
-      agentId: { foo: 'bar' },
-      brandId: { foo: 'bar' },
-      channelConfigId: { foo: 'bar' },
-      customerId: { foo: 'bar' },
+      agentId: 'agentId',
+      brandId: 'brandId',
+      channelConfigId: 'channelConfigId',
+      customerId: 'customerId',
       inputData: { foo: 'bar' },
       variables: { orderId: 'bar', priorityTier: 'bar' },
-      workflowId: { foo: 'bar' },
+      workflowId: 'workflowId',
     });
   });
 });
