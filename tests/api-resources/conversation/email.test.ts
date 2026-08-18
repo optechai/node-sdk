@@ -85,6 +85,7 @@ describe('resource email', () => {
     const response = await client.conversation.email.start({
       customerId: 'customerId',
       publicKey: 'publicKey',
+      agentId: 'agentId',
       subject: 'Question about order tracking number',
       variables: { orderId: 'bar', priorityTier: 'bar' },
       workflowId: 'workflowId',
