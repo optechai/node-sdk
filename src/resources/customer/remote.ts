@@ -87,7 +87,7 @@ export interface RemoteUpdateResponse {
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId?: { [key: string]: unknown };
+  remoteId?: string;
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for
@@ -153,7 +153,7 @@ export interface RemoteGetResponse {
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId?: { [key: string]: unknown };
+  remoteId?: string;
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for
@@ -203,7 +203,7 @@ export interface RemoteUpdateParams {
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
-  remoteId?: { [key: string]: unknown };
+  remoteId?: string;
 
   /**
    * The id of the customer in your own primary database or a unique identifier, for

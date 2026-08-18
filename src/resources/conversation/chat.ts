@@ -13,7 +13,7 @@ export class Chat extends APIResource {
    * @example
    * ```ts
    * const response = await client.conversation.chat.generate({
-   *   conversationId: { foo: 'bar' },
+   *   conversationId: 'conversationId',
    *   message: 'message',
    * });
    * ```
@@ -38,7 +38,7 @@ export class Chat extends APIResource {
    * @example
    * ```ts
    * const response = await client.conversation.chat.start({
-   *   customerId: { foo: 'bar' },
+   *   customerId: 'customerId',
    *   publicKey: 'publicKey',
    * });
    * ```
@@ -217,7 +217,7 @@ export interface ChatGenerateParams {
   /**
    * The ID of the conversation
    */
-  conversationId: { [key: string]: unknown };
+  conversationId: string;
 
   /**
    * The message to be sent to the user (customer or agent). This endpoint supports
@@ -284,7 +284,7 @@ export namespace ChatGenerateParams {
      * The id of the customer in the ticketing system. For the SDK this needs to be
      * stable and unique
      */
-    remoteId?: { [key: string]: unknown };
+    remoteId?: string;
 
     /**
      * The id of the customer in your own primary database or a unique identifier, for
@@ -317,7 +317,7 @@ export interface ChatStartParams {
   /**
    * The ID of the customer. If omitted, a new customer will be created.
    */
-  customerId: { [key: string]: unknown };
+  customerId: string;
 
   /**
    * The public key associated with this agent
@@ -329,7 +329,7 @@ export interface ChatStartParams {
    * agent must belong to the same concierge as this channel. Cannot be combined with
    * workflowId.
    */
-  agentId?: { [key: string]: unknown };
+  agentId?: string;
 
   /**
    * The subject of the conversation.
@@ -344,7 +344,7 @@ export interface ChatStartParams {
   /**
    * The UUID of the workflow to trigger.
    */
-  workflowId?: { [key: string]: unknown };
+  workflowId?: string;
 }
 
 export declare namespace Chat {
