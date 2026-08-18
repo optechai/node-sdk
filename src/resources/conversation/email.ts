@@ -356,6 +356,13 @@ export interface EmailStartParams {
   publicKey: string;
 
   /**
+   * The UUID of the agent that opens the conversation with the first message. The
+   * agent must belong to the same concierge as this channel. Cannot be combined with
+   * workflowId.
+   */
+  agentId?: string;
+
+  /**
    * The subject of the conversation.
    */
   subject?: string;
