@@ -14,13 +14,6 @@ export class Email extends APIResource {
    * @example
    * ```ts
    * const response = await client.conversation.email.generate({
-   *   attachments: [
-   *     {
-   *       name: 'example.jpg',
-   *       type: 'image/jpeg',
-   *       url: 'https://example.com/example.jpg',
-   *     },
-   *   ],
    *   conversationId: 'conversationId',
    *   message: 'message',
    * });
@@ -253,11 +246,6 @@ export interface EmailStartResponse {
 
 export interface EmailGenerateParams {
   /**
-   * Attachments to be sent with the message
-   */
-  attachments: Array<ConversationAPI.AttachmentDto>;
-
-  /**
    * The ID of the conversation
    */
   conversationId: string;
@@ -267,6 +255,11 @@ export interface EmailGenerateParams {
    * markdown.
    */
   message: string;
+
+  /**
+   * Attachments to be sent with the message
+   */
+  attachments?: Array<ConversationAPI.AttachmentDto>;
 
   /**
    * Any additional customer information, that has changed in the course of the
@@ -361,6 +354,13 @@ export interface EmailStartParams {
    * The public key associated with this agent
    */
   publicKey: string;
+
+  /**
+   * The UUID of the agent that opens the conversation with the first message. The
+   * agent must belong to the same concierge as this channel. Cannot be combined with
+   * workflowId.
+   */
+  agentId?: string;
 
   /**
    * The subject of the conversation.

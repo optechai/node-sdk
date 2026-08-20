@@ -1,5 +1,30 @@
 # Changelog
 
+## 2.5.0 (2026-08-20)
+
+Full Changelog: [v2.4.0...v2.5.0](https://github.com/optechai/node-sdk/compare/v2.4.0...v2.5.0)
+
+### Features
+
+* **api:** api update ([f4e6330](https://github.com/optechai/node-sdk/commit/f4e63307ae2671bbcfce2c4660a653295369a35a))
+* **api:** api update ([09d598d](https://github.com/optechai/node-sdk/commit/09d598d4aa1e0f4023df8a085d471936a47223e5))
+* **api:** api update ([c774020](https://github.com/optechai/node-sdk/commit/c77402047daf6c08aa4c058cfd724418bd91c590))
+* **api:** api update ([041b6c8](https://github.com/optechai/node-sdk/commit/041b6c80bfc122cbd6889ee17614f530ecc6890f))
+* **api:** api update ([01e6d73](https://github.com/optechai/node-sdk/commit/01e6d73aeabd191e460f6e9cff030e693b4f3c3b))
+* **customer-events:** add ingestion method ([dbce505](https://github.com/optechai/node-sdk/commit/dbce505ce51de570f00eb7268efedbc8f12cd386))
+* **customer:** add consent update method ([9685bf0](https://github.com/optechai/node-sdk/commit/9685bf04c816683e3f708a6c50661e6c4305b012))
+
+
+### Bug Fixes
+
+* **stlc:** stop hand-edited CI workflows from blocking seals and builds ([5477a95](https://github.com/optechai/node-sdk/commit/5477a9581cca13f8d3f86f6169559bd0cfa5c952))
+
+
+### Chores
+
+* **internal:** allow the mock server port to be set with STAINLESS_MOCK_PORT ([9b3f390](https://github.com/optechai/node-sdk/commit/9b3f3905c8e20bb2f0620ac8f91f96a4a35fc75d))
+* **internal:** codegen related update ([a76c11f](https://github.com/optechai/node-sdk/commit/a76c11fc26710e512686793815f1259cbc2c3f29))
+
 ## 2.4.0 (2026-07-27)
 
 Full Changelog: [v2.3.0...v2.4.0](https://github.com/optechai/node-sdk/compare/v2.3.0...v2.4.0)

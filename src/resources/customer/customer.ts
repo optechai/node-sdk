@@ -64,6 +64,29 @@ export class Customer extends APIResource {
   token(body: CustomerTokenParams, options?: RequestOptions): APIPromise<string> {
     return this._client.post('/v1/customer/token', { body, ...options });
   }
+
+  /**
+   * Applies the update immediately. For VOICE, SMS, and WHATSAPP, an unexpired
+   * OPTED_OUT update also cancels active outbound follow-up jobs for the Customer on
+   * that channel.
+   *
+   * @example
+   * ```ts
+   * const response = await client.customer.updateConsent({
+   *   channelType: 'VOICE',
+   *   consentStatus: 'OPTED_OUT',
+   *   customerId: '11111111-1111-4111-8111-111111111111',
+   *   effectiveAt: '2026-08-17T10:00:00.000Z',
+   *   source: 'crm_sync',
+   * });
+   * ```
+   */
+  updateConsent(
+    body: CustomerUpdateConsentParams,
+    options?: RequestOptions,
+  ): APIPromise<CustomerUpdateConsentResponse> {
+    return this._client.put('/v1/customer/consent', { body, ...options });
+  }
 }
 
 export interface CustomerCreateResponse {
@@ -266,6 +289,49 @@ export interface CustomerGetResponse {
 
 export type CustomerTokenResponse = string;
 
+export interface CustomerUpdateConsentResponse {
+  /**
+   * The consent record ID.
+   */
+  id: string;
+
+  /**
+   * The outbound channel whose consent state is being updated.
+   */
+  channelType: 'VOICE' | 'SMS' | 'WHATSAPP' | 'EMAIL';
+
+  /**
+   * The resulting consent state.
+   */
+  consentStatus: 'OPTED_IN' | 'OPTED_OUT' | 'UNKNOWN';
+
+  createdAt: string;
+
+  /**
+   * The Lorikeet Customer ID.
+   */
+  customerId: string;
+
+  /**
+   * When the consent decision took effect. This is an audit timestamp; the update is
+   * applied immediately.
+   */
+  effectiveAt: string;
+
+  /**
+   * The external system or process that supplied the decision.
+   */
+  source: string;
+
+  updatedAt: string;
+
+  /**
+   * When this consent record expires. An unexpired OPTED_OUT record suppresses
+   * outbound contact.
+   */
+  expiresAt?: string | null;
+}
+
 export interface CustomerCreateParams {
   /**
    * The URL of the customer avatar
@@ -450,6 +516,40 @@ export interface CustomerTokenParams {
   subscriberToken?: string;
 }
 
+export interface CustomerUpdateConsentParams {
+  /**
+   * The outbound channel whose consent state is being updated.
+   */
+  channelType: 'VOICE' | 'SMS' | 'WHATSAPP' | 'EMAIL';
+
+  /**
+   * The resulting consent state.
+   */
+  consentStatus: 'OPTED_IN' | 'OPTED_OUT' | 'UNKNOWN';
+
+  /**
+   * The Lorikeet Customer ID.
+   */
+  customerId: string;
+
+  /**
+   * When the consent decision took effect. This is an audit timestamp; the update is
+   * applied immediately.
+   */
+  effectiveAt: string;
+
+  /**
+   * The external system or process that supplied the decision.
+   */
+  source: string;
+
+  /**
+   * When this consent record expires. An unexpired OPTED_OUT record suppresses
+   * outbound contact.
+   */
+  expiresAt?: string | null;
+}
+
 Customer.Remote = Remote;
 Customer.Profile = Profile;
 
@@ -459,10 +559,12 @@ export declare namespace Customer {
     type CustomerUpdateResponse as CustomerUpdateResponse,
     type CustomerGetResponse as CustomerGetResponse,
     type CustomerTokenResponse as CustomerTokenResponse,
+    type CustomerUpdateConsentResponse as CustomerUpdateConsentResponse,
     type CustomerCreateParams as CustomerCreateParams,
     type CustomerUpdateParams as CustomerUpdateParams,
     type CustomerGetParams as CustomerGetParams,
     type CustomerTokenParams as CustomerTokenParams,
+    type CustomerUpdateConsentParams as CustomerUpdateConsentParams,
   };
 
   export {
