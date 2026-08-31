@@ -498,6 +498,13 @@ export interface CustomerTokenParams {
   phoneNumber?: string;
 
   /**
+   * Profile fields to merge into the customer profile before issuing the token.
+   * Existing values for these fields are overwritten; all other fields are
+   * preserved.
+   */
+  profile?: { [key: string]: unknown };
+
+  /**
    * The id of the customer in the ticketing system. For the SDK this needs to be
    * stable and unique
    */
