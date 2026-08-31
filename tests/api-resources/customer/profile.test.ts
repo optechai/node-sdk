@@ -25,6 +25,7 @@ describe('resource profile', () => {
   test('sync: required and optional params', async () => {
     const response = await client.customer.profile.sync('123e4567-e89b-12d3-a456-426614174000', {
       data: { foo: 'string' },
+      observedAt: '2019-12-27T18:11:19.117Z',
     });
   });
 });
