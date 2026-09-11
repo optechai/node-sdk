@@ -94,7 +94,6 @@ Methods:
 Methods:
 
 - <code title="post /ingest/{toolId}/{ticketId}/{inputHash}/{workflowId}">client.ingest.<a href="./src/resources/ingest.ts">submit</a>(workflowID, { ...params }) -> void</code>
-- <code title="post /ingest/test/{toolId}">client.ingest.<a href="./src/resources/ingest.ts">test</a>(toolID, { ...params }) -> void</code>
 - <code title="post /ingest/validate">client.ingest.<a href="./src/resources/ingest.ts">validate</a>() -> void</code>
 
 # CustomerEvents
