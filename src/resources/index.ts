@@ -28,4 +28,4 @@ export {
   type CustomerTokenParams,
   type CustomerUpdateConsentParams,
 } from './customer/customer';
-export { Ingest, type IngestSubmitParams, type IngestTestParams } from './ingest';
+export { Ingest, type IngestSubmitParams } from './ingest';

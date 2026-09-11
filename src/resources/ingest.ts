@@ -19,14 +19,6 @@ export class Ingest extends APIResource {
     });
   }
 
-  test(toolID: string, body: IngestTestParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/ingest/test/${toolID}`, {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
-  }
-
   validate(options?: RequestOptions): APIPromise<void> {
     return this._client.post('/ingest/validate', {
       ...options,
@@ -57,18 +49,6 @@ export interface IngestSubmitParams {
   data: { [key: string]: unknown };
 }
 
-export interface IngestTestParams {
-  /**
-   * The input data to simulate a test response for.
-   */
-  inputs: { [key: string]: unknown };
-
-  /**
-   * Optional execution environment ID for integration endpoint tools.
-   */
-  envId?: string;
-}
-
 export declare namespace Ingest {
-  export { type IngestSubmitParams as IngestSubmitParams, type IngestTestParams as IngestTestParams };
+  export { type IngestSubmitParams as IngestSubmitParams };
 }

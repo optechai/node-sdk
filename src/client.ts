@@ -24,7 +24,7 @@ import {
   APIKeyListResponse,
   APIKeys,
 } from './resources/api-keys';
-import { Ingest, IngestSubmitParams, IngestTestParams } from './resources/ingest';
+import { Ingest, IngestSubmitParams } from './resources/ingest';
 import {
   AttachmentDto,
   Conversation,
@@ -841,11 +841,7 @@ export declare namespace Lorikeet {
     type CustomerUpdateConsentParams as CustomerUpdateConsentParams,
   };
 
-  export {
-    Ingest as Ingest,
-    type IngestSubmitParams as IngestSubmitParams,
-    type IngestTestParams as IngestTestParams,
-  };
+  export { Ingest as Ingest, type IngestSubmitParams as IngestSubmitParams };
 
   export {
     APIKeys as APIKeys,
