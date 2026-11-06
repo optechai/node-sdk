@@ -49,6 +49,16 @@ Methods:
 
 - <code title="post /v1/conversation/voice/outbound">client.conversation.voice.<a href="./src/resources/conversation/voice.ts">outbound</a>({ ...params }) -> VoiceOutboundResponse</code>
 
+### Web
+
+Types:
+
+- <code><a href="./src/resources/conversation/voice/web.ts">WebCreateResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/conversation/voice/web/create">client.conversation.voice.web.<a href="./src/resources/conversation/voice/web.ts">create</a>({ ...params }) -> WebCreateResponse</code>
+
 # Customer
 
 Types:

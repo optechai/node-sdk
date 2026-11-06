@@ -1,6 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as WebAPI from './voice/web';
+import { Web, WebCreateParams, WebCreateResponse } from './voice/web';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
@@ -8,6 +10,8 @@ import { RequestOptions } from '../../internal/request-options';
  * Endpoints for managing conversations
  */
 export class Voice extends APIResource {
+  web: WebAPI.Web = new WebAPI.Web(this._client);
+
   /**
    * @example
    * ```ts
@@ -71,9 +75,13 @@ export interface VoiceOutboundParams {
   workflowId?: string;
 }
 
+Voice.Web = Web;
+
 export declare namespace Voice {
   export {
     type VoiceOutboundResponse as VoiceOutboundResponse,
     type VoiceOutboundParams as VoiceOutboundParams,
   };
+
+  export { Web as Web, type WebCreateResponse as WebCreateResponse, type WebCreateParams as WebCreateParams };
 }
