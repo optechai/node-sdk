@@ -1,8 +1,13 @@
 # Changelog
 
-## 2.5.0 (2026-08-31)
+## 3.0.0 (2026-11-09)
 
-Full Changelog: [v2.4.0...v2.5.0](https://github.com/optechai/node-sdk/compare/v2.4.0...v2.5.0)
+Full Changelog: [v2.4.0...v3.0.0](https://github.com/optechai/node-sdk/compare/v2.4.0...v3.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **ingest:** `ingest.submit()` now requires `data` and sends it as the request body. The previous version sent no body, so the server could not accept a real tool response from it.
+* **customer:** `ProfileSyncResponse` values are now typed `unknown`. Narrow them before use.
 
 ### Features
 
@@ -14,6 +19,7 @@ Full Changelog: [v2.4.0...v2.5.0](https://github.com/optechai/node-sdk/compare/v
 * **api:** api update ([041b6c8](https://github.com/optechai/node-sdk/commit/041b6c80bfc122cbd6889ee17614f530ecc6890f))
 * **api:** api update ([01e6d73](https://github.com/optechai/node-sdk/commit/01e6d73aeabd191e460f6e9cff030e693b4f3c3b))
 * **customer-events:** add ingestion method ([dbce505](https://github.com/optechai/node-sdk/commit/dbce505ce51de570f00eb7268efedbc8f12cd386))
+* **conversation:** add voice web create method ([1d9b730](https://github.com/optechai/node-sdk/commit/1d9b7306df5899b51c761a25272b85d1e09753a2))
 * **customer:** add consent update method ([9685bf0](https://github.com/optechai/node-sdk/commit/9685bf04c816683e3f708a6c50661e6c4305b012))
 
 
