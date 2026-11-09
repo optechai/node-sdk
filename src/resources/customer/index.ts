@@ -6,10 +6,12 @@ export {
   type CustomerUpdateResponse,
   type CustomerGetResponse,
   type CustomerTokenResponse,
+  type CustomerUpdateConsentResponse,
   type CustomerCreateParams,
   type CustomerUpdateParams,
   type CustomerGetParams,
   type CustomerTokenParams,
+  type CustomerUpdateConsentParams,
 } from './customer';
 export { Profile, type ProfileSyncResponse, type ProfileSyncParams } from './profile';
 export { Remote, type RemoteUpdateResponse, type RemoteGetResponse, type RemoteUpdateParams } from './remote';

@@ -28,6 +28,7 @@ describe('resource voice', () => {
       channelConfigId: 'channelConfigId',
       customerId: 'customerId',
       inputData: { foo: 'bar' },
+      variables: { orderId: 'bar', priorityTier: 'bar' },
       workflowId: 'workflowId',
     });
   });

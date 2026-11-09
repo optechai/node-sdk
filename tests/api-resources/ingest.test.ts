@@ -14,6 +14,7 @@ describe('resource ingest', () => {
       toolId: 'toolId',
       ticketId: 'ticketId',
       inputHash: 'inputHash',
+      data: { foo: 'bar' },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -29,6 +30,7 @@ describe('resource ingest', () => {
       toolId: 'toolId',
       ticketId: 'ticketId',
       inputHash: 'inputHash',
+      data: { foo: 'bar' },
     });
   });
 

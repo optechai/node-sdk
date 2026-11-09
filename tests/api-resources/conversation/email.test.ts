@@ -11,13 +11,6 @@ const client = new Lorikeet({
 describe('resource email', () => {
   test('generate: only required params', async () => {
     const responsePromise = client.conversation.email.generate({
-      attachments: [
-        {
-          name: 'example.jpg',
-          type: 'image/jpeg',
-          url: 'https://example.com/example.jpg',
-        },
-      ],
       conversationId: 'conversationId',
       message: 'message',
     });
@@ -32,6 +25,8 @@ describe('resource email', () => {
 
   test('generate: required and optional params', async () => {
     const response = await client.conversation.email.generate({
+      conversationId: 'conversationId',
+      message: 'message',
       attachments: [
         {
           name: 'example.jpg',
@@ -39,8 +34,6 @@ describe('resource email', () => {
           url: 'https://example.com/example.jpg',
         },
       ],
-      conversationId: 'conversationId',
-      message: 'message',
       customer: {
         avatarUrl: 'https://example.com/image.jpg',
         displayName: 'Lori Keet',
@@ -92,6 +85,7 @@ describe('resource email', () => {
     const response = await client.conversation.email.start({
       customerId: 'customerId',
       publicKey: 'publicKey',
+      agentId: 'agentId',
       subject: 'Question about order tracking number',
       variables: { orderId: 'bar', priorityTier: 'bar' },
       workflowId: 'workflowId',
