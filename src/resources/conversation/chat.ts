@@ -2,6 +2,8 @@
 
 import { APIResource } from '../../core/resource';
 import * as ConversationAPI from './conversation';
+import * as ContinuousAPI from './chat/continuous';
+import { Continuous, ContinuousGenerateParams, ContinuousGenerateResponse } from './chat/continuous';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { pollUntil } from '../../lib/poll-until';
@@ -13,6 +15,8 @@ import { EventSource } from 'eventsource';
  * Endpoints for managing conversations
  */
 export class Chat extends APIResource {
+  continuous: ContinuousAPI.Continuous = new ContinuousAPI.Continuous(this._client);
+
   /**
    * @example
    * ```ts
@@ -503,6 +507,8 @@ export type ChatStreamEvent =
   | ChatStreamMessageChunkEvent
   | ChatStreamMessageCompleteEvent;
 
+Chat.Continuous = Continuous;
+
 export declare namespace Chat {
   export {
     type ChatGenerateResponse as ChatGenerateResponse,
@@ -516,5 +522,11 @@ export declare namespace Chat {
     type ChatStreamNewMessageEvent as ChatStreamNewMessageEvent,
     type ChatStreamMessageChunkEvent as ChatStreamMessageChunkEvent,
     type ChatStreamMessageCompleteEvent as ChatStreamMessageCompleteEvent,
+  };
+
+  export {
+    Continuous as Continuous,
+    type ContinuousGenerateResponse as ContinuousGenerateResponse,
+    type ContinuousGenerateParams as ContinuousGenerateParams,
   };
 }
