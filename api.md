@@ -39,6 +39,16 @@ Methods:
 - <code title="get /v1/conversation/chat/message">client.conversation.chat.<a href="./src/resources/conversation/chat.ts">get</a>({ ...params }) -> ChatGetResponse</code>
 - <code title="post /v1/conversation/chat/create">client.conversation.chat.<a href="./src/resources/conversation/chat.ts">start</a>({ ...params }) -> ChatStartResponse</code>
 
+### Continuous
+
+Types:
+
+- <code><a href="./src/resources/conversation/chat/continuous.ts">ContinuousGenerateResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/conversation/chat/continuous/message">client.conversation.chat.continuous.<a href="./src/resources/conversation/chat/continuous.ts">generate</a>({ ...params }) -> ContinuousGenerateResponse</code>
+
 ## Voice
 
 Types:
